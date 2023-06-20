@@ -1,1 +1,1 @@
-# SeeBnB
+# Bachelorthesis
