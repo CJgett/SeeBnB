@@ -1,7 +1,7 @@
 MIT License
 
-Copyright (c) 2023 Carly Gettinger
-Copyright (c) 2020 Jeff Hackshaw ([tspvis])(https://tspvis.com)
+Copyright (c) 2023 Carly Gettinger <br>
+Copyright (c) 2020 Jeff Hackshaw - [tspvis](https://tspvis.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
