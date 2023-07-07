@@ -14,4 +14,3 @@ These are the main tools used to build this site:
 
 ## Acknowledgements
 This repository is a modified version of [tspvis](https://github.com/jhackshaw/tspvis) by [Jeff Hackshaw](https://github.com/jhackshaw)  
->>>>>>> Stashed changes
