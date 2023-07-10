@@ -1,8 +1,11 @@
 module.exports = {
   siteMetadata: {
-    title: `Traveling Salesman Problem Solver`,
+    title: `SeeBnB`,
     description: ``,
-    author: `@jhackshaw`
+    author: `@CJgett`
+  },
+  flags: {
+      DEV_SSR: false
   },
   plugins: [
     `gatsby-plugin-material-ui`,
