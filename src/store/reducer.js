@@ -18,7 +18,7 @@ const initialState = {
   points: gerTop5,
   viewport: initialViewport,
   algorithm: "branchAndBoundOnCost",
-  delay: 25ms,
+  delay: 25,
   evaluatingDetailLevel: 2,
   maxEvaluatingDetailLevel: 2,
   showBestPath: true,
