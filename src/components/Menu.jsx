@@ -24,6 +24,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const Menu = ({
+  onStep,
   onStart,
   onPause,
   onUnPause,
@@ -39,6 +40,7 @@ export const Menu = ({
       <Divider />
       <MenuMetrics />
       <MenuSolverControls
+        onStep={onStep}
         onStart={onStart}
         onPause={onPause}
         onUnPause={onUnPause}

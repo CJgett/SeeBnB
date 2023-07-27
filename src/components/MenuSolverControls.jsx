@@ -14,6 +14,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faStepForward,
   faPlay,
   faStop,
   faRedo,
@@ -28,6 +29,7 @@ import * as actions from "../store/actions";
 import * as selectors from "../store/selectors";
 
 export const MenuSolverControls = ({
+  onStep,
   onStart,
   onPause,
   onUnPause,
@@ -137,6 +139,10 @@ export const MenuSolverControls = ({
             color="secondary"
             size="large"
           >
+            <Button onClick={onStep} disabled={running || definingPoints}>
+              <FontAwesomeIcon icon={faStepForward} width="0" />
+            </Button>
+
             <Button
               onClick={paused ? onUnPause : running ? onPause : onStart}
               disabled={definingPoints || fullSpeed}
