@@ -4,8 +4,7 @@ import { Grid, Typography, IconButton, Tooltip } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faInfoCircle,
-  faBriefcase,
-  faDonate
+  faCodeBranch
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { makeStyles } from "@material-ui/styles";
@@ -33,7 +32,7 @@ export const MenuHeader = props => {
 
   return (
     <MenuSection>
-      <Grid container justify="space-between" alignItems="center">
+      <Grid container justifyContent="space-between" alignItems="center">
         <Typography
           gutterBottom
           display="inline"
@@ -41,13 +40,13 @@ export const MenuHeader = props => {
           component="h1"
           classes={{ root: classes.title }}
         >
-          <FontAwesomeIcon icon={faBriefcase} width="0" /> TSPVIS
+          <FontAwesomeIcon icon={faCodeBranch} flip="vertical" width="0" /> SeeBnB 
         </Typography>
         <Typography gutterBottom display="inline" color="textSecondary">
           <Tooltip title="Source code">
             <IconButton
               target="_blank"
-              href="https://github.com/jhackshaw/tspvis"
+              href="https://github.com/CJgett/SeeBnB"
             >
               <FontAwesomeIcon icon={faGithub} size="xs" width="0" />
             </IconButton>
@@ -61,12 +60,9 @@ export const MenuHeader = props => {
         </Typography>
       </Grid>
       <Typography variant="subtitle2" color="textSecondary">
-        Visualize algorithms for the traveling salesman problem. Use the
-        controls below to plot points, choose an algorithm, and control
+        SeeBnB is a tool to help visualize the branch and bound algorithm for the traveling salesman problem. Use the
+        controls below to plot points, choose a combination of algorithms, and control
         execution.
-        <br />
-        (Hint: try a construction alogorithm followed by an improvement
-        algorithm)
       </Typography>
     </MenuSection>
   );
