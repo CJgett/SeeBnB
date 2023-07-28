@@ -66,8 +66,9 @@ export const MapPlot = React.forwardRef((props, ref) => {
     <MapGL
       {...viewport}
       ref={mapGlRef}
+      flex="5"
+      height="100%"
       width="100%"
-      height={matches ? "50%" : "100%"}
       maxPitch={0}
       onViewportChange={onViewportChanged}
       mapboxApiAccessToken={TOKEN}

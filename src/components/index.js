@@ -13,3 +13,5 @@ export * from "./MenuSolverControls";
 export * from "../context/PreSetTheme";
 export * from "./SEO";
 export * from "./ThemeToggle";
+export * from "./BottomMenu";
+export * from "./MapAndBottomMenuContainer";

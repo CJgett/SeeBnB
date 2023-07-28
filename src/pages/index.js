@@ -10,7 +10,9 @@ import {
   AlgorithmModals,
   IntroductionModal,
   Layout,
+  BottomMenu,
   MapPlot,
+  MapAndBottomMenuContainer,
   Menu,
   SEO,
   ThemeToggle
@@ -103,7 +105,10 @@ const IndexPage = () => {
         onStop={stop}
         onRandomizePoints={onRandomizePoints}
       />
-      <MapPlot ref={mapRef}></MapPlot>
+      <MapAndBottomMenuContainer>
+        <MapPlot ref={mapRef}></MapPlot>
+        <BottomMenu></BottomMenu>
+      </MapAndBottomMenuContainer>
     </Layout>
   );
 };

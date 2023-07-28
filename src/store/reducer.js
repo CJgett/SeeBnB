@@ -11,7 +11,7 @@ const gerTop5 = [
 const initialViewport = {
   latitude: 51.1657,
   longitude: 10.4515,
-  zoom: 5 
+  zoom: 4 
 };
 
 const initialState = {
