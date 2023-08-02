@@ -9,6 +9,7 @@ import {
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { makeStyles } from "@material-ui/styles";
 import { MenuSection } from "./MenuSection";
+import { ThemeToggle } from "./ThemeToggle";
 
 import * as actions from "../store/actions";
 
@@ -57,6 +58,7 @@ export const MenuHeader = props => {
               <FontAwesomeIcon icon={faInfoCircle} size="xs" width="0" />
             </IconButton>
           </Tooltip>
+          <ThemeToggle />
         </Typography>
       </Grid>
       <Typography variant="subtitle2" color="textSecondary">

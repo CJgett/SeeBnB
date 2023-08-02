@@ -181,62 +181,6 @@ export const MenuSolverControls = ({
           />
         </MenuItem>
       </MenuSection>
-      <MenuSection>
-        <MenuItem row>
-          <Grid item xs={10}>
-            <Typography variant="button" color="textSecondary" component="div">
-              Show Best Path
-            </Typography>
-          </Grid>
-          <Grid item xs={2}>
-            <Switch
-              checked={showBestPath}
-              onChange={onShowBestPathChange}
-              color="secondary"
-              disabled={definingPoints || fullSpeed}
-              id="show-best-path"
-            />
-          </Grid>
-
-          <Grid item xs={10}>
-            <Typography variant="button" color="textSecondary" component="div">
-              Show Evaluated Paths
-            </Typography>
-          </Grid>
-          <Grid item xs={2}>
-            <Switch
-              checked={evaluatingDetailLevel > 0}
-              onChange={onEvaluatingDetailLevelChange(1, 0)}
-              color="secondary"
-              disabled={definingPoints || fullSpeed}
-              id="show-evaluating-paths"
-            />
-          </Grid>
-
-          {maxEvaluatingDetailLevel > 1 && (
-            <>
-              <Grid item xs={10}>
-                <Typography
-                  variant="button"
-                  color="textSecondary"
-                  component="div"
-                >
-                  Show Evaluated Steps
-                </Typography>
-              </Grid>
-              <Grid item xs={2}>
-                <Switch
-                  checked={evaluatingDetailLevel > 1}
-                  onChange={onEvaluatingDetailLevelChange(2, 1)}
-                  color="secondary"
-                  disabled={definingPoints || fullSpeed}
-                  id="show-evaluating-steps"
-                />
-              </Grid>
-            </>
-          )}
-        </MenuItem>
-      </MenuSection>
     </>
   );
 };

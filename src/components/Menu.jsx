@@ -49,8 +49,6 @@ export const Menu = ({
       />
       <Divider />
       <MenuPointControls onRandomizePoints={onRandomizePoints} />
-      <Divider />
-      <OtherControls />
     </Paper>
   );
 };
