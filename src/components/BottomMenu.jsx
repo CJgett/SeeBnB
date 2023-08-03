@@ -20,8 +20,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const BottomMenu = ({
-}) => {
+export const BottomMenu = () => {
   const classes = useStyles();
 
   return (

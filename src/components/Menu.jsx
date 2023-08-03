@@ -5,7 +5,6 @@ import { MenuHeader } from "./MenuHeader";
 import { MenuSolverControls } from "./MenuSolverControls";
 import { MenuMetrics } from "./MenuMetrics";
 import { MenuPointControls } from "./MenuPointControls";
-import { OtherControls } from "./OtherControls";
 
 const useStyles = makeStyles(theme => ({
   wrapper: {

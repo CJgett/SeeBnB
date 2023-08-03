@@ -2,7 +2,6 @@ import React, {
   useRef,
   useEffect,
   useCallback,
-  useState,
   useMemo
 } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,7 +14,6 @@ import {
   MapAndBottomMenuContainer,
   Menu,
   SEO,
-  ThemeToggle
 } from "../components";
 import { useSolverWorker, useAlgorithmInfo } from "../hooks";
 import * as selectors from "../store/selectors";

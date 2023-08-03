@@ -7,7 +7,6 @@ import {
   ListSubheader,
   MenuItem as SelectItem,
   Typography,
-  Switch,
   Grid,
   IconButton
 } from "@material-ui/core";
@@ -40,13 +39,6 @@ export const MenuSolverControls = ({
   const algorithms = useAlgorithmInfo();
   const selectedAlgorithm = useSelector(selectors.selectAlgorithm);
   const delay = useSelector(selectors.selectDelay);
-  const evaluatingDetailLevel = useSelector(
-    selectors.selectEvaluatingDetailLevel
-  );
-  const maxEvaluatingDetailLevel = useSelector(
-    selectors.selectMaxEvaluatingDetailLevel
-  );
-  const showBestPath = useSelector(selectors.selectShowBestPath);
   const running = useSelector(selectors.selectRunning);
   const fullSpeed = useSelector(selectors.selectFullSpeed);
   const paused = useSelector(selectors.selectPaused);
@@ -62,15 +54,6 @@ export const MenuSolverControls = ({
 
   const onDelayChange = (_, newDelay) => {
     dispatch(actions.setDelay(newDelay));
-  };
-
-  const onEvaluatingDetailLevelChange = (onLevel, offLevel) => event => {
-    const level = event.target.checked ? onLevel : offLevel;
-    dispatch(actions.setEvaluatingDetailLevel(level));
-  };
-
-  const onShowBestPathChange = event => {
-    dispatch(actions.setShowBestPath(event.target.checked));
   };
 
   const onReset = () => {

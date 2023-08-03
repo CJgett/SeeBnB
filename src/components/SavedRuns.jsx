@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Grid, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core";
-import * as selectors from "../store/selectors";
+import React from "react";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@material-ui/core";
 
 import { MenuSection } from "./MenuSection";
 import { MenuItem } from "./MenuItem";
@@ -21,7 +20,6 @@ const columns = [
 ];
 
 function createData(runID, runDetails, solution, runtime, instance, evalNodes, maxTreeDepth) {
-  console.log("data created HERE!!!" + runID + runDetails);
   return { runID, runDetails, solution, runtime, instance, evalNodes, maxTreeDepth };
 }
 
@@ -35,7 +33,7 @@ export const SavedRuns = props => {
 
   return (
     <MenuSection>
-      <MenuItem title="Previous Runs"
+      <MenuItem title="Previous Runs" className={classes.item}
        sx={{ width: '100%', overflow: 'hidden' }}>
          <TableContainer sx={{ maxHeight: 440 }}>
            <Table stickyHeader aria-label="sticky table">

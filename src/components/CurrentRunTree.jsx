@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Grid, Typography } from "@material-ui/core";
-import * as selectors from "../store/selectors";
 
 import { MenuSection } from "./MenuSection";
 import { MenuItem } from "./MenuItem";
