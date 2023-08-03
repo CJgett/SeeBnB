@@ -4,15 +4,20 @@ import {
   ButtonGroup,
   Button,
   Slider,
+  Select,
+  MenuItem as SelectItem,
   Grid,
   Typography,
-  makeStyles
+  makeStyles,
+  IconButton,
+  Tooltip,
 } from "@material-ui/core";
 import {
   faRandom,
   faSave,
   faMousePointer,
-  faMapMarked
+  faMapMarked,
+  faQuestion
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -27,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-// [0, 1/2, 1, 3, 12]
+// calculate number of possible paths [0, 1/2, 1, 3, 12] 
 let cache = ["1e+0", "1e+0"];
 const possRoutes = n => {
   if (n <= 2) {
@@ -51,12 +56,23 @@ export const MenuPointControls = ({ onRandomizePoints }) => {
   const classes = useStyles();
   const [possiblePaths, setPossiblePaths] = useState("0");
   const dispatch = useDispatch();
+  const selectedInstance = useSelector(selectors.selectInstance);
   const pointCount = useSelector(selectors.selectPointCount);
   const running = useSelector(selectors.selectRunning);
   const definingPoints = useSelector(selectors.selectDefiningPoints);
+  const paused = useSelector(selectors.selectPaused);
 
   const onDefaultMap = () => {
     dispatch(actions.setDefaultMap());
+  };
+
+  const onInstanceChange = event => {
+    event.persist();
+    //onStop();
+    const instance = event.target.value;
+    //const { defaults } = instance.find(alg => alg.solverKey === solverKey);
+    //dispatch(actions.setDefaultMap(solverKey, defaults));
+    dispatch(actions.setDropdownMap(instance));
   };
 
   const onToggleDefiningPoints = () => {
@@ -78,33 +94,71 @@ export const MenuPointControls = ({ onRandomizePoints }) => {
 
   return (
     <MenuSection>
-      <MenuItem title="Points">
-        <ButtonGroup
-          fullWidth
-          variant="outlined"
-          color="secondary"
-          size="large"
-          disabled={running}
-        >
-          <Button
-            onClick={onRandomizePoints}
-            disabled={definingPoints || pointCount < 3}
+      <MenuItem title="Instance">
+        <Grid container alignItems="center">
+          <Grid item xs={11}>
+            <Select
+              value={selectedInstance}
+              onChange={onInstanceChange}
+              disabled={running || paused || definingPoints}
+              variant="outlined"
+              fullWidth
+              margin="dense"
+            >
+              <SelectItem value="grandmasRoute" key="grandmasRoute">
+                Grandma's Route 4
+              </SelectItem>
+              <SelectItem value="gerTop5" key="germany-top-5">
+                Germany Top 5
+              </SelectItem>
+              <SelectItem value="vacationCircuit" key="vacation-circuit">
+                Vacation Circuit 6
+              </SelectItem>
+            </Select>
+          </Grid>
+
+          <Grid item xs={1}>
+            <Typography align="right" color="textSecondary">
+              <IconButton edge="end" >
+                <FontAwesomeIcon icon={faQuestion} size="xs" />
+              </IconButton>
+            </Typography>
+          </Grid>
+        </Grid>
+    </MenuItem>
+        <MenuItem>
+          <ButtonGroup
+            fullWidth
+            variant="outlined"
+            color="secondary"
+            size="large"
+            disabled={running}
           >
-            <FontAwesomeIcon icon={faRandom} width="0" />
-          </Button>
-          <Button onClick={onToggleDefiningPoints}>
-            <FontAwesomeIcon
-              icon={definingPoints ? faSave : faMousePointer}
-              width="0"
-            />
-          </Button>
-          <Button disabled={definingPoints} onClick={onDefaultMap}>
-            <FontAwesomeIcon icon={faMapMarked} width="0" />
-          </Button>
-        </ButtonGroup>
+            <Tooltip title="Random Instance">
+              <Button
+                onClick={onRandomizePoints}
+                disabled={definingPoints || pointCount < 3}
+              >
+                <FontAwesomeIcon icon={faRandom} width="0" />
+              </Button>
+            </Tooltip>
+            <Tooltip title="Choose Nodes"> 
+              <Button onClick={onToggleDefiningPoints}>
+                <FontAwesomeIcon
+                  icon={definingPoints ? faSave : faMousePointer}
+                  width="0"
+                />
+              </Button>
+            </Tooltip>
+            <Tooltip title="Default Map">
+              <Button disabled={definingPoints} onClick={onDefaultMap}>
+                <FontAwesomeIcon icon={faMapMarked} width="0" />
+              </Button>
+            </Tooltip>
+          </ButtonGroup>
       </MenuItem>
 
-      <MenuItem title="Number of random points">
+      <MenuItem title="Number of random nodes">
         <Slider
           value={pointCount}
           onChange={onPointCountChange}

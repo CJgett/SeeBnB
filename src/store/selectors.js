@@ -35,6 +35,8 @@ export const selectStartedRunningAt = state => state.startedRunningAt;
 //
 // FOR POINT CONTROLS
 //
+export const selectInstance = state => state.instance;
+
 export const selectDefiningPoints = state => state.definingPoints;
 
 export const selectPointCount = state => state.pointCount;

@@ -23,6 +23,7 @@ export const STOP_DEFINING_POINTS = "STOP_DEFINING_POINTS";
 export const SET_POINT_COUNT = "SET_POINT_COUNT";
 export const SET_POINTS = "SET_POINTS";
 export const SET_DEFAULT_MAP = "SET_DEFAULT_MAP";
+export const SET_DROPDOWN_MAP = "SET_DROPDOWN_MAP";
 
 export const TOGGLE_SITE_INFO_OPEN = "TOGGLE_SITE_INFO_OPEN";
 export const TOGGLE_ALG_INFO_OPEN = "TOGGLE_ALG_INFO_OPEN";
@@ -159,6 +160,11 @@ const setDefaultMapAction = () => ({
   type: SET_DEFAULT_MAP
 });
 
+const setDropdownMapAction = (instance) => ({
+  type: SET_DROPDOWN_MAP,
+  instance
+});
+
 const setPointsAction = points => ({
   type: SET_POINTS,
   points
@@ -206,4 +212,10 @@ export const randomizePoints = bounds => (dispatch, getState) => {
 export const setDefaultMap = (...args) => dispatch => {
   dispatch(resetSolverState());
   dispatch(setDefaultMapAction());
+};
+
+export const setDropdownMap = (instance) => dispatch => {
+  console.log(instance);
+  dispatch(resetSolverState());
+  dispatch(setDropdownMapAction(instance));
 };

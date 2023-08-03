@@ -8,16 +8,46 @@ const gerTop5 = [
   [8.6850,50.1379],
 ];
 
+const grandmasRoute = [
+  [-86.15076793709714, 41.44841933102996],
+  [-86.15805385600271, 41.66033526378252],
+  [-86.25519626860176, 41.67574936825329],
+  [-85.97486915619965, 41.68785991475081],
+];
+
+const vacationCircuit = [
+  [127.001953, 37.492294],
+  [127.729764, 37.881057],
+  [127.384902, 36.349701],
+  [129.075236, 35.179953],
+  [126.74943953557997, 33.55405122278805],
+  [126.59863805245867, 33.24363640858483],
+];
+
 const initialViewport = {
   latitude: 51.1657,
   longitude: 10.4515,
-  zoom: 4 
+  zoom: 4
+};
+
+const grandmasViewport = {
+  latitude: 41.59592617614131,
+  longitude: -86.12731473663396,
+  zoom: 7, 
+};
+
+const vacationViewport = {
+  latitude: 36.32576380051149,
+  longitude: 127.8107581650217,
+  zoom: 5, 
+
 };
 
 const initialState = {
   points: gerTop5,
   viewport: initialViewport,
   algorithm: "branchAndBoundOnCost",
+  instance: "gerTop5",
   delay: 25,
   evaluatingDetailLevel: 2,
   maxEvaluatingDetailLevel: 2,
@@ -40,6 +70,27 @@ const initialState = {
   siteInfoOpen: false,
   algInfoOpen: false
 };
+
+let findInstance = (instance) => {
+  if (instance === "grandmasRoute") 
+    return grandmasRoute;
+  else if (instance === "vacationCircuit")
+    return vacationCircuit;
+  else 
+    return gerTop5;
+ 
+};
+
+let findViewport = (instance) => {
+  if (instance === "grandmasRoute") 
+    return grandmasViewport;
+  else if (instance === "vacationCircuit")
+    return vacationViewport;
+  else
+    return initialViewport;
+
+};
+
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -209,7 +260,17 @@ export default (state = initialState, action) => {
         ...state,
         viewport: initialViewport,
         points: gerTop5,
-        pointCount: gerTop5.length
+        pointCount: gerTop5.length,
+        instance: "gerTop5"
+      };
+
+    case actions.SET_DROPDOWN_MAP:
+      return {
+        ...state,
+        viewport: findViewport(action.instance),
+        points: findInstance(action.instance),
+        pointCount: findInstance(action.instance).length,
+        instance: action.instance
       };
 
     default:
