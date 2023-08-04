@@ -10,6 +10,7 @@ export * from "./MenuMetrics";
 export * from "./MenuPointControls";
 export * from "./MenuSection";
 export * from "./MenuSolverControls";
+export * from "./MenuRunControls";
 export * from "../context/PreSetTheme";
 export * from "./SEO";
 export * from "./ThemeToggle";

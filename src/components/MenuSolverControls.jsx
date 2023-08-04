@@ -1,8 +1,5 @@
 import React from "react";
 import {
-  ButtonGroup,
-  Button,
-  Slider,
   Select,
   ListSubheader,
   MenuItem as SelectItem,
@@ -12,35 +9,19 @@ import {
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faStepForward,
-  faPlay,
-  faStop,
-  faRedo,
-  faQuestion,
-  faFastForward,
-  faPause
-} from "@fortawesome/free-solid-svg-icons";
+import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { MenuSection } from "./MenuSection";
+import { MenuHeader } from "./MenuHeader";
 import { MenuItem } from "./MenuItem";
 import { useAlgorithmInfo } from "../hooks";
 import * as actions from "../store/actions";
 import * as selectors from "../store/selectors";
 
-export const MenuSolverControls = ({
-  onStep,
-  onStart,
-  onPause,
-  onUnPause,
-  onFullSpeed,
-  onStop
-}) => {
+export const MenuSolverControls = ({ onStop }) => {
   const dispatch = useDispatch();
   const algorithms = useAlgorithmInfo();
   const selectedAlgorithm = useSelector(selectors.selectAlgorithm);
-  const delay = useSelector(selectors.selectDelay);
   const running = useSelector(selectors.selectRunning);
-  const fullSpeed = useSelector(selectors.selectFullSpeed);
   const paused = useSelector(selectors.selectPaused);
   const definingPoints = useSelector(selectors.selectDefiningPoints);
 
@@ -52,15 +33,6 @@ export const MenuSolverControls = ({
     dispatch(actions.setAlgorithm(solverKey, defaults));
   };
 
-  const onDelayChange = (_, newDelay) => {
-    dispatch(actions.setDelay(newDelay));
-  };
-
-  const onReset = () => {
-    onStop();
-    dispatch(actions.resetSolverState());
-  };
-
   const onShowAlgInfo = () => {
     dispatch(actions.toggleAlgInfoOpen());
   };
@@ -68,7 +40,7 @@ export const MenuSolverControls = ({
   return (
     <>
       <MenuSection highlight>
-        <MenuItem title="Algorithm">
+        <MenuItem title="Initial Solution">
           <Grid container alignItems="center">
             <Grid item xs={11}>
               <Select
@@ -114,54 +86,99 @@ export const MenuSolverControls = ({
             </Grid>
           </Grid>
         </MenuItem>
-
-        <MenuItem title="Controls">
-          <ButtonGroup
-            fullWidth
-            variant="outlined"
-            color="secondary"
-            size="large"
-          >
-            <Button onClick={onStep} disabled={running || definingPoints}>
-              <FontAwesomeIcon icon={faStepForward} width="0" />
-            </Button>
-
-            <Button
-              onClick={paused ? onUnPause : running ? onPause : onStart}
-              disabled={definingPoints || fullSpeed}
-            >
-              <FontAwesomeIcon
-                icon={paused ? faPlay : running ? faPause : faPlay}
-                width="0"
-              />
-            </Button>
-
-            <Button
-              onClick={paused ? onStop : onFullSpeed}
-              disabled={(!running && !paused) || definingPoints || fullSpeed}
-            >
-              <FontAwesomeIcon
-                icon={paused ? faStop : faFastForward}
-                width="0"
-              />
-            </Button>
-
-            <Button onClick={onReset} disabled={running || definingPoints}>
-              <FontAwesomeIcon icon={faRedo} width="0" />
-            </Button>
-          </ButtonGroup>
+       
+        <MenuItem title="Search Strategy">
+          <Grid container alignItems="center">
+            <Grid item xs={11}>
+              <Select
+                value={selectedAlgorithm}
+                onChange={onAlgorithmChange}
+                disabled={running || paused || definingPoints}
+                variant="outlined"
+                fullWidth
+                margin="dense"
+              >
+                <ListSubheader>Heuristic Construction</ListSubheader>
+                {algorithms
+                  .filter(alg => alg.type === "heuristic-construction")
+                  .map(alg => (
+                    <SelectItem value={alg.solverKey} key={alg.solverKey}>
+                      {alg.friendlyName}
+                    </SelectItem>
+                  ))}
+                <ListSubheader>Heuristic Improvement</ListSubheader>
+                {algorithms
+                  .filter(alg => alg.type === "heuristic-improvement")
+                  .map(alg => (
+                    <SelectItem value={alg.solverKey} key={alg.solverKey}>
+                      {alg.friendlyName}
+                    </SelectItem>
+                  ))}
+                <ListSubheader>Exhaustive</ListSubheader>
+                {algorithms
+                  .filter(alg => alg.type === "exhaustive")
+                  .map(alg => (
+                    <SelectItem value={alg.solverKey} key={alg.solverKey}>
+                      {alg.friendlyName}
+                    </SelectItem>
+                  ))}
+              </Select>
+            </Grid>
+            <Grid item xs={1}>
+              <Typography align="right" color="textSecondary">
+                <IconButton edge="end" onClick={onShowAlgInfo}>
+                  <FontAwesomeIcon icon={faQuestion} size="xs" />
+                </IconButton>
+              </Typography>
+            </Grid>
+          </Grid>
         </MenuItem>
-        <MenuItem title="Delay">
-          <Slider
-            value={delay}
-            onChange={onDelayChange}
-            step={25}
-            min={0}
-            max={250}
-            valueLabelDisplay="auto"
-            color="secondary"
-            disabled={definingPoints || fullSpeed}
-          />
+        
+        <MenuItem title="Bounding Strategy">
+          <Grid container alignItems="center">
+            <Grid item xs={11}>
+              <Select
+                value={selectedAlgorithm}
+                onChange={onAlgorithmChange}
+                disabled={running || paused || definingPoints}
+                variant="outlined"
+                fullWidth
+                margin="dense"
+              >
+                <ListSubheader>Heuristic Construction</ListSubheader>
+                {algorithms
+                  .filter(alg => alg.type === "heuristic-construction")
+                  .map(alg => (
+                    <SelectItem value={alg.solverKey} key={alg.solverKey}>
+                      {alg.friendlyName}
+                    </SelectItem>
+                  ))}
+                <ListSubheader>Heuristic Improvement</ListSubheader>
+                {algorithms
+                  .filter(alg => alg.type === "heuristic-improvement")
+                  .map(alg => (
+                    <SelectItem value={alg.solverKey} key={alg.solverKey}>
+                      {alg.friendlyName}
+                    </SelectItem>
+                  ))}
+                <ListSubheader>Exhaustive</ListSubheader>
+                {algorithms
+                  .filter(alg => alg.type === "exhaustive")
+                  .map(alg => (
+                    <SelectItem value={alg.solverKey} key={alg.solverKey}>
+                      {alg.friendlyName}
+                    </SelectItem>
+                  ))}
+              </Select>
+            </Grid>
+            <Grid item xs={1}>
+              <Typography align="right" color="textSecondary">
+                <IconButton edge="end" onClick={onShowAlgInfo}>
+                  <FontAwesomeIcon icon={faQuestion} size="xs" />
+                </IconButton>
+              </Typography>
+            </Grid>
+          </Grid>
         </MenuItem>
       </MenuSection>
     </>

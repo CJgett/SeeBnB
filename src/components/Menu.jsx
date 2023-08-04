@@ -5,6 +5,7 @@ import { MenuHeader } from "./MenuHeader";
 import { MenuSolverControls } from "./MenuSolverControls";
 import { MenuMetrics } from "./MenuMetrics";
 import { MenuPointControls } from "./MenuPointControls";
+import { MenuRunControls } from "./MenuRunControls";
 
 const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -46,6 +47,7 @@ export const Menu = ({
         onStop={onStop}
         onFullSpeed={onFullSpeed}
       />
+      <MenuRunControls />
       <Divider />
       <MenuPointControls onRandomizePoints={onRandomizePoints} />
     </Paper>
