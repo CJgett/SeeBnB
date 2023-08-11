@@ -2,21 +2,19 @@ import React from "react";
 import Helmet from "react-helmet";
 
 const description =
-  "Interactive solver for the traveling salesman problem to visualize different algorithms. Includes various Heuristic and Exhaustive algorithms.";
+  "Interactive solver for the traveling salesman problem to visualize the Branch and Bound algorithm.";
 
 export const SEO = ({ subtitle }) => {
   return (
     <Helmet
-      title={`${subtitle}${
-        subtitle ? " | " : ""
-      }Traveling Salesman Problem Visualizer`}
+      title={`SeeBnB`}
       htmlAttributes={{ lang: "en" }}
     >
       <meta name="description" content={description} />
 
       <meta
         property="og:title"
-        content={`Traveling Salesman Problem Visualizer`}
+        content={`Branch and Bound Visualizer`}
       />
       <meta property="og:url" content="https://tspvis.com" />
       <meta property="og:description" content={description} />

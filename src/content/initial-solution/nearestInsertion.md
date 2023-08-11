@@ -1,20 +1,20 @@
 ---
-type: heuristic-construction
-order: 2
-solverKey: arbitraryInsertion
-friendlyName: Arbitrary Insertion
+type: initial-solution
+order: 3
+solverKey: nearestInsertion
+friendlyName: Nearest Insertion
 defaults:
   evaluatingDetailLevel: 1
   maxEvaluatingDetailLevel: 1
 ---
 
-# Arbitrary Insertion
+# Furthest Insertion
 
-This is a heuristic construction algorithm. It select a random point, and then figures out where the best place to put it will be.
+This is a heuristic construction algorithm. It selects the closest point to the path, and then figures out where the best place to put it will be.
 
 1. From the starting point
 2. First, go to the closest point
-3. Choose a random point to go to
+3. Choose the point that is **nearest** to the current path
 4. Find the cheapest place to add it in the path
 5. Chosen point is no longer an "available point"
 6. Continue from #3 until there are no available points, and then return to the start.
@@ -22,28 +22,35 @@ This is a heuristic construction algorithm. It select a random point, and then f
 ## Implementation
 
 ```javascript
-const arbitraryInsertion = async points => {
+const nearestInsertion = async points => {
   // from the starting point
   const path = [points.shift()];
 
   //
-  // INITIALIZATION - go to the nearest point
+  // INITIALIZATION - go to the nearest point first
   //
   points.sort((a, b) => distance(path[0], b) - distance(path[0], a));
   path.push(points.pop());
 
-  // randomly sort points - this is the order they will be added
-  // to the path
-  points.sort(() => Math.random() - 0.5);
-
   while (points.length > 0) {
     //
-    // SELECTION - choose a next point randomly
+    // SELECTION - nearest point to the path
     //
-    const nextPoint = points.pop();
+    let [selectedDistance, selectedIdx] = [Infinity, null];
+    for (const [freePointIdx, freePoint] of points.entries()) {
+      for (const pathPoint of path) {
+        const dist = distance(freePoint, pathPoint);
+        if (dist < selectedDistance) {
+          [selectedDistance, selectedIdx] = [dist, freePointIdx];
+        }
+      }
+    }
+
+    // get the next point to add
+    const [nextPoint] = points.splice(selectedIdx, 1);
 
     //
-    // INSERTION -find the insertion spot that minimizes distance
+    // INSERTION - find the insertion spot that minimizes distance
     //
     let [bestCost, bestIdx] = [Infinity, null];
     for (let i = 1; i < path.length; i++) {

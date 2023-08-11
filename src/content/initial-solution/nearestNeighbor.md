@@ -1,5 +1,5 @@
 ---
-type: heuristic-construction
+type: initial-solution
 order: 1
 solverKey: nearestNeighbor
 friendlyName: Nearest Neighbor

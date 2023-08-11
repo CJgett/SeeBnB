@@ -1,5 +1,5 @@
 ---
-type: heuristic-improvement
+type: bounding-strategy 
 order: 1
 solverKey: twoOptInversion
 friendlyName: Two Opt Inversion

@@ -1,5 +1,5 @@
 ---
-type: heuristic-construction
+type: initial-solution
 order: 5
 solverKey: convexHull
 friendlyName: Convex Hull

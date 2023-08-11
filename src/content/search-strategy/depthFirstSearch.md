@@ -1,5 +1,5 @@
 ---
-type: exhaustive
+type: search-strategy 
 order: 1
 solverKey: depthFirstSearch
 friendlyName: Depth First Search (Brute Force)

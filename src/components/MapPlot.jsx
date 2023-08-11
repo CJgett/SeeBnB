@@ -27,7 +27,7 @@ export const MapPlot = React.forwardRef((props, ref) => {
     colorMode === "dark"
       ? "mapbox://styles/mapbox/dark-v8"
       : "mapbox://styles/mapbox/light-v8"
-  , []);
+  );
   const dispatch = useDispatch();
 
   useImperativeHandle(ref, () => ({

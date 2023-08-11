@@ -1,17 +1,15 @@
 import React from "react";
 import {
   Select,
-  ListSubheader,
-  MenuItem as SelectItem,
   Typography,
   Grid,
+  MenuItem as SelectItem,
   IconButton
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { MenuSection } from "./MenuSection";
-import { MenuHeader } from "./MenuHeader";
 import { MenuItem } from "./MenuItem";
 import { useAlgorithmInfo } from "../hooks";
 import * as actions from "../store/actions";
@@ -20,18 +18,25 @@ import * as selectors from "../store/selectors";
 export const MenuSolverControls = ({ onStop }) => {
   const dispatch = useDispatch();
   const algorithms = useAlgorithmInfo();
-  const selectedAlgorithm = useSelector(selectors.selectAlgorithm);
+  const selectedAlgorithmInitial = useSelector(selectors.selectInitialSolution);
+  const selectedAlgorithmSearch = useSelector(selectors.selectSearchStrategy);
+  const selectedAlgorithmBounding = useSelector(selectors.selectBoundingStrategy);
   const running = useSelector(selectors.selectRunning);
   const paused = useSelector(selectors.selectPaused);
   const definingPoints = useSelector(selectors.selectDefiningPoints);
 
-  const onAlgorithmChange = event => {
+  function onAlgorithmChange(event, algorithmType) {
     event.persist();
     onStop();
     const solverKey = event.target.value;
     const { defaults } = algorithms.find(alg => alg.solverKey === solverKey);
-    dispatch(actions.setAlgorithm(solverKey, defaults));
-  };
+    if(algorithmType === "initial-solution") 
+      dispatch(actions.setInitialSolution(solverKey, defaults));
+    else if (algorithmType === "search-strategy") 
+      dispatch(actions.setSearchStrategy(solverKey, defaults));
+    else 
+      dispatch(actions.setBoundingStrategy(solverKey, defaults));
+  }
 
   const onShowAlgInfo = () => {
     dispatch(actions.toggleAlgInfoOpen());
@@ -44,37 +49,22 @@ export const MenuSolverControls = ({ onStop }) => {
           <Grid container alignItems="center">
             <Grid item xs={11}>
               <Select
-                value={selectedAlgorithm}
-                onChange={onAlgorithmChange}
+                value={selectedAlgorithmInitial}
+                onChange={e => {
+                  onAlgorithmChange(e, "initial-solution");
+                }}
                 disabled={running || paused || definingPoints}
                 variant="outlined"
                 fullWidth
                 margin="dense"
               >
-                <ListSubheader>Heuristic Construction</ListSubheader>
                 {algorithms
-                  .filter(alg => alg.type === "heuristic-construction")
-                  .map(alg => (
-                    <SelectItem value={alg.solverKey} key={alg.solverKey}>
-                      {alg.friendlyName}
-                    </SelectItem>
-                  ))}
-                <ListSubheader>Heuristic Improvement</ListSubheader>
-                {algorithms
-                  .filter(alg => alg.type === "heuristic-improvement")
-                  .map(alg => (
-                    <SelectItem value={alg.solverKey} key={alg.solverKey}>
-                      {alg.friendlyName}
-                    </SelectItem>
-                  ))}
-                <ListSubheader>Exhaustive</ListSubheader>
-                {algorithms
-                  .filter(alg => alg.type === "exhaustive")
-                  .map(alg => (
-                    <SelectItem value={alg.solverKey} key={alg.solverKey}>
-                      {alg.friendlyName}
-                    </SelectItem>
-                  ))}
+                .filter(alg => alg.type === "initial-solution")
+                .map(alg => (
+                  <SelectItem value={alg.solverKey} key={alg.solverKey}>
+                    {alg.friendlyName}
+                  </SelectItem>
+                ))}
               </Select>
             </Grid>
             <Grid item xs={1}>
@@ -91,32 +81,17 @@ export const MenuSolverControls = ({ onStop }) => {
           <Grid container alignItems="center">
             <Grid item xs={11}>
               <Select
-                value={selectedAlgorithm}
-                onChange={onAlgorithmChange}
+                value={selectedAlgorithmSearch}
+                onChange={e => {
+                  onAlgorithmChange(e, "search-strategy");
+                }}
                 disabled={running || paused || definingPoints}
                 variant="outlined"
                 fullWidth
                 margin="dense"
               >
-                <ListSubheader>Heuristic Construction</ListSubheader>
                 {algorithms
-                  .filter(alg => alg.type === "heuristic-construction")
-                  .map(alg => (
-                    <SelectItem value={alg.solverKey} key={alg.solverKey}>
-                      {alg.friendlyName}
-                    </SelectItem>
-                  ))}
-                <ListSubheader>Heuristic Improvement</ListSubheader>
-                {algorithms
-                  .filter(alg => alg.type === "heuristic-improvement")
-                  .map(alg => (
-                    <SelectItem value={alg.solverKey} key={alg.solverKey}>
-                      {alg.friendlyName}
-                    </SelectItem>
-                  ))}
-                <ListSubheader>Exhaustive</ListSubheader>
-                {algorithms
-                  .filter(alg => alg.type === "exhaustive")
+                  .filter(alg => alg.type === "search-strategy")
                   .map(alg => (
                     <SelectItem value={alg.solverKey} key={alg.solverKey}>
                       {alg.friendlyName}
@@ -138,32 +113,17 @@ export const MenuSolverControls = ({ onStop }) => {
           <Grid container alignItems="center">
             <Grid item xs={11}>
               <Select
-                value={selectedAlgorithm}
-                onChange={onAlgorithmChange}
+                value={selectedAlgorithmBounding}
+                onChange={e => {
+                  onAlgorithmChange(e, "bounding-strategy");
+                }}
                 disabled={running || paused || definingPoints}
                 variant="outlined"
                 fullWidth
                 margin="dense"
               >
-                <ListSubheader>Heuristic Construction</ListSubheader>
                 {algorithms
-                  .filter(alg => alg.type === "heuristic-construction")
-                  .map(alg => (
-                    <SelectItem value={alg.solverKey} key={alg.solverKey}>
-                      {alg.friendlyName}
-                    </SelectItem>
-                  ))}
-                <ListSubheader>Heuristic Improvement</ListSubheader>
-                {algorithms
-                  .filter(alg => alg.type === "heuristic-improvement")
-                  .map(alg => (
-                    <SelectItem value={alg.solverKey} key={alg.solverKey}>
-                      {alg.friendlyName}
-                    </SelectItem>
-                  ))}
-                <ListSubheader>Exhaustive</ListSubheader>
-                {algorithms
-                  .filter(alg => alg.type === "exhaustive")
+                  .filter(alg => alg.type === "bounding-strategy")
                   .map(alg => (
                     <SelectItem value={alg.solverKey} key={alg.solverKey}>
                       {alg.friendlyName}

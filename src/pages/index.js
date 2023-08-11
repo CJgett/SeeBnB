@@ -15,7 +15,7 @@ import {
   Menu,
   SEO,
 } from "../components";
-import { useSolverWorker, useAlgorithmInfo } from "../hooks";
+import { useSolverWorker } from "../hooks";
 import * as selectors from "../store/selectors";
 import * as actions from "../store/actions";
 
@@ -24,7 +24,6 @@ const IndexPage = () => {
   const dispatch = useDispatch();
 
   const algorithm = useSelector(selectors.selectAlgorithm);
-  const algorithmInfo = useAlgorithmInfo();
   const delay = useSelector(selectors.selectDelay);
   const evaluatingDetailLevel = useSelector(
     selectors.selectEvaluatingDetailLevel
@@ -84,14 +83,9 @@ const IndexPage = () => {
     solver.postMessage(actions.setEvaluatingDetailLevel(evaluatingDetailLevel));
   }, [evaluatingDetailLevel, solver]);
 
-  const algTitle = useMemo(() => {
-    const alg = algorithmInfo.find(alg => alg.solverKey === algorithm);
-    return alg.friendlyName;
-  }, [algorithm, algorithmInfo]);
-
   return (
     <Layout>
-      <SEO subtitle={algTitle} />
+      <SEO />
       <IntroductionModal />
       <AlgorithmModals />
       <Menu

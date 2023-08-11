@@ -1,5 +1,5 @@
 ---
-type: heuristic-construction
+type: initial-solution
 order: 6
 solverKey: simulatedAnnealing
 friendlyName: Simulated Annealing

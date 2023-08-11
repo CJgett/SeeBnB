@@ -43,7 +43,7 @@ export const MenuHeader = props => {
         >
           <FontAwesomeIcon icon={faCodeBranch} flip="vertical" width="0" /> SeeBnB 
         </Typography>
-        <Typography gutterBottom display="inline" color="textSecondary">
+        <Typography gutterBottom component="span" display="inline" color="textSecondary">
           <Tooltip title="Source code">
             <IconButton
               target="_blank"

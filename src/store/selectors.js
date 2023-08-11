@@ -17,6 +17,12 @@ export const selectAlgInfoOpen = state => state.algInfoOpen;
 //
 export const selectAlgorithm = state => state.algorithm;
 
+export const selectInitialSolution = state => state.initialSolution;
+
+export const selectSearchStrategy = state => state.searchStrategy;
+
+export const selectBoundingStrategy = state => state.boundingStrategy;
+
 export const selectDelay = state => state.delay;
 
 export const selectEvaluatingDetailLevel = state => state.evaluatingDetailLevel;

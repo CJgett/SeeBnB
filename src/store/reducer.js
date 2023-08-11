@@ -46,6 +46,9 @@ const vacationViewport = {
 const initialState = {
   points: gerTop5,
   viewport: initialViewport,
+  initialSolution: "nearestNeighbor",
+  searchStrategy: "depthFirstSearch",
+  boundingStrategy: "twoOptInversion",
   algorithm: "branchAndBoundOnCost",
   instance: "gerTop5",
   delay: 25,
@@ -129,6 +132,30 @@ export default (state = initialState, action) => {
     //
     // SOLVER CONTROLS
     //
+
+
+
+    case actions.SET_INITIAL_SOLUTION:
+      return {
+        ...state,
+        ...action.defaults,
+        initialSolution: action.initialSolution
+      };
+
+    case actions.SET_SEARCH_STRATEGY:
+      return {
+        ...state,
+        ...action.defaults,
+        searchStrategy: action.searchStrategy
+      };
+
+    case actions.SET_BOUNDING_STRATEGY:
+      return {
+        ...state,
+        ...action.defaults,
+        boundingStrategy: action.boundingStrategy
+      };
+
     case actions.SET_ALGORITHM:
       return {
         ...state,

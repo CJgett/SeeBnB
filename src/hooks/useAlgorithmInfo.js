@@ -10,9 +10,9 @@ export const useAlgorithmInfo = () => {
           frontmatter: {
             type: {
               in: [
-                "exhaustive"
-                "heuristic-construction"
-                "heuristic-improvement"
+                "initial-solution"
+                "search-strategy"
+                "bounding-strategy"
               ]
             }
           }

@@ -4,6 +4,10 @@ export const SET_VIEWPORT_STATE = "SET_VIEWPORT_STATE";
 export const RESET_EVALUATING_STATE = "RESET_EVALUATING_STATE";
 export const RESET_BEST_PATH_STATE = "RESET_BEST_PATH_STATE";
 
+
+export const SET_INITIAL_SOLUTION = "SET_INITIAL_SOLUTION";
+export const SET_SEARCH_STRATEGY = "SET_SEARCH_STRATEGY";
+export const SET_BOUNDING_STRATEGY = "SET_BOUNDING_STRATEGY";
 export const SET_ALGORITHM = "SET_ALGORITHM";
 export const SET_DELAY = "SET_DELAY";
 export const SET_EVALUATING_DETAIL_LEVEL = "SET_EVALUATING_DETAIL_LEVEL";
@@ -60,6 +64,24 @@ const resetBestPathStateAction = () => ({
   type: RESET_BEST_PATH_STATE
 });
 
+const setInitialSolutionAction = (initialSolution, defaults) => ({
+  type: SET_INITIAL_SOLUTION,
+  initialSolution,
+  defaults
+});
+
+const setSearchStrategyAction = (searchStrategy, defaults) => ({
+  type: SET_SEARCH_STRATEGY,
+  searchStrategy,
+  defaults
+});
+
+const setBoundingStrategyAction = (boundingStrategy, defaults) => ({
+  type: SET_BOUNDING_STRATEGY,
+  boundingStrategy,
+  defaults
+});
+
 const setAlgorithmAction = (algorithm, defaults) => ({
   type: SET_ALGORITHM,
   algorithm,
@@ -81,6 +103,21 @@ export const stopSolvingAction = () => ({
 export const setAlgorithm = (algorithm, defaults = {}) => dispatch => {
   dispatch(resetEvaluatingStateAction());
   dispatch(setAlgorithmAction(algorithm, defaults));
+};
+
+export const setInitialSolution = (initialSolution, defaults = {}) => dispatch => {
+  dispatch(resetEvaluatingStateAction());
+  dispatch(setInitialSolutionAction(initialSolution, defaults));
+};
+
+export const setSearchStrategy = (searchStrategy, defaults = {}) => dispatch => {
+  dispatch(resetEvaluatingStateAction());
+  dispatch(setSearchStrategyAction(searchStrategy, defaults));
+};
+
+export const setBoundingStrategy = (boundingStrategy, defaults = {}) => dispatch => {
+  dispatch(resetEvaluatingStateAction());
+  dispatch(setBoundingStrategyAction(boundingStrategy, defaults));
 };
 
 export const setDelay = delay => ({
