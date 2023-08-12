@@ -38,9 +38,13 @@ export const MenuSolverControls = ({ onStop }) => {
       dispatch(actions.setBoundingStrategy(solverKey, defaults));
   }
 
-  const onShowAlgInfo = () => {
+  function setAlgorithmType(algorithmType) {
+    dispatch(actions.setAlgorithmType(algorithmType));
+  }
+
+  function onShowAlgInfo() {
     dispatch(actions.toggleAlgInfoOpen());
-  };
+  }
 
   return (
     <>
@@ -69,7 +73,10 @@ export const MenuSolverControls = ({ onStop }) => {
             </Grid>
             <Grid item xs={1}>
               <Typography align="right" color="textSecondary">
-                <IconButton edge="end" onClick={onShowAlgInfo}>
+                <IconButton edge="end" onClick={e => {
+                  setAlgorithmType("initial-solution");
+                  onShowAlgInfo();
+                }}>
                   <FontAwesomeIcon icon={faQuestion} size="xs" />
                 </IconButton>
               </Typography>
@@ -83,7 +90,7 @@ export const MenuSolverControls = ({ onStop }) => {
               <Select
                 value={selectedAlgorithmSearch}
                 onChange={e => {
-                  onAlgorithmChange(e, "search-strategy");
+                  onAlgorithmChange("search-strategy");
                 }}
                 disabled={running || paused || definingPoints}
                 variant="outlined"
@@ -101,7 +108,10 @@ export const MenuSolverControls = ({ onStop }) => {
             </Grid>
             <Grid item xs={1}>
               <Typography align="right" color="textSecondary">
-                <IconButton edge="end" onClick={onShowAlgInfo}>
+                <IconButton edge="end" onClick={e => {
+                  setAlgorithmType("search-strategy");
+                  onShowAlgInfo();
+                }}>
                   <FontAwesomeIcon icon={faQuestion} size="xs" />
                 </IconButton>
               </Typography>
@@ -133,7 +143,10 @@ export const MenuSolverControls = ({ onStop }) => {
             </Grid>
             <Grid item xs={1}>
               <Typography align="right" color="textSecondary">
-                <IconButton edge="end" onClick={onShowAlgInfo}>
+                <IconButton edge="end" onClick={e => {
+                  setAlgorithmType("bounding-strategy");
+                  onShowAlgInfo();
+                }}>
                   <FontAwesomeIcon icon={faQuestion} size="xs" />
                 </IconButton>
               </Typography>

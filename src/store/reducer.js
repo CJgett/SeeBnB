@@ -50,6 +50,7 @@ const initialState = {
   searchStrategy: "depthFirstSearch",
   boundingStrategy: "twoOptInversion",
   algorithm: "branchAndBoundOnCost",
+  algorithmType: "initial-solution",
   instance: "gerTop5",
   delay: 25,
   evaluatingDetailLevel: 2,
@@ -161,6 +162,12 @@ export default (state = initialState, action) => {
         ...state,
         ...action.defaults,
         algorithm: action.algorithm
+      };
+
+    case actions.SET_ALGORITHM_TYPE:
+      return {
+        ...state,
+        algorithmType: action.algorithmType
       };
 
     case actions.SET_DELAY:

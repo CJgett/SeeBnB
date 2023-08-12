@@ -9,6 +9,7 @@ export const SET_INITIAL_SOLUTION = "SET_INITIAL_SOLUTION";
 export const SET_SEARCH_STRATEGY = "SET_SEARCH_STRATEGY";
 export const SET_BOUNDING_STRATEGY = "SET_BOUNDING_STRATEGY";
 export const SET_ALGORITHM = "SET_ALGORITHM";
+export const SET_ALGORITHM_TYPE = "SET_ALGORITHM_TYPE";
 export const SET_DELAY = "SET_DELAY";
 export const SET_EVALUATING_DETAIL_LEVEL = "SET_EVALUATING_DETAIL_LEVEL";
 export const SET_SHOW_BEST_PATH = "SET_SHOW_BEST_PATH";
@@ -88,6 +89,12 @@ const setAlgorithmAction = (algorithm, defaults) => ({
   defaults
 });
 
+const setAlgorithmTypeAction = (algorithmType, defaults) => ({
+  type: SET_ALGORITHM_TYPE,
+  algorithmType,
+  defaults
+});
+
 export const startSolvingAction = (points, delay, evaluatingDetailLevel) => ({
   type: START_SOLVING,
   points,
@@ -105,7 +112,14 @@ export const setAlgorithm = (algorithm, defaults = {}) => dispatch => {
   dispatch(setAlgorithmAction(algorithm, defaults));
 };
 
+export const setAlgorithmType = (algorithmType) => dispatch => {
+  console.log("algorithmType set: " + algorithmType);
+  dispatch(resetEvaluatingStateAction());
+  dispatch(setAlgorithmTypeAction(algorithmType));
+};
+
 export const setInitialSolution = (initialSolution, defaults = {}) => dispatch => {
+  console.log("initial solution set: " + initialSolution);
   dispatch(resetEvaluatingStateAction());
   dispatch(setInitialSolutionAction(initialSolution, defaults));
 };
