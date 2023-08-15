@@ -41,13 +41,6 @@ const IndexPage = () => {
     }
   }, [mapRef, dispatch, pointCount, definingPoints]);
 
-  const step = useCallback(() => {
-    dispatch(actions.startSolving(points, delay, evaluatingDetailLevel));
-    solver.postMessage(
-      actions.startSolvingAction(points, delay, evaluatingDetailLevel)
-    );
-  }, [solver, dispatch, delay, points, evaluatingDetailLevel]);
-
   const start = useCallback(() => {
     dispatch(actions.startSolving(points, delay, evaluatingDetailLevel));
     solver.postMessage(
@@ -89,7 +82,6 @@ const IndexPage = () => {
       <IntroductionModal />
       <AlgorithmModals />
       <Menu
-        onStep={step}
         onStart={start}
         onPause={pause}
         onUnPause={unpause}

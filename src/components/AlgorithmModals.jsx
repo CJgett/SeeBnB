@@ -17,7 +17,6 @@ export const AlgorithmModals = props => {
   const open = useSelector(selectors.selectAlgInfoOpen);
 
   function selectedAlgorithm() {
-    console.log(selectedAlgorithmType);
     if (selectedAlgorithmType === "initial-solution")
       return selectedInitialSolution; 
     else if (selectedAlgorithmType === "search-strategy")

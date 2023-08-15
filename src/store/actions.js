@@ -113,13 +113,11 @@ export const setAlgorithm = (algorithm, defaults = {}) => dispatch => {
 };
 
 export const setAlgorithmType = (algorithmType) => dispatch => {
-  console.log("algorithmType set: " + algorithmType);
   dispatch(resetEvaluatingStateAction());
   dispatch(setAlgorithmTypeAction(algorithmType));
 };
 
 export const setInitialSolution = (initialSolution, defaults = {}) => dispatch => {
-  console.log("initial solution set: " + initialSolution);
   dispatch(resetEvaluatingStateAction());
   dispatch(setInitialSolutionAction(initialSolution, defaults));
 };
@@ -156,10 +154,10 @@ export const resetSolverState = () => dispatch => {
 };
 
 export const startSolving = (...args) => (dispatch, getState) => {
-  const { algorithm, pointCount } = getState();
+  const { initialSolution, pointCount } = getState();
   gtmEmit({
     event: "start-solving",
-    algorithm,
+    initialSolution,
     pointCount
   });
   dispatch(resetEvaluatingStateAction());
@@ -266,7 +264,6 @@ export const setDefaultMap = (...args) => dispatch => {
 };
 
 export const setDropdownMap = (instance) => dispatch => {
-  console.log(instance);
   dispatch(resetSolverState());
   dispatch(setDropdownMapAction(instance));
 };

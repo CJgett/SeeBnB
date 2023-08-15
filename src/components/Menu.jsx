@@ -47,7 +47,14 @@ export const Menu = ({
         onStop={onStop}
         onFullSpeed={onFullSpeed}
       />
-      <MenuRunControls />
+      <MenuRunControls 
+        onStep={onStep}
+        onStart={onStart}
+        onPause={onPause}
+        onUnPause={onUnPause}
+        onStop={onStop}
+        onFullSpeed={onFullSpeed}
+      />
       <Divider />
       <MenuPointControls onRandomizePoints={onRandomizePoints} />
     </Paper>

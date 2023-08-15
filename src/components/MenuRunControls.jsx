@@ -59,7 +59,9 @@ export const MenuRunControls = ({
             </Button>
 
             <Button
-              onClick={paused ? onUnPause : running ? onPause : onStart}
+              onClick={e => {
+                paused ? onUnPause() : running ? onPause() : onStart();
+              }}
               disabled={definingPoints || fullSpeed}
             >
               <FontAwesomeIcon
