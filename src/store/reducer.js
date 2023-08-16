@@ -1,5 +1,6 @@
 import * as actions from "./actions";
 
+// define the instance options here 
 const gerTop5 = [
   [13.4105300,52.5243700],
   [10.0111,53.5242],
@@ -24,6 +25,7 @@ const vacationCircuit = [
   [126.59863805245867, 33.24363640858483],
 ];
 
+// define the map zoom and center here
 const initialViewport = {
   latitude: 51.1657,
   longitude: 10.4515,
@@ -43,6 +45,7 @@ const vacationViewport = {
 
 };
 
+// defaults
 const initialState = {
   points: gerTop5,
   viewport: initialViewport,
@@ -75,6 +78,7 @@ const initialState = {
   algInfoOpen: false
 };
 
+// map the string instance name to the coordinates, viewpoint
 let findInstance = (instance) => {
   if (instance === "grandmasRoute") 
     return grandmasRoute;
@@ -82,7 +86,6 @@ let findInstance = (instance) => {
     return vacationCircuit;
   else 
     return gerTop5;
- 
 };
 
 let findViewport = (instance) => {
@@ -92,7 +95,6 @@ let findViewport = (instance) => {
     return vacationViewport;
   else
     return initialViewport;
-
 };
 
 
@@ -133,9 +135,6 @@ export default (state = initialState, action) => {
     //
     // SOLVER CONTROLS
     //
-
-
-
     case actions.SET_INITIAL_SOLUTION:
       return {
         ...state,

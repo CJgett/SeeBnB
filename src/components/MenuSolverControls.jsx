@@ -28,6 +28,7 @@ export const MenuSolverControls = ({ onStop }) => {
   function onAlgorithmChange(event, algorithmType) {
     event.persist();
     onStop();
+    dispatch(actions.resetSolverState());
     const solverKey = event.target.value;
     const { defaults } = algorithms.find(alg => alg.solverKey === solverKey);
     if(algorithmType === "initial-solution") 
