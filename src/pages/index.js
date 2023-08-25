@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   AlgorithmModals,
   IntroductionModal,
+  InstanceModal,
   Layout,
   BottomMenu,
   MapPlot,
@@ -81,6 +82,7 @@ const IndexPage = () => {
       <SEO />
       <IntroductionModal />
       <AlgorithmModals />
+      <InstanceModal />
       <Menu
         onStart={start}
         onPause={pause}

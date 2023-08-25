@@ -32,6 +32,7 @@ export const SET_DROPDOWN_MAP = "SET_DROPDOWN_MAP";
 
 export const TOGGLE_SITE_INFO_OPEN = "TOGGLE_SITE_INFO_OPEN";
 export const TOGGLE_ALG_INFO_OPEN = "TOGGLE_ALG_INFO_OPEN";
+export const TOGGLE_INSTANCE_INFO_OPEN = "TOGGLE_INSTANCE_INFO_OPEN";
 
 const getRandomPoint = (max, min) => Math.random() * (max - min) + min;
 
@@ -44,6 +45,10 @@ export const toggleSiteInfoOpen = () => ({
 
 export const toggleAlgInfoOpen = () => ({
   type: TOGGLE_ALG_INFO_OPEN
+});
+
+export const toggleInstanceInfoOpen = () => ({
+  type: TOGGLE_INSTANCE_INFO_OPEN
 });
 
 //

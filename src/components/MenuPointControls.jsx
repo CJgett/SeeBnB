@@ -52,6 +52,8 @@ const possRoutes = n => {
   return cache[n - 1];
 };
 
+ 
+
 export const MenuPointControls = ({ onRandomizePoints }) => {
   const classes = useStyles();
   const [possiblePaths, setPossiblePaths] = useState("0");
@@ -65,6 +67,10 @@ export const MenuPointControls = ({ onRandomizePoints }) => {
   const onDefaultMap = () => {
     dispatch(actions.setDefaultMap());
   };
+  
+  function onShowInstanceInfo() {
+    dispatch(actions.toggleInstanceInfoOpen());
+  }
 
   const onInstanceChange = event => {
     event.persist();
@@ -119,7 +125,9 @@ export const MenuPointControls = ({ onRandomizePoints }) => {
 
           <Grid item xs={1}>
             <Typography align="right" color="textSecondary">
-              <IconButton edge="end" >
+              <IconButton edge="end" onClick={e => {
+                  onShowInstanceInfo();
+                }}>
                 <FontAwesomeIcon icon={faQuestion} size="xs" />
               </IconButton>
             </Typography>

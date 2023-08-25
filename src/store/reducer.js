@@ -111,6 +111,12 @@ export default (state = initialState, action) => {
         ...state,
         algInfoOpen: !state.algInfoOpen
       };
+   
+    case actions.TOGGLE_INSTANCE_INFO_OPEN:
+      return {
+        ...state,
+        instanceInfoOpen: !state.instanceInfoOpen
+      };
 
     case actions.SET_VIEWPORT_STATE:
       return {
