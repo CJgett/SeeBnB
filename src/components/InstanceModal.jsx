@@ -20,7 +20,7 @@ export const InstanceModal = props => {
   const points = useSelector(selectors.selectPoints);
   const distanceMatrix = calculateDistanceMatrix(points);
   const myStyle = {
-    paddingBottom: '20px', 
+    marginBottom: '20px', 
   };
 // create a 2D array and then fill it with the distances between each 
 // destination. The distance from each point to itself is set to infinity
@@ -46,13 +46,13 @@ export const InstanceModal = props => {
   };
 
   return (
-    <div style={myStyle}>
+    <div>
         <InformationModal
           open={open}
           onClose={onClose}
         >
           <h1>Distance Matrix</h1>
-          <Table>
+          <Table style={myStyle}>
             <TableHead>
               <TableRow>
                 <TableCell>ID</TableCell>
