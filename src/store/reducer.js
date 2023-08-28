@@ -9,7 +9,7 @@ const gerTop5 = [
   [8.6850,50.1379],
 ];
 
-const grandmasRoute = [
+const hometownRoute = [
   [-86.15076793709714, 41.44841933102996],
   [-86.15805385600271, 41.66033526378252],
   [-86.25519626860176, 41.67574936825329],
@@ -32,7 +32,7 @@ const initialViewport = {
   zoom: 4
 };
 
-const grandmasViewport = {
+const hometownViewport = {
   latitude: 41.59592617614131,
   longitude: -86.12731473663396,
   zoom: 7, 
@@ -80,8 +80,8 @@ const initialState = {
 
 // map the string instance name to the coordinates, viewpoint
 let findInstance = (instance) => {
-  if (instance === "grandmasRoute") 
-    return grandmasRoute;
+  if (instance === "hometownRoute") 
+    return hometownRoute;
   else if (instance === "vacationCircuit")
     return vacationCircuit;
   else 
@@ -89,8 +89,8 @@ let findInstance = (instance) => {
 };
 
 let findViewport = (instance) => {
-  if (instance === "grandmasRoute") 
-    return grandmasViewport;
+  if (instance === "hometownRoute") 
+    return hometownViewport;
   else if (instance === "vacationCircuit")
     return vacationViewport;
   else
