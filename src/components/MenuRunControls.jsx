@@ -10,7 +10,6 @@ import {
   faStepForward,
   faPlay,
   faStop,
-  faRedo,
   faFastForward,
   faPause
 } from "@fortawesome/free-solid-svg-icons";
@@ -36,11 +35,6 @@ export const MenuRunControls = ({
 
   const onDelayChange = (_, newDelay) => {
     dispatch(actions.setDelay(newDelay));
-  };
-
-  const onReset = () => {
-    onStop();
-    dispatch(actions.resetSolverState());
   };
 
   return (
@@ -80,9 +74,6 @@ export const MenuRunControls = ({
               />
             </Button>
 
-            <Button onClick={onReset} disabled={running || definingPoints}>
-              <FontAwesomeIcon icon={faRedo} width="0" />
-            </Button>
           </ButtonGroup>
         </MenuItem>
         <MenuItem title="Delay">

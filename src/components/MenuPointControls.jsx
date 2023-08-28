@@ -74,10 +74,7 @@ export const MenuPointControls = ({ onRandomizePoints }) => {
 
   const onInstanceChange = event => {
     event.persist();
-    //onStop();
     const instance = event.target.value;
-    //const { defaults } = instance.find(alg => alg.solverKey === solverKey);
-    //dispatch(actions.setDefaultMap(solverKey, defaults));
     dispatch(actions.setDropdownMap(instance));
   };
 
@@ -172,7 +169,7 @@ export const MenuPointControls = ({ onRandomizePoints }) => {
           onChange={onPointCountChange}
           step={1}
           min={3}
-          max={200}
+          max={20}
           valueLabelDisplay="auto"
           color="secondary"
           disabled={running || definingPoints}
