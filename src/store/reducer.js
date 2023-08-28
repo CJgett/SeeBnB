@@ -99,6 +99,7 @@ let findViewport = (instance) => {
 
 
 export default (state = initialState, action) => {
+  console.log(action);
   switch (action.type) {
     case actions.TOGGLE_SITE_INFO_OPEN:
       return {
@@ -230,10 +231,7 @@ export default (state = initialState, action) => {
     case actions.STOP_SOLVING:
       return {
         ...state,
-        points:
-          state.bestPath.length > 0
-            ? state.bestPath.slice(0, state.bestPath.length - 1)
-            : state.points,
+        points: state.points,
         showBestPath: true,
         running: false,
         paused: false,
