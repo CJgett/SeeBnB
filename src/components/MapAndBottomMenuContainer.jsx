@@ -10,7 +10,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+
 export const MapAndBottomMenuContainer = ({ children }) => {
+
   const classes = useStyles();
 
   return <div className={classes.container}>{children}</div>;

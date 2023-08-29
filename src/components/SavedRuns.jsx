@@ -13,7 +13,10 @@ import { MenuItem } from "./MenuItem";
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles(theme => ({
-    flex: 1
+  wrapper: {
+    flex: "1",
+    overflow: "auto",
+  }
 }));
 
 const columns = [
