@@ -75,7 +75,8 @@ const initialState = {
   definingPoints: false,
 
   siteInfoOpen: false,
-  algInfoOpen: false
+  algInfoOpen: false,
+  instanceInfoOpen: false
 };
 
 // map the string instance name to the coordinates, viewpoint

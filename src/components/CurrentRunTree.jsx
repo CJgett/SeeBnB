@@ -15,7 +15,7 @@ export const CurrentRunTree = props => {
   return (
     <MenuSection>
       <MenuItem title="Current Run" row>
-        <Grid item container justify="space-between">
+        <Grid item container justifyContent="space-between">
           <Typography
             display="inline"
             variant="button"

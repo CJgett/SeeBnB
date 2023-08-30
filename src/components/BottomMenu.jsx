@@ -44,7 +44,6 @@ export const BottomMenu = () => {
     var posProp = "pageY";
     var sizeProp = "offsetHeight";
     var resizer = e.target;
-    console.log(resizer);
 
     var map = resizer.parentElement.previousElementSibling;
     var bottomMenu = resizer.nextElementSibling;
@@ -86,7 +85,6 @@ export const BottomMenu = () => {
       // Change cursor to signal a state's change: stop resizing.
       const html = document.querySelector('html');
       html.style.cursor = 'default';
-      console.log("mouse up");
 
       resizer.style.cursor = 'ns-resize';
       
@@ -101,7 +99,6 @@ export const BottomMenu = () => {
   
   
   function setupResizerEvents(event) {
-console.log("mousedown");
       // Used to avoid cursor's flickering
       const html = document.querySelector('html');
       

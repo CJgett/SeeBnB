@@ -108,8 +108,8 @@ export const MenuPointControls = ({ onRandomizePoints }) => {
               fullWidth
               margin="dense"
             >
-              <SelectItem value="grandmasRoute" key="grandmasRoute">
-                Grandma's Route 4
+              <SelectItem value="hometownRoute" key="hometownRoute">
+                Hometown Route 4
               </SelectItem>
               <SelectItem value="gerTop5" key="germany-top-5">
                 Germany Top 5
@@ -176,7 +176,7 @@ export const MenuPointControls = ({ onRandomizePoints }) => {
         />
       </MenuItem>
       <MenuItem row>
-        <Grid item container justify="space-between">
+        <Grid item container justifyContent="space-between">
           <Typography
             display="inline"
             variant="button"
