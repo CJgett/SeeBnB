@@ -35,6 +35,9 @@ const IndexPage = () => {
 
   const solver = useSolverWorker(dispatch, algorithm);
 
+  const paused = useSelector(selectors.selectPaused);
+  const stepping = useSelector(selectors.selectStepping);
+
   const onRandomizePoints = useCallback(() => {
     if (!definingPoints) {
       const bounds = mapRef.current.getBounds();
@@ -52,6 +55,24 @@ const IndexPage = () => {
   const fullSpeed = useCallback(() => {
     dispatch(actions.goFullSpeed());
     solver.postMessage(actions.goFullSpeed());
+  }, [solver, dispatch]);
+
+  // sets the stepping variable to true if not already so, then starts solving, or, if the solving process has already started, simply unpauses
+  const step = useCallback(() => {
+    if (!stepping) {
+      dispatch(actions.goStepByStep());
+      solver.postMessage(actions.goStepByStep());
+    }
+    if (!paused) {
+      start();
+    } else {
+      unpause(); 
+    }
+  }, [solver, dispatch, start, paused]);
+
+  const stopStep = useCallback(() => {
+    dispatch(actions.stopStepping());
+    solver.postMessage(actions.stopStepping());
   }, [solver, dispatch]);
 
   const pause = useCallback(() => {
@@ -88,6 +109,8 @@ const IndexPage = () => {
         onPause={pause}
         onUnPause={unpause}
         onFullSpeed={fullSpeed}
+        onStep={step}
+        onStopStep={stopStep}
         onStop={stop}
         onRandomizePoints={onRandomizePoints}
       />

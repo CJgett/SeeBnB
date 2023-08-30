@@ -13,6 +13,7 @@ export const makeSolver = solver => {
     detailLevel: 0,
     delay: 10,
     fullSpeed: false,
+    stepping: true,
     paused: false
   };
 
@@ -41,6 +42,10 @@ export const makeSolver = solver => {
   };
 
   self.sleep = async () => {
+    if (self.solverConfig.stepping) {
+      self.postMessage(actions.pause());
+      self.solverConfig.paused = true;
+    }
     if (self.solverConfig.paused) {
       return await self.waitPause();
     }
@@ -58,6 +63,7 @@ export const makeSolver = solver => {
         self.solverConfig.delay = action.delay;
         self.solverConfig.detailLevel = action.evaluatingDetailLevel;
         self.solverConfig.fullSpeed = action.fullSpeed;
+        self.solverConfig.stepping = true;
         run(action.points);
         break;
 
@@ -73,6 +79,13 @@ export const makeSolver = solver => {
         self.solverConfig.evaluatingDetailLevel = 0;
         self.solverConfig.fullSpeed = true;
         break;
+
+      case actions.GO_STEP_BY_STEP:
+        self.solverConfig.stepping = true;
+        break;
+
+      case actions.STOP_STEPPING:
+        self.solverConfig.stepping = false;
 
       case actions.PAUSE:
         self.solverConfig.paused = true;

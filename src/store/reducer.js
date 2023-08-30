@@ -69,6 +69,7 @@ const initialState = {
   running: false,
   fullSpeed: false,
   paused: false,
+  stepping: false,
   startedRunningAt: null,
 
   pointCount: gerTop5.length,
@@ -198,11 +199,13 @@ export default (state = initialState, action) => {
       };
 
     case actions.START_SOLVING:
+      console.log("stepping at START_SOLVING: " + state.stepping);
       return {
         ...state,
         showBestPath: false,
         running: true,
         startedRunningAt: Date.now(),
+        stepping: true,
         pointCount: state.points.length
       };
 
@@ -212,7 +215,19 @@ export default (state = initialState, action) => {
         showBestPath: true,
         evaluatingDetailLevel: 0,
         evaluatingPaths: [],
-        fullSpeed: true
+        fullSpeed: true,
+      };
+
+   case actions.GO_STEP_BY_STEP:
+      return {
+        ...state,
+        stepping: true
+      };
+
+    case actions.STOP_STEPPING:
+      return {
+        ...state,
+        stepping: false
       };
 
     case actions.PAUSE:
@@ -237,6 +252,7 @@ export default (state = initialState, action) => {
         running: false,
         paused: false,
         fullSpeed: false,
+        stepping: true,
         startedRunningAt: null
       };
 

@@ -15,6 +15,8 @@ export const SET_EVALUATING_DETAIL_LEVEL = "SET_EVALUATING_DETAIL_LEVEL";
 export const SET_SHOW_BEST_PATH = "SET_SHOW_BEST_PATH";
 export const START_SOLVING = "START_SOLVING";
 export const GO_FULL_SPEED = "GO_FULL_SPEED";
+export const GO_STEP_BY_STEP = "GO_STEP_BY_STEP";
+export const STOP_STEPPING = "STOP_STEPPING";
 export const PAUSE = "PAUSE";
 export const UNPAUSE = "UNPAUSE";
 export const STOP_SOLVING = "STOP_SOLVING";
@@ -105,7 +107,8 @@ export const startSolvingAction = (points, delay, evaluatingDetailLevel) => ({
   points,
   delay,
   evaluatingDetailLevel,
-  fullSpeed: false
+  fullSpeed: false,
+  stepping: false
 });
 
 export const stopSolvingAction = () => ({
@@ -171,6 +174,14 @@ export const startSolving = (...args) => (dispatch, getState) => {
 
 export const goFullSpeed = () => ({
   type: GO_FULL_SPEED
+});
+
+export const goStepByStep = () => ({
+  type: GO_STEP_BY_STEP
+});
+
+export const stopStepping = () => ({
+  type: STOP_STEPPING
 });
 
 export const pause = () => ({

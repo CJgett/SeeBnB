@@ -19,23 +19,42 @@ import * as actions from "../store/actions";
 import * as selectors from "../store/selectors";
 
 export const MenuRunControls = ({
-  onStep,
   onStart,
   onPause,
   onUnPause,
   onFullSpeed,
+  onStep,
+  onStopStep,
   onStop
 }) => {
   const dispatch = useDispatch();
   const delay = useSelector(selectors.selectDelay);
   const running = useSelector(selectors.selectRunning);
   const fullSpeed = useSelector(selectors.selectFullSpeed);
+  const stepping = useSelector(selectors.selectStepping);
   const paused = useSelector(selectors.selectPaused);
   const definingPoints = useSelector(selectors.selectDefiningPoints);
 
   const onDelayChange = (_, newDelay) => {
     dispatch(actions.setDelay(newDelay));
   };
+
+  // use function when play button is pressed, start solving without stepping
+  function stopStepThenStart() {
+    console.log("stopthenstart");
+    if (stepping) {
+      onStopStep();
+      onUnPause();
+    } else 
+      onStart();
+  }
+
+  function stopStepThenUnPause() {
+    console.log("stopthenunpause");
+    if (stepping) 
+      onStopStep();
+    onUnPause();
+  }
 
   return (
     <>
@@ -54,7 +73,7 @@ export const MenuRunControls = ({
 
             <Button
               onClick={e => {
-                paused ? onUnPause() : running ? onPause() : onStart();
+                paused ? stopStepThenUnPause() : running ? onPause() : stopStepThenStart();
               }}
               disabled={definingPoints || fullSpeed}
             >

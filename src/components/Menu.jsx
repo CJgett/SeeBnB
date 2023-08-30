@@ -24,11 +24,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const Menu = ({
-  onStep,
   onStart,
   onPause,
   onUnPause,
   onFullSpeed,
+  onStep,
+  onStopStep,
   onStop,
   onRandomizePoints
 }) => {
@@ -40,20 +41,22 @@ export const Menu = ({
       <Divider />
       <MenuMetrics />
       <MenuSolverControls
-        onStep={onStep}
         onStart={onStart}
         onPause={onPause}
         onUnPause={onUnPause}
         onStop={onStop}
         onFullSpeed={onFullSpeed}
+        onStep={onStep}
+        onStopStep={onStopStep}
       />
       <MenuRunControls 
-        onStep={onStep}
         onStart={onStart}
         onPause={onPause}
         onUnPause={onUnPause}
         onStop={onStop}
         onFullSpeed={onFullSpeed}
+        onStep={onStep}
+        onStopStep={onStopStep}
       />
       <Divider />
       <MenuPointControls onRandomizePoints={onRandomizePoints} />
