@@ -40,15 +40,7 @@ export const Menu = ({
       <MenuHeader />
       <Divider />
       <MenuMetrics />
-      <MenuSolverControls
-        onStart={onStart}
-        onPause={onPause}
-        onUnPause={onUnPause}
-        onStop={onStop}
-        onFullSpeed={onFullSpeed}
-        onStep={onStep}
-        onStopStep={onStopStep}
-      />
+      <MenuSolverControls />
       <MenuRunControls 
         onStart={onStart}
         onPause={onPause}

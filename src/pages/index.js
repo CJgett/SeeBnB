@@ -2,7 +2,7 @@ import React, {
   useRef,
   useEffect,
   useCallback,
-  useMemo
+  useMemo,
 } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -32,11 +32,10 @@ const IndexPage = () => {
   const points = useSelector(selectors.selectPoints);
   const pointCount = useSelector(selectors.selectPointCount);
   const definingPoints = useSelector(selectors.selectDefiningPoints);
-
+  const stepping = useSelector(selectors.selectStepping);
+  const paused = useSelector(selectors.selectPaused);
   const solver = useSolverWorker(dispatch, algorithm);
 
-  const paused = useSelector(selectors.selectPaused);
-  const stepping = useSelector(selectors.selectStepping);
 
   const onRandomizePoints = useCallback(() => {
     if (!definingPoints) {
@@ -46,33 +45,16 @@ const IndexPage = () => {
   }, [mapRef, dispatch, pointCount, definingPoints]);
 
   const start = useCallback(() => {
-    dispatch(actions.startSolving(points, delay, evaluatingDetailLevel));
+    console.log("started solving. Stepping: " + stepping);
+    dispatch(actions.startSolving(points, delay, evaluatingDetailLevel, false));
     solver.postMessage(
-      actions.startSolvingAction(points, delay, evaluatingDetailLevel)
+      actions.startSolvingAction(points, delay, evaluatingDetailLevel, false)
     );
-  }, [solver, dispatch, delay, points, evaluatingDetailLevel]);
+  }, [solver, dispatch, delay, points, evaluatingDetailLevel ]);
 
   const fullSpeed = useCallback(() => {
     dispatch(actions.goFullSpeed());
     solver.postMessage(actions.goFullSpeed());
-  }, [solver, dispatch]);
-
-  // sets the stepping variable to true if not already so, then starts solving, or, if the solving process has already started, simply unpauses
-  const step = useCallback(() => {
-    if (!stepping) {
-      dispatch(actions.goStepByStep());
-      solver.postMessage(actions.goStepByStep());
-    }
-    if (!paused) {
-      start();
-    } else {
-      unpause(); 
-    }
-  }, [solver, dispatch, start, paused]);
-
-  const stopStep = useCallback(() => {
-    dispatch(actions.stopStepping());
-    solver.postMessage(actions.stopStepping());
   }, [solver, dispatch]);
 
   const pause = useCallback(() => {
@@ -85,10 +67,30 @@ const IndexPage = () => {
     solver.postMessage(actions.unpause());
   }, [solver, dispatch]);
 
+  const step = useCallback(() => {
+    dispatch(actions.goStepByStep());
+    solver.postMessage(actions.goStepByStep());
+    if (paused) 
+      unpause();
+    else {
+      dispatch(actions.startSolving(points, delay, evaluatingDetailLevel, true));
+      solver.postMessage(
+        actions.startSolvingAction(points, delay, evaluatingDetailLevel, true)
+      );
+    }
+  }, [solver, dispatch, stepping, start]);
+
+  const stopStep = useCallback(() => {
+    dispatch(actions.stopStepping());
+    solver.postMessage(actions.stopStepping());
+  }, [solver, dispatch]);
+
   const stop = useCallback(() => {
     dispatch(actions.stopSolving());
     solver.terminate();
   }, [solver, dispatch]);
+
+  
 
   useEffect(() => {
     solver.postMessage(actions.setDelay(delay));

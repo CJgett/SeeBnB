@@ -63,7 +63,8 @@ export const makeSolver = solver => {
         self.solverConfig.delay = action.delay;
         self.solverConfig.detailLevel = action.evaluatingDetailLevel;
         self.solverConfig.fullSpeed = action.fullSpeed;
-        self.solverConfig.stepping = true;
+        console.log("stepping in solver?: " + action.stepping);
+        self.solverConfig.stepping = action.stepping;
         run(action.points);
         break;
 

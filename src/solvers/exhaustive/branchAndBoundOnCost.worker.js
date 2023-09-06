@@ -12,10 +12,16 @@ const branchAndBoundOnCost = async (
   points,
   path = [],
   visited = null,
-  overallBest = Infinity
+  overallBest = Infinity,
+  //bestCostFromHeuristic = Infinity, 
+  //bestPathFromHeuristic = []
 ) => {
   if (visited === null) {
     // initial call
+    /*if (bestCostFromHeuristic != Infinity && bestPathFromHeuristic != []) {
+      points = bestPathFromHeuristic;
+      overallBest = bestCostFromHeuristic;
+    }*/
     path = [points.shift()];
     points = new Set(points);
     visited = new Set();

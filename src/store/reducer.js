@@ -101,7 +101,6 @@ let findViewport = (instance) => {
 
 
 export default (state = initialState, action) => {
-  console.log(action);
   switch (action.type) {
     case actions.TOGGLE_SITE_INFO_OPEN:
       return {
@@ -199,13 +198,12 @@ export default (state = initialState, action) => {
       };
 
     case actions.START_SOLVING:
-      console.log("stepping at START_SOLVING: " + state.stepping);
+      console.log("stepping at START_SOLVING: " + action.stepping);
       return {
         ...state,
         showBestPath: false,
         running: true,
         startedRunningAt: Date.now(),
-        stepping: true,
         pointCount: state.points.length
       };
 
@@ -219,6 +217,7 @@ export default (state = initialState, action) => {
       };
 
    case actions.GO_STEP_BY_STEP:
+      console.log("GO_STEP_BY_STEP reducer");
       return {
         ...state,
         stepping: true
@@ -252,7 +251,7 @@ export default (state = initialState, action) => {
         running: false,
         paused: false,
         fullSpeed: false,
-        stepping: true,
+        stepping: false,
         startedRunningAt: null
       };
 

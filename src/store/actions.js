@@ -102,13 +102,13 @@ const setAlgorithmTypeAction = (algorithmType, defaults) => ({
   defaults
 });
 
-export const startSolvingAction = (points, delay, evaluatingDetailLevel) => ({
+export const startSolvingAction = (points, delay, evaluatingDetailLevel, stepping) => ({
   type: START_SOLVING,
   points,
   delay,
   evaluatingDetailLevel,
   fullSpeed: false,
-  stepping: false
+  stepping
 });
 
 export const stopSolvingAction = () => ({
@@ -162,13 +162,13 @@ export const resetSolverState = () => dispatch => {
 };
 
 export const startSolving = (...args) => (dispatch, getState) => {
-  const { initialSolution, pointCount } = getState();
+  const { initialSolution, pointCount, algorithm } = getState();
   gtmEmit({
     event: "start-solving",
     initialSolution,
+    algorithm,
     pointCount
   });
-  dispatch(resetEvaluatingStateAction());
   dispatch(startSolvingAction(...args));
 };
 

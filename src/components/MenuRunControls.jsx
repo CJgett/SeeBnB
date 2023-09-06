@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   ButtonGroup,
   Button,
@@ -10,6 +10,7 @@ import {
   faStepForward,
   faPlay,
   faStop,
+  faRedo,
   faFastForward,
   faPause
 } from "@fortawesome/free-solid-svg-icons";
@@ -17,6 +18,7 @@ import { MenuSection } from "./MenuSection";
 import { MenuItem } from "./MenuItem";
 import * as actions from "../store/actions";
 import * as selectors from "../store/selectors";
+import { useAlgorithmInfo } from "../hooks";
 
 export const MenuRunControls = ({
   onStart,
@@ -35,31 +37,44 @@ export const MenuRunControls = ({
   const paused = useSelector(selectors.selectPaused);
   const definingPoints = useSelector(selectors.selectDefiningPoints);
 
+  const algorithms = useAlgorithmInfo();
+  const algorithm = useSelector(selectors.selectAlgorithm);
+  const initialSolutionAlg = useSelector(selectors.selectInitialSolution);
+  const searchAlg = useSelector(selectors.selectSearchStrategy);
+
+  useEffect(() => {
+    console.log("stepping value after goStep: " + stepping);
+  }, [stepping]);
+
   const onDelayChange = (_, newDelay) => {
     dispatch(actions.setDelay(newDelay));
   };
 
   // use function when play button is pressed, start solving without stepping
   function stopStepThenStart() {
-    console.log("stopthenstart");
     if (stepping) {
+      console.log("stopthenstart");
       onStopStep();
-      onUnPause();
-    } else 
-      onStart();
+    }
+    console.log("just start");
+    onStart();
   }
 
   function stopStepThenUnPause() {
-    console.log("stopthenunpause");
+    console.log("stopstepthenunpause");
     if (stepping) 
       onStopStep();
     onUnPause();
   }
+  
+  const onReset = () => {
+    onStop();
+    dispatch(actions.resetSolverState());
+  };
 
   return (
     <>
       <MenuSection>
-
         <MenuItem title="Controls">
           <ButtonGroup
             fullWidth
@@ -91,6 +106,10 @@ export const MenuRunControls = ({
                 icon={paused ? faStop : faFastForward}
                 width="0"
               />
+            </Button>
+
+            <Button onClick={onReset} disabled={(running && !fullSpeed) || definingPoints}>
+              <FontAwesomeIcon icon={faRedo} width="0" />
             </Button>
 
           </ButtonGroup>
