@@ -2,7 +2,6 @@ import React, {
   useRef,
   useEffect,
   useCallback,
-  useMemo,
 } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -16,7 +15,7 @@ import {
   Menu,
   SEO,
 } from "../components";
-import { useSolverWorker } from "../hooks";
+import { useSolverWorker, useAlgorithmInfo } from "../hooks";
 import * as selectors from "../store/selectors";
 import * as actions from "../store/actions";
 
@@ -24,18 +23,19 @@ const IndexPage = () => {
   const mapRef = useRef(null);
   const dispatch = useDispatch();
 
+  const algorithms = useAlgorithmInfo();
   const algorithm = useSelector(selectors.selectAlgorithm);
   const delay = useSelector(selectors.selectDelay);
-  const evaluatingDetailLevel = useSelector(
-    selectors.selectEvaluatingDetailLevel
-  );
   const points = useSelector(selectors.selectPoints);
   const pointCount = useSelector(selectors.selectPointCount);
+  const evaluatingDetailLevel = useSelector(selectors.selectEvaluatingDetailLevel);
   const definingPoints = useSelector(selectors.selectDefiningPoints);
-  const stepping = useSelector(selectors.selectStepping);
   const paused = useSelector(selectors.selectPaused);
+  const algorithmStage = useSelector(selectors.selectAlgorithmStage);
+  const initialSolution = useSelector(selectors.selectInitialSolution);
   const solver = useSolverWorker(dispatch, algorithm);
-
+  const heuristicSolver = useSolverWorker(dispatch, initialSolution);
+  let stepping = false;
 
   const onRandomizePoints = useCallback(() => {
     if (!definingPoints) {
@@ -44,13 +44,26 @@ const IndexPage = () => {
     }
   }, [mapRef, dispatch, pointCount, definingPoints]);
 
-  const start = useCallback(() => {
-    console.log("started solving. Stepping: " + stepping);
-    dispatch(actions.startSolving(points, delay, evaluatingDetailLevel, false));
-    solver.postMessage(
-      actions.startSolvingAction(points, delay, evaluatingDetailLevel, false)
-    );
-  }, [solver, dispatch, delay, points, evaluatingDetailLevel ]);
+  const handleRunHeuristic = useCallback(() => {
+    console.log("stepping: " + stepping);
+    dispatch(actions.startSolving(points, delay, evaluatingDetailLevel, stepping));
+    heuristicSolver.postMessage(actions.startSolvingAction(points, delay, evaluatingDetailLevel, stepping));
+    }, [heuristicSolver, dispatch, delay, points, stepping, evaluatingDetailLevel]);
+
+  const runBnB = useCallback((stepping) => {
+    console.log("initialSolution " + initialSolution);
+    const { defaults } = algorithms.find(alg => alg.solverKey === initialSolution);
+    dispatch(actions.setAlgorithm(initialSolution, defaults));
+    handleRunHeuristic(stepping); 
+
+  }, [dispatch, algorithms, handleRunHeuristic, initialSolution]);
+  
+  function start() {
+    stepping = false;
+    dispatch(actions.stopStepping());
+    dispatch(actions.setAlgorithmStage("initialSolution"));
+    runBnB(stepping);
+  }
 
   const fullSpeed = useCallback(() => {
     dispatch(actions.goFullSpeed());
@@ -59,46 +72,52 @@ const IndexPage = () => {
 
   const pause = useCallback(() => {
     dispatch(actions.pause());
-    solver.postMessage(actions.pause());
-  }, [solver, dispatch]);
+    heuristicSolver.postMessage(actions.pause());
+  }, [ dispatch, heuristicSolver]);
 
   const unpause = useCallback(() => {
     dispatch(actions.unpause());
-    solver.postMessage(actions.unpause());
-  }, [solver, dispatch]);
+    heuristicSolver.postMessage(actions.unpause());
+  }, [dispatch, heuristicSolver]);
 
-  const step = useCallback(() => {
+  function step() {
+    stepping = true;
     dispatch(actions.goStepByStep());
-    solver.postMessage(actions.goStepByStep());
+    stepWithCallback(stepping);
+  }
+  
+  function findCurrentSolver() {
+    console.log("algorithmStage " + algorithmStage);
+    if (algorithmStage === "initialSolution")
+      return heuristicSolver;
+    else 
+      return solver;
+  }
+    
+  const stepWithCallback  = useCallback((stepping) => {
+    heuristicSolver.postMessage(actions.goStepByStep());
     if (paused) 
       unpause();
     else {
-      dispatch(actions.startSolving(points, delay, evaluatingDetailLevel, true));
-      solver.postMessage(
-        actions.startSolvingAction(points, delay, evaluatingDetailLevel, true)
-      );
+      dispatch(actions.setAlgorithmStage("initialSolution"));
+      runBnB(stepping); 
     }
-  }, [solver, dispatch, stepping, start]);
-
-  const stopStep = useCallback(() => {
+  }, [heuristicSolver, dispatch, paused, unpause, runBnB]);
+  
+  function stopStep() {
+    stepping = false 
     dispatch(actions.stopStepping());
-    solver.postMessage(actions.stopStepping());
-  }, [solver, dispatch]);
+    heuristicSolver.postMessage(actions.stopStepping());
+  }
 
   const stop = useCallback(() => {
     dispatch(actions.stopSolving());
     solver.terminate();
   }, [solver, dispatch]);
 
-  
-
   useEffect(() => {
     solver.postMessage(actions.setDelay(delay));
   }, [delay, solver]);
-
-  useEffect(() => {
-    solver.postMessage(actions.setEvaluatingDetailLevel(evaluatingDetailLevel));
-  }, [evaluatingDetailLevel, solver]);
 
   return (
     <Layout>

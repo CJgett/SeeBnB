@@ -63,8 +63,8 @@ export const makeSolver = solver => {
         self.solverConfig.delay = action.delay;
         self.solverConfig.detailLevel = action.evaluatingDetailLevel;
         self.solverConfig.fullSpeed = action.fullSpeed;
-        console.log("stepping in solver?: " + action.stepping);
         self.solverConfig.stepping = action.stepping;
+        self.solverConfig.bestCostFromHeuristic = action.bestCost;
         run(action.points);
         break;
 
@@ -86,6 +86,7 @@ export const makeSolver = solver => {
         break;
 
       case actions.STOP_STEPPING:
+        console.log("told solver to stop stepping");
         self.solverConfig.stepping = false;
 
       case actions.PAUSE:

@@ -26,6 +26,8 @@ export const selectBoundingStrategy = state => state.boundingStrategy;
 
 export const selectAlgorithmType = state => state.algorithmType;
 
+export const selectAlgorithmStage = state => state.algorithmStage;
+
 export const selectDelay = state => state.delay;
 
 export const selectEvaluatingDetailLevel = state => state.evaluatingDetailLevel;

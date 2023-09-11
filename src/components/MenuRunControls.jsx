@@ -42,10 +42,6 @@ export const MenuRunControls = ({
   const initialSolutionAlg = useSelector(selectors.selectInitialSolution);
   const searchAlg = useSelector(selectors.selectSearchStrategy);
 
-  useEffect(() => {
-    console.log("stepping value after goStep: " + stepping);
-  }, [stepping]);
-
   const onDelayChange = (_, newDelay) => {
     dispatch(actions.setDelay(newDelay));
   };
@@ -53,20 +49,17 @@ export const MenuRunControls = ({
   // use function when play button is pressed, start solving without stepping
   function stopStepThenStart() {
     if (stepping) {
-      console.log("stopthenstart");
       onStopStep();
     }
-    console.log("just start");
     onStart();
   }
 
   function stopStepThenUnPause() {
-    console.log("stopstepthenunpause");
     if (stepping) 
       onStopStep();
     onUnPause();
   }
-  
+ 
   const onReset = () => {
     onStop();
     dispatch(actions.resetSolverState());

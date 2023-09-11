@@ -4,8 +4,8 @@ order: 6
 solverKey: simulatedAnnealing
 friendlyName: Simulated Annealing
 defaults:
-  evaluatingDetailLevel: 1
-  maxEvaluatingDetailLevel: 1
+  evaluatingDetailLevel: 1 
+  maxEvaluatingDetailLevel: 1 
 ---
 
 # Simulated Annealing

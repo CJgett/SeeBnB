@@ -12,16 +12,13 @@ const branchAndBoundOnCost = async (
   points,
   path = [],
   visited = null,
-  overallBest = Infinity,
-  //bestCostFromHeuristic = Infinity, 
-  //bestPathFromHeuristic = []
+  overallBest = Number.POSITIVE_INFINITY,
+  bestCostFromHeuristic, 
 ) => {
   if (visited === null) {
-    // initial call
-    /*if (bestCostFromHeuristic != Infinity && bestPathFromHeuristic != []) {
-      points = bestPathFromHeuristic;
+     // initial call
+    if (bestCostFromHeuristic !== Number.POSITIVE_INFINITY) 
       overallBest = bestCostFromHeuristic;
-    }*/
     path = [points.shift()];
     points = new Set(points);
     visited = new Set();
@@ -53,8 +50,6 @@ const branchAndBoundOnCost = async (
       }),
       2
     );
-    await self.sleep();
-
     return [null, null];
   }
 

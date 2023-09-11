@@ -4,8 +4,8 @@ order: 1
 solverKey: nearestNeighbor
 friendlyName: Nearest Neighbor
 defaults:
-  evaluatingDetailLevel: 1
-  maxEvaluatingDetailLevel: 1
+  evaluatingDetailLevel: 1 
+  maxEvaluatingDetailLevel: 1 
 ---
 
 # Nearest Neighbor

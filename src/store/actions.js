@@ -10,6 +10,7 @@ export const SET_SEARCH_STRATEGY = "SET_SEARCH_STRATEGY";
 export const SET_BOUNDING_STRATEGY = "SET_BOUNDING_STRATEGY";
 export const SET_ALGORITHM = "SET_ALGORITHM";
 export const SET_ALGORITHM_TYPE = "SET_ALGORITHM_TYPE";
+export const SET_ALGORITHM_STAGE = "SET_ALGORITHM_STAGE";
 export const SET_DELAY = "SET_DELAY";
 export const SET_EVALUATING_DETAIL_LEVEL = "SET_EVALUATING_DETAIL_LEVEL";
 export const SET_SHOW_BEST_PATH = "SET_SHOW_BEST_PATH";
@@ -102,13 +103,18 @@ const setAlgorithmTypeAction = (algorithmType, defaults) => ({
   defaults
 });
 
-export const startSolvingAction = (points, delay, evaluatingDetailLevel, stepping) => ({
+export const setAlgorithmStage = () => ({
+  type: SET_ALGORITHM_STAGE,
+});
+
+export const startSolvingAction = (points, delay, evaluatingDetailLevel, stepping, bestCostFromHeuristic) => ({
   type: START_SOLVING,
   points,
   delay,
-  evaluatingDetailLevel,
   fullSpeed: false,
-  stepping
+  evaluatingDetailLevel,
+  stepping,
+  bestCostFromHeuristic: Number.POSITIVE_INFINITY
 });
 
 export const stopSolvingAction = () => ({
@@ -162,12 +168,13 @@ export const resetSolverState = () => dispatch => {
 };
 
 export const startSolving = (...args) => (dispatch, getState) => {
-  const { initialSolution, pointCount, algorithm } = getState();
+  const { initialSolution, pointCount, algorithm, evaluatingDetailLevel } = getState();
   gtmEmit({
     event: "start-solving",
     initialSolution,
     algorithm,
-    pointCount
+    pointCount,
+    evaluatingDetailLevel
   });
   dispatch(startSolvingAction(...args));
 };
