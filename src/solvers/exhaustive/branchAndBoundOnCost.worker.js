@@ -10,31 +10,34 @@ import {
 
 const branchAndBoundOnCost = async (
   points,
+  bestCostFromHeuristic,
   path = [],
   visited = null,
-  overallBest = Number.POSITIVE_INFINITY,
-  bestCostFromHeuristic, 
+  overallBest = Number.POSITIVE_INFINITY
 ) => {
-  console.log("......");
+  console.log("points next");
+  console.log(points);
   if (visited === null) {
      // initial call
-    console.log(bestCostFromHeuristic);
-    if (bestCostFromHeuristic !== null && bestCostFromHeuristic !== undefined) 
+    if (bestCostFromHeuristic !== null && bestCostFromHeuristic !== undefined)
       overallBest = bestCostFromHeuristic;
+    console.log("overallBest: " + overallBest);
     path = [points.shift()];
     points = new Set(points);
     visited = new Set();
   }
-
+  console.log("visited next");
+  console.log(visited);
   // figure out which points are left
   const available = setDifference(points, visited);
+  console.log("available next");
+  console.log(available);
 
   // calculate the cost, from here, to go home
   const backToStart = [...path, path[0]];
   const cost = pathCost(backToStart);
 
   if (cost > overallBest) {
-    console.log("cost > overallBest");
     // we may not be done, but have already traveled further than the best path
     // no reason to continue
     self.setEvaluatingPaths(
@@ -58,7 +61,6 @@ const branchAndBoundOnCost = async (
 
   // still cheaper than the best, keep going deeper, and deeper, and deeper...
   else {
-    console.log("cost not > overallBest");
     self.setEvaluatingPaths(
       () => ({
         paths: [
@@ -76,11 +78,8 @@ const branchAndBoundOnCost = async (
       2
     );
   }
-  console.log("made it to before sleep");
 
   await self.sleep();
-
-  console.log("made it to after sleep");
 
   if (available.size === 0) {
     // at the end of the path, return where we're at
@@ -96,6 +95,8 @@ const branchAndBoundOnCost = async (
 
   // for every point yet to be visited along this path
   for (const p of available) {
+    console.log("p next");
+    console.log(p);
     // go to that point
     visited.add(p);
     path.push(p);
@@ -103,6 +104,7 @@ const branchAndBoundOnCost = async (
     // RECURSE - go through all the possible points from that point
     const [curCost, curPath] = await branchAndBoundOnCost(
       points,
+      bestCostFromHeuristic,
       path,
       visited,
       overallBest
@@ -112,9 +114,11 @@ const branchAndBoundOnCost = async (
     if (curCost && (!bestCost || curCost < bestCost)) {
       [bestCost, bestPath] = [curCost, curPath];
 
-      if (!overallBest || bestCost < overallBest) {
+      if (!overallBest || bestCost <= overallBest) {
         // found a new best complete path
-        overallBest = bestCost;
+        if (bestCost !== overallBest) {
+          overallBest = bestCost;
+        }
         self.setBestPath(bestPath, bestCost);
       }
     }

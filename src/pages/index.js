@@ -23,20 +23,22 @@ const IndexPage = () => {
   const mapRef = useRef(null);
   const dispatch = useDispatch();
 
-  const algorithms = useAlgorithmInfo();
-  const algorithm = useSelector(selectors.selectAlgorithm);
   const delay = useSelector(selectors.selectDelay);
   const points = useSelector(selectors.selectPoints);
   const pointCount = useSelector(selectors.selectPointCount);
   const evaluatingDetailLevel = useSelector(selectors.selectEvaluatingDetailLevel);
   const definingPoints = useSelector(selectors.selectDefiningPoints);
   const paused = useSelector(selectors.selectPaused);
+  
+  const algorithms = useAlgorithmInfo();
   const initialSolution = useSelector(selectors.selectInitialSolution);
   const bestCost = useSelector(selectors.selectBestCost);
   const isBranchAndBound = useSelector(selectors.selectAlgorithmStage);
   const branchAndBound = "branchAndBoundOnCost";
+
   const solver = useSolverWorker(dispatch, branchAndBound);
   const initialSolutionSolver = useSolverWorker(dispatch, initialSolution);
+
   let stepping = false;
 
   const onRandomizePoints = useCallback(() => {
@@ -50,11 +52,9 @@ const IndexPage = () => {
   const runBnB = useCallback((stepping) => {
     let { defaults } = {};
     let currentSolver = "";
-    console.log("stepping at start of runBnB: " + stepping);
     // find initial solution, as long as heuristic is not set to none and algorithmStage is not branch and bound
     if (initialSolution !== "none" && isBranchAndBound === false) {
       currentSolver = initialSolutionSolver;
-      console.log("made it to initialSolution");
       defaults = algorithms.find(alg => alg.solverKey === initialSolution);
       dispatch(actions.setAlgorithm(initialSolution, defaults));
       dispatch(actions.startSolving(points, delay, evaluatingDetailLevel, stepping, bestCost));
@@ -62,9 +62,7 @@ const IndexPage = () => {
     }
     else if (isBranchAndBound === true) { 
       currentSolver = solver;
-      console.log("algorithms at startBnB = " + algorithms);
-      // TODO change to bnb from initialSolution in next line!
-      defaults = algorithms.find(alg => alg.solverKey === initialSolution);
+      defaults = algorithms.find(alg => alg.solverKey === "branchAndBoundOnCost");
       dispatch(actions.setAlgorithm(branchAndBound, defaults));
       dispatch(actions.startSolving(points, delay, evaluatingDetailLevel, stepping, bestCost));
       currentSolver.postMessage(actions.startSolvingAction(points, delay, evaluatingDetailLevel, stepping, bestCost));
