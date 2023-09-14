@@ -53,6 +53,7 @@ const initialState = {
   searchStrategy: "depthFirstSearch",
   boundingStrategy: "twoOptInversion",
   algorithm: "branchAndBoundOnCost",
+  isBranchAndBound: false,
   algorithmType: "initial-solution",
   instance: "gerTop5",
   delay: 25,
@@ -181,7 +182,7 @@ export default (state = initialState, action) => {
     case actions.SET_ALGORITHM_STAGE:
       return {
         ...state,
-        algorithmStage: action.algorithmStage
+        isBranchAndBound: ((action.isBranchAndBound === "toggle") ? !state.isBranchAndBound : action.isBranchAndBound)
       };
 
     case actions.SET_DELAY:

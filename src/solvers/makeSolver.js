@@ -4,6 +4,7 @@ import * as actions from "../store/actions";
 const wrapSolver = solver => async (...args) => {
   await solver(...args);
   self.postMessage(actions.stopSolvingAction());
+  self.postMessage(actions.setAlgorithmStage("toggle"));
 };
 
 export const makeSolver = solver => {
@@ -14,6 +15,7 @@ export const makeSolver = solver => {
     delay: 10,
     fullSpeed: false,
     stepping: true,
+    bestCostFromHeuristic: Infinity,
     paused: false
   };
 
@@ -42,16 +44,23 @@ export const makeSolver = solver => {
   };
 
   self.sleep = async () => {
+    console.log("1");
     if (self.solverConfig.stepping) {
+      console.log("2");
       self.postMessage(actions.pause());
       self.solverConfig.paused = true;
     }
     if (self.solverConfig.paused) {
+      console.log("3");
+      console.log("isPaused here: " + self.solverConfig.paused);
       return await self.waitPause();
     }
+
+    console.log("4");
     const duration = self.solverConfig.fullSpeed
       ? 0
       : self.solverConfig.delay || 10;
+    console.log("5");
     return new Promise(resolve => {
       setTimeout(resolve, duration);
     });
@@ -64,7 +73,8 @@ export const makeSolver = solver => {
         self.solverConfig.detailLevel = action.evaluatingDetailLevel;
         self.solverConfig.fullSpeed = action.fullSpeed;
         self.solverConfig.stepping = action.stepping;
-        self.solverConfig.bestCostFromHeuristic = action.bestCost;
+        self.solverConfig.bestCostFromHeuristic = action.bestCostFromHeuristic;
+        self.solverConfig.paused = false;
         run(action.points);
         break;
 
@@ -86,14 +96,16 @@ export const makeSolver = solver => {
         break;
 
       case actions.STOP_STEPPING:
-        console.log("told solver to stop stepping");
+        console.log("stop_stepping noted by solver");
         self.solverConfig.stepping = false;
 
       case actions.PAUSE:
+        console.log("pause noted by solver");
         self.solverConfig.paused = true;
         break;
 
       case actions.UNPAUSE:
+        console.log("unpause noted by solver");
         self.solverConfig.paused = false;
         break;
 

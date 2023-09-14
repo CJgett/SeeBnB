@@ -31,10 +31,12 @@ const IndexPage = () => {
   const evaluatingDetailLevel = useSelector(selectors.selectEvaluatingDetailLevel);
   const definingPoints = useSelector(selectors.selectDefiningPoints);
   const paused = useSelector(selectors.selectPaused);
-  const algorithmStage = useSelector(selectors.selectAlgorithmStage);
   const initialSolution = useSelector(selectors.selectInitialSolution);
-  const solver = useSolverWorker(dispatch, algorithm);
-  const heuristicSolver = useSolverWorker(dispatch, initialSolution);
+  const bestCost = useSelector(selectors.selectBestCost);
+  const isBranchAndBound = useSelector(selectors.selectAlgorithmStage);
+  const branchAndBound = "branchAndBoundOnCost";
+  const solver = useSolverWorker(dispatch, branchAndBound);
+  const initialSolutionSolver = useSolverWorker(dispatch, initialSolution);
   let stepping = false;
 
   const onRandomizePoints = useCallback(() => {
@@ -44,80 +46,93 @@ const IndexPage = () => {
     }
   }, [mapRef, dispatch, pointCount, definingPoints]);
 
-  const handleRunHeuristic = useCallback(() => {
-    console.log("stepping: " + stepping);
-    dispatch(actions.startSolving(points, delay, evaluatingDetailLevel, stepping));
-    heuristicSolver.postMessage(actions.startSolvingAction(points, delay, evaluatingDetailLevel, stepping));
-    }, [heuristicSolver, dispatch, delay, points, stepping, evaluatingDetailLevel]);
-
+  // runs EITHER heuristic OR branchAndBound, based on whether or not algorithmStage isBranchAndBound
   const runBnB = useCallback((stepping) => {
-    console.log("initialSolution " + initialSolution);
-    const { defaults } = algorithms.find(alg => alg.solverKey === initialSolution);
-    dispatch(actions.setAlgorithm(initialSolution, defaults));
-    handleRunHeuristic(stepping); 
-
-  }, [dispatch, algorithms, handleRunHeuristic, initialSolution]);
+    let { defaults } = {};
+    let currentSolver = "";
+    console.log("stepping at start of runBnB: " + stepping);
+    // find initial solution, as long as heuristic is not set to none and algorithmStage is not branch and bound
+    if (initialSolution !== "none" && isBranchAndBound === false) {
+      currentSolver = initialSolutionSolver;
+      console.log("made it to initialSolution");
+      defaults = algorithms.find(alg => alg.solverKey === initialSolution);
+      dispatch(actions.setAlgorithm(initialSolution, defaults));
+      dispatch(actions.startSolving(points, delay, evaluatingDetailLevel, stepping, bestCost));
+      currentSolver.postMessage(actions.startSolvingAction(points, delay, evaluatingDetailLevel, stepping, bestCost));
+    }
+    else if (isBranchAndBound === true) { 
+      currentSolver = solver;
+      console.log("algorithms at startBnB = " + algorithms);
+      // TODO change to bnb from initialSolution in next line!
+      defaults = algorithms.find(alg => alg.solverKey === initialSolution);
+      dispatch(actions.setAlgorithm(branchAndBound, defaults));
+      dispatch(actions.startSolving(points, delay, evaluatingDetailLevel, stepping, bestCost));
+      currentSolver.postMessage(actions.startSolvingAction(points, delay, evaluatingDetailLevel, stepping, bestCost));
+    }
+  }, [dispatch, solver, initialSolutionSolver, algorithms, initialSolution, isBranchAndBound, bestCost, points, delay, evaluatingDetailLevel]);
   
   function start() {
     stepping = false;
-    dispatch(actions.stopStepping());
-    dispatch(actions.setAlgorithmStage("initialSolution"));
-    runBnB(stepping);
+    startWithCallback(stepping);
   }
+
+  const startWithCallback = useCallback((stepping) => {
+    dispatch(actions.stopStepping());
+    solver.postMessage(actions.stopStepping());
+    initialSolutionSolver.postMessage(actions.stopStepping());
+    runBnB(stepping);
+  }, [solver, initialSolutionSolver, dispatch, runBnB]);
 
   const fullSpeed = useCallback(() => {
     dispatch(actions.goFullSpeed());
     solver.postMessage(actions.goFullSpeed());
-  }, [solver, dispatch]);
+    initialSolutionSolver.postMessage(actions.goFullSpeed());
+  }, [solver, initialSolutionSolver, dispatch]);
 
   const pause = useCallback(() => {
     dispatch(actions.pause());
-    heuristicSolver.postMessage(actions.pause());
-  }, [ dispatch, heuristicSolver]);
+    solver.postMessage(actions.pause());
+    initialSolutionSolver.postMessage(actions.pause());
+  }, [dispatch, initialSolutionSolver, solver]);
 
   const unpause = useCallback(() => {
     dispatch(actions.unpause());
-    heuristicSolver.postMessage(actions.unpause());
-  }, [dispatch, heuristicSolver]);
+    solver.postMessage(actions.unpause());
+    initialSolutionSolver.postMessage(actions.unpause());
+  }, [dispatch, initialSolutionSolver, solver]);
 
   function step() {
     stepping = true;
-    dispatch(actions.goStepByStep());
     stepWithCallback(stepping);
-  }
-  
-  function findCurrentSolver() {
-    console.log("algorithmStage " + algorithmStage);
-    if (algorithmStage === "initialSolution")
-      return heuristicSolver;
-    else 
-      return solver;
   }
     
   const stepWithCallback  = useCallback((stepping) => {
-    heuristicSolver.postMessage(actions.goStepByStep());
-    if (paused) 
+    dispatch(actions.goStepByStep());
+    if (paused) {
+      solver.postMessage(actions.goStepByStep());
       unpause();
-    else {
-      dispatch(actions.setAlgorithmStage("initialSolution"));
-      runBnB(stepping); 
     }
-  }, [heuristicSolver, dispatch, paused, unpause, runBnB]);
+    else 
+      runBnB(stepping); 
+  }, [solver, dispatch, paused, unpause, runBnB]);
   
   function stopStep() {
     stepping = false 
     dispatch(actions.stopStepping());
-    heuristicSolver.postMessage(actions.stopStepping());
+    solver.postMessage(actions.stopStepping());
+    initialSolutionSolver.postMessage(actions.stopStepping());
   }
 
   const stop = useCallback(() => {
     dispatch(actions.stopSolving());
     solver.terminate();
-  }, [solver, dispatch]);
+    initialSolutionSolver.terminate();
+  }, [solver, dispatch, initialSolutionSolver]);
 
   useEffect(() => {
     solver.postMessage(actions.setDelay(delay));
-  }, [delay, solver]);
+    initialSolutionSolver.postMessage(actions.setDelay(delay));
+  }, [delay, solver, initialSolutionSolver]);
 
   return (
     <Layout>

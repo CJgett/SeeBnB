@@ -103,8 +103,10 @@ const setAlgorithmTypeAction = (algorithmType, defaults) => ({
   defaults
 });
 
-export const setAlgorithmStage = () => ({
+// this EITHER toggles based on what the current value is OR sets the stage to isBranchAndBound (boolean, when true, then run BranchAndBound, otherwise run heuristic)
+export const setAlgorithmStage = (isBranchAndBound) => ({
   type: SET_ALGORITHM_STAGE,
+  isBranchAndBound 
 });
 
 export const startSolvingAction = (points, delay, evaluatingDetailLevel, stepping, bestCostFromHeuristic) => ({
@@ -114,7 +116,7 @@ export const startSolvingAction = (points, delay, evaluatingDetailLevel, steppin
   fullSpeed: false,
   evaluatingDetailLevel,
   stepping,
-  bestCostFromHeuristic: Number.POSITIVE_INFINITY
+  bestCostFromHeuristic
 });
 
 export const stopSolvingAction = () => ({
@@ -165,16 +167,18 @@ export const resetSolverState = () => dispatch => {
   dispatch(stopSolving());
   dispatch(resetEvaluatingStateAction());
   dispatch(resetBestPathStateAction());
+  dispatch(setAlgorithmStage(false));
 };
 
 export const startSolving = (...args) => (dispatch, getState) => {
-  const { initialSolution, pointCount, algorithm, evaluatingDetailLevel } = getState();
+  const { initialSolution, pointCount, algorithm, evaluatingDetailLevel, bestCost } = getState();
   gtmEmit({
     event: "start-solving",
     initialSolution,
     algorithm,
     pointCount,
-    evaluatingDetailLevel
+    evaluatingDetailLevel,
+    bestCost
   });
   dispatch(startSolvingAction(...args));
 };

@@ -15,9 +15,11 @@ const branchAndBoundOnCost = async (
   overallBest = Number.POSITIVE_INFINITY,
   bestCostFromHeuristic, 
 ) => {
+  console.log("......");
   if (visited === null) {
      // initial call
-    if (bestCostFromHeuristic !== Number.POSITIVE_INFINITY) 
+    console.log(bestCostFromHeuristic);
+    if (bestCostFromHeuristic !== null && bestCostFromHeuristic !== undefined) 
       overallBest = bestCostFromHeuristic;
     path = [points.shift()];
     points = new Set(points);
@@ -32,6 +34,7 @@ const branchAndBoundOnCost = async (
   const cost = pathCost(backToStart);
 
   if (cost > overallBest) {
+    console.log("cost > overallBest");
     // we may not be done, but have already traveled further than the best path
     // no reason to continue
     self.setEvaluatingPaths(
@@ -55,6 +58,7 @@ const branchAndBoundOnCost = async (
 
   // still cheaper than the best, keep going deeper, and deeper, and deeper...
   else {
+    console.log("cost not > overallBest");
     self.setEvaluatingPaths(
       () => ({
         paths: [
@@ -72,8 +76,11 @@ const branchAndBoundOnCost = async (
       2
     );
   }
+  console.log("made it to before sleep");
 
   await self.sleep();
+
+  console.log("made it to after sleep");
 
   if (available.size === 0) {
     // at the end of the path, return where we're at

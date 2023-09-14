@@ -26,7 +26,7 @@ export const selectBoundingStrategy = state => state.boundingStrategy;
 
 export const selectAlgorithmType = state => state.algorithmType;
 
-export const selectAlgorithmStage = state => state.algorithmStage;
+export const selectAlgorithmStage = state => state.isBranchAndBound;
 
 export const selectDelay = state => state.delay;
 

@@ -21,7 +21,6 @@ export const useSolverWorker = (onSolverMessage, algorithm) => {
       solver.postMessage(data);
     }
   };
-
   return {
     postMessage,
     terminate: resetSolver
