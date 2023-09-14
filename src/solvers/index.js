@@ -3,6 +3,9 @@ import depthFirstSearch from "./search-strategy/depthFirstSearch.worker";
 import branchAndBoundOnCost from "./exhaustive/branchAndBoundOnCost.worker";
 import branchAndBoundOnCostAndCross from "./exhaustive/branchAndBoundOnCostAndCross.worker";
 
+
+import none from "./initial-solution/none.worker";
+import kruskal from "./initial-solution/kruskal.worker";
 import nearestNeighbor from "./initial-solution/nearestNeighbor.worker";
 import arbitraryInsertion from "./initial-solution/arbitraryInsertion.worker";
 import nearestInsertion from "./initial-solution/nearestInsertion.worker";
@@ -18,7 +21,9 @@ export default {
   depthFirstSearch,
   branchAndBoundOnCost,
   branchAndBoundOnCostAndCross,
-
+  
+  none,
+  kruskal,
   nearestNeighbor,
   arbitraryInsertion,
   furthestInsertion,

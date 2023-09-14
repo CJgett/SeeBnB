@@ -33,7 +33,10 @@ export const MenuSolverControls = ({ onStop }) => {
     const { defaults } = algorithms.find(alg => alg.solverKey === solverKey);
     if(algorithmType === "initial-solution") { 
       dispatch(actions.setInitialSolution(solverKey, defaults));
-      dispatch(actions.setAlgorithmStage(false));
+      if (solverKey === "none") 
+        dispatch(actions.setAlgorithmStage(true));
+      else 
+        dispatch(actions.setAlgorithmStage(false));
     }
     else if (algorithmType === "search-strategy") 
       dispatch(actions.setSearchStrategy(solverKey, defaults));

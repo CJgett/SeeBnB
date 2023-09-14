@@ -53,6 +53,9 @@ const IndexPage = () => {
     let { defaults } = {};
     let currentSolver = "";
     // find initial solution, as long as heuristic is not set to none and algorithmStage is not branch and bound
+    if (initialSolution === "none") {
+      dispatch(actions.setAlgorithmStage(true));
+    }
     if (initialSolution !== "none" && isBranchAndBound === false) {
       currentSolver = initialSolutionSolver;
       defaults = algorithms.find(alg => alg.solverKey === initialSolution);
@@ -60,7 +63,7 @@ const IndexPage = () => {
       dispatch(actions.startSolving(points, delay, evaluatingDetailLevel, stepping, bestCost));
       currentSolver.postMessage(actions.startSolvingAction(points, delay, evaluatingDetailLevel, stepping, bestCost));
     }
-    else if (isBranchAndBound === true) { 
+    else { 
       currentSolver = solver;
       defaults = algorithms.find(alg => alg.solverKey === "branchAndBoundOnCost");
       dispatch(actions.setAlgorithm(branchAndBound, defaults));

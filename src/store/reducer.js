@@ -49,11 +49,11 @@ const vacationViewport = {
 const initialState = {
   points: gerTop5,
   viewport: initialViewport,
-  initialSolution: "nearestNeighbor",
+  initialSolution: "none",
   searchStrategy: "depthFirstSearch",
   boundingStrategy: "twoOptInversion",
   algorithm: "branchAndBoundOnCost",
-  isBranchAndBound: false,
+  isBranchAndBound: true,
   algorithmType: "initial-solution",
   instance: "gerTop5",
   delay: 25,
