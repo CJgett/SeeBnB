@@ -1,8 +1,8 @@
 /* eslint-disable no-restricted-globals */
 import makeSolver from "../makeSolver";
 
-const lifo = async () => {
+const mlb = async () => {
   // placeholder worker
 };
 
-makeSolver(lifo);
+makeSolver(mlb);

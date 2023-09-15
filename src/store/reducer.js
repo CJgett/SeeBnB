@@ -50,7 +50,7 @@ const initialState = {
   points: gerTop5,
   viewport: initialViewport,
   initialSolution: "none",
-  searchStrategy: "depthFirstSearch",
+  searchStrategy: "lifo",
   boundingStrategy: "twoOptInversion",
   algorithm: "branchAndBoundOnCost",
   isBranchAndBound: true,

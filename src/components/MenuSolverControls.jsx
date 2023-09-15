@@ -96,7 +96,7 @@ export const MenuSolverControls = ({ onStop }) => {
               <Select
                 value={selectedAlgorithmSearch}
                 onChange={e => {
-                  onAlgorithmChange("search-strategy");
+                  onAlgorithmChange(e, "search-strategy");
                 }}
                 disabled={running || paused || definingPoints}
                 variant="outlined"
