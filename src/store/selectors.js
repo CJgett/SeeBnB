@@ -64,7 +64,8 @@ export const selectPoints = state => state.points;
 export const selectPointsDisplay = createSelector(selectPoints, points =>
   points.map((p, idx) => ({
     position: p,
-    color: idx === 0 ? START_POINT_COLOR : POINT_COLOR
+    color: idx === 0 ? START_POINT_COLOR : POINT_COLOR,
+    id: idx.toString() 
   }))
 );
 

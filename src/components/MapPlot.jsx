@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useMediaQuery } from "@material-ui/core";
 import MapGL from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import DeckGL, { ScatterplotLayer, PathLayer } from "deck.gl";
+import DeckGL, { ScatterplotLayer, PathLayer, TextLayer } from "deck.gl";
 import { LinearProgress } from "@material-ui/core";
 import * as actions from "../store/actions";
 import * as selectors from "../store/selectors";
@@ -55,6 +55,7 @@ export const MapPlot = React.forwardRef((props, ref) => {
   }, [matches, dispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onViewportChanged = viewport => {
+    console.log(plotPoints);
     dispatch(actions.setViewportState(viewport));
   };
 
@@ -96,6 +97,17 @@ export const MapPlot = React.forwardRef((props, ref) => {
           getFillColor={p => p.color}
           radiusMinPixels={6}
           raduisMaxPixels={8}
+        />
+        <TextLayer
+          id="text-layer"
+          data={plotPoints}
+          pickable={true}
+          getPosition={p => p.position}
+          getText={p => p.id}
+          getSize={14}
+          getAngle={0}
+          getTextAnchor={'middle'}
+          getAlignmentBaseline={'center'}
         />
       </DeckGL>
       {children}
