@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   ButtonGroup,
   Button,
@@ -18,7 +18,6 @@ import { MenuSection } from "./MenuSection";
 import { MenuItem } from "./MenuItem";
 import * as actions from "../store/actions";
 import * as selectors from "../store/selectors";
-import { useAlgorithmInfo } from "../hooks";
 
 export const MenuRunControls = ({
   onStart,
@@ -36,11 +35,6 @@ export const MenuRunControls = ({
   const stepping = useSelector(selectors.selectStepping);
   const paused = useSelector(selectors.selectPaused);
   const definingPoints = useSelector(selectors.selectDefiningPoints);
-
-  const algorithms = useAlgorithmInfo();
-  const algorithm = useSelector(selectors.selectAlgorithm);
-  const initialSolutionAlg = useSelector(selectors.selectInitialSolution);
-  const searchAlg = useSelector(selectors.selectSearchStrategy);
 
   const onDelayChange = (_, newDelay) => {
     dispatch(actions.setDelay(newDelay));
