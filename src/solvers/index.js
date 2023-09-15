@@ -13,6 +13,10 @@ import depthFirstSearch from "./search-strategy/depthFirstSearch.worker";
 import breadthFirstSearch from "./search-strategy/breadthFirstSearch.worker";
 import minimumLowerBound from "./search-strategy/minimumLowerBound.worker";
 
+import cheapestEdges from "./bounding-strategy/cheapestEdges.worker";
+import singleCycleTree from "./bounding-strategy/singleCycleTree.worker";
+import singleCycleTreeWithAscent from "./bounding-strategy/singleCycleTreeWithAscent.worker";
+
 export default {
   branchAndBoundOnCost,
   
@@ -28,4 +32,8 @@ export default {
   depthFirstSearch,
   breadthFirstSearch,
   minimumLowerBound,
+
+  cheapestEdges,
+  singleCycleTree,
+  singleCycleTreeWithAscent,
 };

@@ -51,7 +51,7 @@ const initialState = {
   viewport: initialViewport,
   initialSolution: "none",
   searchStrategy: "lifo",
-  boundingStrategy: "twoOptInversion",
+  boundingStrategy: "cheapestEdges",
   algorithm: "branchAndBoundOnCost",
   isBranchAndBound: true,
   algorithmType: "initial-solution",
