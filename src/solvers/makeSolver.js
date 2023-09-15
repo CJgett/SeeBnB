@@ -63,13 +63,14 @@ export const makeSolver = solver => {
   self.onmessage = async ({ data: action }) => {
     switch (action.type) {
       case actions.START_SOLVING:
+        console.log("started solving");
         self.solverConfig.delay = action.delay;
         self.solverConfig.detailLevel = action.evaluatingDetailLevel;
         self.solverConfig.fullSpeed = action.fullSpeed;
         self.solverConfig.stepping = action.stepping;
         self.solverConfig.bestCostFromHeuristic = action.bestCostFromHeuristic;
         self.solverConfig.paused = false;
-        run(action.points, action.bestCostFromHeuristic);
+        run(action.points, action.bestCostFromHeuristic, action.searchStrategy, action.boundingStrategy);
         break;
 
       case actions.SET_DELAY:
@@ -85,7 +86,7 @@ export const makeSolver = solver => {
         self.solverConfig.fullSpeed = true;
         break;
 
-      case actions.GO_STEP_BY_STEP:
+    case actions.GO_STEP_BY_STEP:
         self.solverConfig.stepping = true;
         break;
 

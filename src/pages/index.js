@@ -35,6 +35,8 @@ const IndexPage = () => {
   const bestCost = useSelector(selectors.selectBestCost);
   const isBranchAndBound = useSelector(selectors.selectAlgorithmStage);
   const branchAndBound = "branchAndBoundOnCost";
+  const searchStrategy = useSelector(selectors.selectSearchStrategy);
+  const boundingStrategy = useSelector(selectors.selectBoundingStrategy);
 
   const solver = useSolverWorker(dispatch, branchAndBound);
   const initialSolutionSolver = useSolverWorker(dispatch, initialSolution);
@@ -60,17 +62,17 @@ const IndexPage = () => {
       currentSolver = initialSolutionSolver;
       defaults = algorithms.find(alg => alg.solverKey === initialSolution);
       dispatch(actions.setAlgorithm(initialSolution, defaults));
-      dispatch(actions.startSolving(points, delay, evaluatingDetailLevel, stepping, bestCost));
-      currentSolver.postMessage(actions.startSolvingAction(points, delay, evaluatingDetailLevel, stepping, bestCost));
+      dispatch(actions.startSolving(points, delay, evaluatingDetailLevel, stepping));
+      currentSolver.postMessage(actions.startSolvingAction(points, delay, evaluatingDetailLevel, stepping));
     }
     else { 
       currentSolver = solver;
       defaults = algorithms.find(alg => alg.solverKey === "branchAndBoundOnCost");
       dispatch(actions.setAlgorithm(branchAndBound, defaults));
-      dispatch(actions.startSolving(points, delay, evaluatingDetailLevel, stepping, bestCost));
-      currentSolver.postMessage(actions.startSolvingAction(points, delay, evaluatingDetailLevel, stepping, bestCost));
+      dispatch(actions.startSolving(points, delay, evaluatingDetailLevel, stepping, bestCost, searchStrategy, boundingStrategy));
+      currentSolver.postMessage(actions.startSolvingAction(points, delay, evaluatingDetailLevel, stepping, bestCost, searchStrategy, boundingStrategy));
     }
-  }, [dispatch, solver, initialSolutionSolver, algorithms, initialSolution, isBranchAndBound, bestCost, points, delay, evaluatingDetailLevel]);
+  }, [dispatch, solver, initialSolutionSolver, algorithms, initialSolution, isBranchAndBound, bestCost, points, delay, evaluatingDetailLevel, searchStrategy, boundingStrategy]);
   
   function start() {
     stepping = false;

@@ -11,6 +11,8 @@ import {
 const branchAndBoundOnCost = async (
   points,
   bestCostFromHeuristic,
+  searchStrategy,
+  boundingStrategy,
   path = [],
   visited = null,
   overallBest = Number.POSITIVE_INFINITY
@@ -19,6 +21,7 @@ const branchAndBoundOnCost = async (
   console.log(points);
   if (visited === null) {
      // initial call
+    console.log("search strategy: " + searchStrategy + ", bounding strategy: " + boundingStrategy);
     if (bestCostFromHeuristic !== null && bestCostFromHeuristic !== undefined)
       overallBest = bestCostFromHeuristic;
     console.log("overallBest: " + overallBest);
@@ -105,6 +108,8 @@ const branchAndBoundOnCost = async (
     const [curCost, curPath] = await branchAndBoundOnCost(
       points,
       bestCostFromHeuristic,
+      searchStrategy,
+      boundingStrategy,
       path,
       visited,
       overallBest

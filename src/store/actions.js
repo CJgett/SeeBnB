@@ -109,14 +109,16 @@ export const setAlgorithmStage = (isBranchAndBound) => ({
   isBranchAndBound 
 });
 
-export const startSolvingAction = (points, delay, evaluatingDetailLevel, stepping, bestCostFromHeuristic) => ({
+export const startSolvingAction = (points, delay, evaluatingDetailLevel, stepping, bestCostFromHeuristic, searchStrategy, boundingStrategy) => ({
   type: START_SOLVING,
   points,
   delay,
   fullSpeed: false,
   evaluatingDetailLevel,
   stepping,
-  bestCostFromHeuristic
+  bestCostFromHeuristic,
+  searchStrategy,
+  boundingStrategy
 });
 
 export const stopSolvingAction = () => ({
