@@ -104,7 +104,7 @@ export const MapPlot = React.forwardRef((props, ref) => {
           pickable={true}
           getPosition={p => p.position}
           getText={p => p.id}
-          getSize={14}
+          getSize={13}
           getAngle={0}
           getTextAnchor={'middle'}
           getAlignmentBaseline={'center'}

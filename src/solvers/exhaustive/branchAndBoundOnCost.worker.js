@@ -1,6 +1,8 @@
 /* eslint-disable no-restricted-globals */
 import makeSolver from "../makeSolver";
-import { pathCost, setDifference } from "../cost";
+import { pathCost, setDifference, distance } from "../cost";
+import { hasPoint, createEdgePriorityQueue, calculateLowerBound, initializeToVisit } from "./bnbHelpers";
+import { TreeNode } from "../data-structures/TreeNode";
 
 import {
   EVALUATING_PATH_COLOR,
@@ -13,36 +15,43 @@ const branchAndBoundOnCost = async (
   bestCostFromHeuristic,
   searchStrategy,
   boundingStrategy,
-  path = [],
-  visited = null,
-  overallBest = Number.POSITIVE_INFINITY
 ) => {
-  console.log("points next");
-  console.log(points);
-  if (visited === null) {
-     // initial call
-    console.log("search strategy: " + searchStrategy + ", bounding strategy: " + boundingStrategy);
-    if (bestCostFromHeuristic !== null && bestCostFromHeuristic !== undefined)
-      overallBest = bestCostFromHeuristic;
-    console.log("overallBest: " + overallBest);
-    path = [points.shift()];
-    points = new Set(points);
-    visited = new Set();
+  // initialize run variables
+  
+  const startingPoint = points.slice(0).shift();
+
+  let overallBestCost = bestCostFromHeuristic;
+  if (overallBestCost === null) {
+    overallBestCost = Infinity;
   }
-  console.log("visited next");
-  console.log(visited);
-  // figure out which points are left
-  const available = setDifference(points, visited);
-  console.log("available next");
-  console.log(available);
+  let overallBestPath = [];
 
-  // calculate the cost, from here, to go home
-  const backToStart = [...path, path[0]];
-  const cost = pathCost(backToStart);
+  // create priority queue of edges ordered by cost (low to high). 
+  // Only needed for cheapest edges bounding strategy
+  const edges = createEdgePriorityQueue(boundingStrategy, points);
 
-  if (cost > overallBest) {
-    // we may not be done, but have already traveled further than the best path
-    // no reason to continue
+  // this holds the nodes that need to still be explored
+  // the data structure depends on the search strategy
+  let toVisit = initializeToVisit(searchStrategy);
+  const initialCost = 0;
+  const initialPath = new Array(startingPoint);
+  const initialLowerBound = calculateLowerBound(initialCost, initialPath, points, boundingStrategy, edges);
+  toVisit.push(new TreeNode(initialCost, initialPath, initialLowerBound));
+
+  let path = initialPath;
+  let cost = initialCost;
+
+  // this value marks the node that will be visited in the current while loop
+  let currentNode = "";
+
+  let currentRun = 0;    
+
+  while (toVisit.size !== 0) {
+    currentNode = toVisit.pop();
+    path = currentNode.pathIncludingPoint;
+    cost = currentNode.costToPoint;
+
+    // the following displays the paths on the map
     self.setEvaluatingPaths(
       () => ({
         paths: [
@@ -59,90 +68,71 @@ const branchAndBoundOnCost = async (
       }),
       2
     );
-    return [null, null];
-  }
+    await self.sleep();
+   
+    if (currentNode.lowerBound > overallBestCost || currentNode.costToPoint > overallBestCost) {
+      // cases 1 & 2: minimumLowerBound > overallBestCost; currentCost > overallBestCost
+      // node should be pruned, lower branches ignored (currentNode deleted & no new nodes added to toVisit)
+    } else if (currentNode.pathIncludingPoint.length === points.length) {
+      // case 3: finished path 
+      //     case 3.1: cost > overallBestCost (already covered above)
+      //     case 3.2: cost < overallBestCost
+      let lastPointAddedToPath = currentNode.pathIncludingPoint[currentNode.pathIncludingPoint.length - 1];
+      let costBackToStart = currentNode.costToPoint + distance(lastPointAddedToPath, startingPoint);
+      let pathBackToStart =  [...currentNode.pathIncludingPoint, startingPoint];
 
-  // still cheaper than the best, keep going deeper, and deeper, and deeper...
-  else {
-    self.setEvaluatingPaths(
-      () => ({
-        paths: [
-          {
-            path: path.slice(0, path.length - 1),
-            color: EVALUATING_SEGMENT_COLOR
-          },
-          {
-            path: path.slice(path.length - 2, path.length + 1),
-            color: EVALUATING_PATH_COLOR
-          }
-        ],
-        cost
-      }),
-      2
-    );
-  }
+      if (costBackToStart < overallBestCost) {
+        overallBestCost = costBackToStart;
+        overallBestPath = pathBackToStart;
 
-  await self.sleep();
-
-  if (available.size === 0) {
-    // at the end of the path, return where we're at
-    self.setEvaluatingPath(() => ({
-      path: { path: backToStart, color: EVALUATING_SEGMENT_COLOR },
-      cost
-    }));
-
-    return [cost, backToStart];
-  }
-
-  let [bestCost, bestPath] = [null, null];
-
-  // for every point yet to be visited along this path
-  for (const p of available) {
-    console.log("p next");
-    console.log(p);
-    // go to that point
-    visited.add(p);
-    path.push(p);
-
-    // RECURSE - go through all the possible points from that point
-    const [curCost, curPath] = await branchAndBoundOnCost(
-      points,
-      bestCostFromHeuristic,
-      searchStrategy,
-      boundingStrategy,
-      path,
-      visited,
-      overallBest
-    );
-
-    // if that path is better and complete, keep it
-    if (curCost && (!bestCost || curCost < bestCost)) {
-      [bestCost, bestPath] = [curCost, curPath];
-
-      if (!overallBest || bestCost <= overallBest) {
-        // found a new best complete path
-        if (bestCost !== overallBest) {
-          overallBest = bestCost;
+        self.setBestPath(overallBestPath, overallBestCost);
+      }
+    } else {
+    // case 4: unfinished path, but still worth searching 
+    // (current node is already delete from toVisit, make sure node values are 
+    // added to currentCost and currentPath! Then add next nodes to end of toVisit) 
+      for (let i = 0; i < points.length; i++) {
+        if (!hasPoint(currentNode.pathIncludingPoint, points[i])) { 
+          let lastPointAddedToPath = currentNode.pathIncludingPoint[currentNode.pathIncludingPoint.length - 1];
+          let distanceToNewNode = distance(lastPointAddedToPath, points[i])
+          let costToNewPoint = currentNode.costToPoint + distanceToNewNode;
+          let pathIncludingNewPoint = [...currentNode.pathIncludingPoint, points[i]];
+          let newPointLowerBound = calculateLowerBound(costToNewPoint, pathIncludingNewPoint, points, boundingStrategy, edges);
+          toVisit.push(new TreeNode(costToNewPoint, pathIncludingNewPoint, newPointLowerBound));
         }
-        self.setBestPath(bestPath, bestCost);
       }
     }
-
-    // go back up and make that point available again
-    visited.delete(p);
-    path.pop();
-
-    self.setEvaluatingPath(
-      () => ({
-        path: { path, color: EVALUATING_SEGMENT_COLOR }
-      }),
-      2
-    );
-    await self.sleep();
+    
+    currentRun++;
   }
 
+  // stop displaying evaluating path 
+  path = initialPath;
+  cost = initialCost;
+  self.setEvaluatingPaths(
+    () => ({
+      paths: [
+        {
+          path: path.slice(0, path.length - 1),
+          color: EVALUATING_SEGMENT_COLOR
+        },
+        {
+          path: path.slice(path.length - 2, path.length + 1),
+          color: EVALUATING_ERROR_COLOR
+        }
+      ],
+      cost
+    }),
+    2
+  );
+
   await self.sleep();
-  return [bestCost, bestPath];
+
+  console.log(overallBestPath);
+  console.log(overallBestCost);
+
+
+  return [overallBestCost, overallBestPath];
 };
 
 makeSolver(branchAndBoundOnCost);

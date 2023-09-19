@@ -2,7 +2,7 @@
 export const distance = (pt1, pt2) => {
   const [lng1, lat1] = pt1;
   const [lng2, lat2] = pt2;
-  if (lat1 === lat2 && lng1 === lng2) {
+  if ((lat1 === lat2 && lng1 === lng2) || (pt1 === pt2)) {
     return 0;
   }
 
@@ -54,3 +54,4 @@ export const rotateToStartingPoint = (path, startingPoint) => {
   const startIdx = path.findIndex(p => p === startingPoint);
   path.unshift(...path.splice(startIdx, path.length));
 };
+
