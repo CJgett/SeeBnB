@@ -1,44 +1,20 @@
 import React, { Component } from "react";
 import * as d3 from "d3";
+import { findNodeWithPath, makeNode } from "./nodeTreeHelpers";
 
 class NodeTree extends Component {
 
   componentDidMount() {
+
+    const rootNode = makeNode("0", 200, [[39, 20]]);
+    const secondNode = makeNode("1", 3, [[39, 20], [19, 52]]);
+    const thirdNode = makeNode("2", 208, [[39, 20], [67, 9]]);
     
-    var data = {
-      "name": "0",
-      "cost": 200,
-      "children": [
-        {
-          "name": "1",
-          "children": [
-            {
-              "name": "2",
-              "value": 100,
-              "children": []
-            },
-            {
-              "name": "3",
-              "value": 300
-            },
-            {
-              "name": "4",
-              "value": 200,
-              "children": [
-              {
-                "name": "1",
-                "value": 100
-              },
-              ]
-            },
-          ]
-        },
-        {
-          "name": "1",
-          "value": 200
-        }
-      ]
-    };
+    var data = rootNode;
+    data.children.push(secondNode);
+    findNodeWithPath([[39, 20]], data).children.push(thirdNode);
+
+    console.log(data);
 
     var treeLayout = d3.tree()
       .size([400, 200]);
@@ -100,7 +76,6 @@ class NodeTree extends Component {
             <g className="nodes"></g>
           </g>
         </svg>
-        <h2>Its rendering... something</h2>
       </div>
     );
   }
