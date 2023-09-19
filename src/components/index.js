@@ -19,3 +19,4 @@ export * from "./BottomMenu";
 export * from "./MapAndBottomMenuContainer";
 export * from "./CurrentRunTree";
 export * from "./SavedRuns";
+export * from "./NodeTree";
