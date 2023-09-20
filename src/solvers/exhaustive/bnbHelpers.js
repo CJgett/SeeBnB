@@ -120,12 +120,13 @@ export function findNodeWithPath(path, tree, pointToNameMap) {
   return nodeToFind;
 }
 
-export function makeNode(name, cost, path, exploring) {
+export function makeNode(name, cost, path, exploring, isCurrentBest) {
   return {
     "name" : name,
     "cost" : cost,
     "path" : path,
     "exploring" : exploring,
+    "isCurrentBest" : isCurrentBest,
     "children": []
   };
 }

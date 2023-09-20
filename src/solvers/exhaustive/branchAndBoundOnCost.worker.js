@@ -38,7 +38,7 @@ const branchAndBoundOnCost = async (
 
   const pointToNameMap = createPointToNameMap(points);
   
-  const rootNode = makeNode("0", initialCost, initialPath, "no");
+  const rootNode = makeNode("0", initialCost, initialPath, "no", "no");
   var data = rootNode;
   self.updateTree(data);
 
@@ -90,10 +90,14 @@ const branchAndBoundOnCost = async (
       let costBackToStart = currentNode.costToPoint + distance(lastPointAddedToPath, startingPoint);
       let pathBackToStart =  [...currentNode.pathIncludingPoint, startingPoint];
 
-      if (costBackToStart < overallBestCost) {
+      if (costBackToStart <= overallBestCost) {
+        // if there is a previous current best, stop showing the highlight in the tree
+        if (overallBestPath.length !== 0) {
+           findNodeWithPath(overallBestPath, data, pointToNameMap).isCurrentBest = "no";
+        }
         overallBestCost = costBackToStart;
         overallBestPath = pathBackToStart;
-
+        findNodeWithPath(path, data, pointToNameMap).isCurrentBest = "yes";
         self.setBestPath(overallBestPath, overallBestCost);
       }
     } else {
@@ -110,7 +114,7 @@ const branchAndBoundOnCost = async (
           toVisit.push(new TreeNode(costToNewPoint, pathIncludingNewPoint, newPointLowerBound));
 
           // add nodes to NodeTree (bottom section) too!
-          const newDisplayTreeNode = makeNode(i.toString(), costToNewPoint, pathIncludingNewPoint, "no");
+          const newDisplayTreeNode = makeNode(i.toString(), costToNewPoint, pathIncludingNewPoint, "no", "no");
           findNodeWithPath(path, data, pointToNameMap).children.push(newDisplayTreeNode);
         }
       }

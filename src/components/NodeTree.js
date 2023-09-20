@@ -28,7 +28,11 @@ export const NodeTree = () => {
     .style("fill", "steelblue") // set node color 
     .style("stroke", function(d) {
     // Set stroke color based on exploring attribute
-    return d.data.exploring === "yes" ? "orange" : "white";
+    if (d.data.exploring ==="yes")
+      return "orange";
+    else if (d.data.isCurrentBest ==="yes")
+      return "green";
+    else return "white";
   }) // set outline color
     .style("stroke-width", "1.5px"); // set outline thickness
 
