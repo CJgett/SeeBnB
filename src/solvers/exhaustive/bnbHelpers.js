@@ -15,11 +15,10 @@ export function hasPoint(path, point) {
   return false;
 }
 
+// create priority queue of edges ordered by cost (low to high). Only needed for cheapest edges bounding strategy
 export function createEdgePriorityQueue(boundingStrategy, points) {
   let edges = new PriorityQueue();
-  // create priority queue of edges ordered by cost (low to high). Only needed for cheapest edges bounding strategy
-  // here, 
-  if (boundingStrategy === "cheapestEdges") {
+    if (boundingStrategy === "cheapestEdges") {
     let pointsAsArray = Array.from(points);
     for (let i = 0; i < pointsAsArray.length; i++) {
       for (let j = i+1; j < pointsAsArray.length; j++) {
@@ -33,9 +32,12 @@ export function createEdgePriorityQueue(boundingStrategy, points) {
   return edges;
 } 
 
+// returns the lower bound for the given path and cost
+// gives an anwswer to the question, 
 export function calculateLowerBound(costToPoint, pathIncludingPoint, points, boundingStrategy, edges) {
   if (boundingStrategy === "cheapestEdges") {
-    // fügen Sie einfach nur die günstigsten, bisher nicht ausgewählten Kanten hinzu, bis Sie genauso viele Kanten selektiert haben, wie Knoten existieren.
+    // Add the cheapest edges that are not yet part of the given path, 
+    // until as many edges have been selected as there are nodes. 
     let cheapestEdgesLowerBound = costToPoint;
     let edgesToAdd = (points.length) - (pathIncludingPoint.length - 1);
     let startCheckingHere = 0;
@@ -62,6 +64,7 @@ export function calculateLowerBound(costToPoint, pathIncludingPoint, points, bou
   }
 }
 
+// returns whether a given path array contains an edge value
 export function containsEdge(path, edge) {
   let edgePointA = edge.pointA;
   let edgePointB = edge.pointB;
@@ -73,6 +76,8 @@ export function containsEdge(path, edge) {
   return false;
 }
 
+// create the toVisit structure to hold nodes that still need to be explored
+// exact data structure type depends on the search strategy
 export function initializeToVisit(searchStrategy) {
   if (searchStrategy === "lifo")
     var toVisit = new Stack();
@@ -83,3 +88,44 @@ export function initializeToVisit(searchStrategy) {
   return toVisit;
 }
 
+//
+// NODE TREE (displayed in bottom section)
+//
+
+// creates a map containing point-name pairs given an array of points 
+// this is used to give the nodes their names (shown as labels inside nodes)
+export function createPointToNameMap(points) {
+  var map = new Map();
+  var uniquePointString;
+  for(let i = 0; i < points.length; i++) {
+    uniquePointString = points[i].join(',');
+    map.set(uniquePointString, i.toString());
+  }
+  return map;
+}
+
+// find a node in the node tree given a path
+export function findNodeWithPath(path, tree, pointToNameMap) {
+  if (path.length === 1)
+    return tree;
+  let nodeToFind = tree;
+  for (let i = 1; i < path.length; i++) {
+    for (let j = 0; j < nodeToFind.children.length; j++) {
+      if (pointToNameMap.get(path[i].join(',')) === nodeToFind.children[j].name) {
+        nodeToFind = nodeToFind.children[j];
+        break;
+      }
+    }
+  }
+  return nodeToFind;
+}
+
+export function makeNode(name, cost, path, exploring) {
+  return {
+    "name" : name,
+    "cost" : cost,
+    "path" : path,
+    "exploring" : exploring,
+    "children": []
+  };
+}

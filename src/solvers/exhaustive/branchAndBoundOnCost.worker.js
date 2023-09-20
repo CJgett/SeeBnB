@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-globals */
 import makeSolver from "../makeSolver";
 import { pathCost, setDifference, distance } from "../cost";
-import { hasPoint, createEdgePriorityQueue, calculateLowerBound, initializeToVisit } from "./bnbHelpers";
+import { hasPoint, createEdgePriorityQueue, calculateLowerBound, initializeToVisit, createPointToNameMap, findNodeWithPath, makeNode } from "./bnbHelpers";
 import { TreeNode } from "../data-structures/TreeNode";
 
 import {
@@ -35,53 +35,12 @@ const branchAndBoundOnCost = async (
   const initialPath = new Array(startingPoint);
   const initialLowerBound = calculateLowerBound(initialCost, initialPath, points, boundingStrategy, edges);
   toVisit.push(new TreeNode(initialCost, initialPath, initialLowerBound));
-  
-
-  // this is for the node tree displayed in the bottom section 
-  function createPointToNameMap(points) {
-    var map = new Map();
-    var uniquePointString;
-    for(let i = 0; i < points.length; i++) {
-      uniquePointString = points[i].join(',');
-      map.set(uniquePointString, i.toString());
-    }
-    return map;
-  }
 
   const pointToNameMap = createPointToNameMap(points);
-
-  function findNodeWithPath(path, tree) {
-    if (path.length === 1)
-      return tree;
-    let nodeToFind = tree;
-    for (let i = 1; i < path.length; i++) {
-      for (let j = 0; j < nodeToFind.children.length; j++) {
-        if (pointToNameMap.get(path[i].join(',')) === nodeToFind.children[j].name) {
-          nodeToFind = nodeToFind.children[j];
-          break;
-        }
-      }
-    }
-    return nodeToFind;
-  }
   
-  /*TODO delete this?
-   * function pointsAreEqual(pointA, pointB) {
-    return (pointA[0] === pointB[0] && pointA[1] === pointB[1]); 
-  }*/
-
-  function makeNode(name, cost, path) {
-    return {
-      "name" : name,
-      "cost" : cost,
-      "path" : path,
-      "children": []
-    };
-  }
-  const rootNode = makeNode("0", initialCost, initialPath);
+  const rootNode = makeNode("0", initialCost, initialPath, "no");
   var data = rootNode;
   self.updateTree(data);
-
 
   let path = initialPath;
   let cost = initialCost;
@@ -91,11 +50,15 @@ const branchAndBoundOnCost = async (
   let numNodesVisited = 0;    
 
   while (toVisit.size !== 0) {
+    // delete the next node from toVisit 
+    // determined by search strategy / data structure
     currentNode = toVisit.pop();
     path = currentNode.pathIncludingPoint;
     cost = currentNode.costToPoint;
 
-    // TODO highlight current node in NodeTree (bottom menu)
+    // highlight current node in NodeTree (bottom menu)
+    findNodeWithPath(path, data, pointToNameMap).exploring = "yes";
+    self.updateTree(data);
 
     // the following displays the paths on the map
     self.setEvaluatingPaths(
@@ -147,13 +110,13 @@ const branchAndBoundOnCost = async (
           toVisit.push(new TreeNode(costToNewPoint, pathIncludingNewPoint, newPointLowerBound));
 
           // add nodes to NodeTree (bottom section) too!
-          const newDisplayTreeNode = makeNode(i.toString(), costToNewPoint, pathIncludingNewPoint);
-          findNodeWithPath(path, data).children.push(newDisplayTreeNode);
+          const newDisplayTreeNode = makeNode(i.toString(), costToNewPoint, pathIncludingNewPoint, "no");
+          findNodeWithPath(path, data, pointToNameMap).children.push(newDisplayTreeNode);
         }
       }
-    self.updateTree(data);
     }
-    
+    findNodeWithPath(path, data, pointToNameMap).exploring = "no";
+    self.updateTree(data);
     numNodesVisited++;
   }
 
@@ -182,7 +145,6 @@ const branchAndBoundOnCost = async (
   console.log(overallBestPath);
   console.log(overallBestCost);
   console.log(data);
-
 
   return [overallBestCost, overallBestPath];
 };
