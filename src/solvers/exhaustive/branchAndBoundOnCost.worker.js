@@ -146,6 +146,14 @@ const branchAndBoundOnCost = async (
 
   await self.sleep();
 
+  self.saveRunDetails({
+  "runID": 1,
+  "runDetails": `none, ${searchStrategy}, ${boundingStrategy}`,
+  "solution": `${overallBestCost}`,
+  "instance": "Germany",
+  "evalNodes": `${numNodesVisited}`,
+});
+
   console.log(overallBestPath);
   console.log(overallBestCost);
   console.log(data);

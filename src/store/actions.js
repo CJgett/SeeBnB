@@ -2,6 +2,7 @@ import gtmEmit from "./emitCustomEvent";
 export const SET_VIEWPORT_STATE = "SET_VIEWPORT_STATE";
 
 export const UPDATE_TREE = "UPDATE_TREE";
+export const UPDATE_RUN_TABLE = "UPDATE_RUN_TABLE";
 
 export const RESET_EVALUATING_STATE = "RESET_EVALUATING_STATE";
 export const RESET_BEST_PATH_STATE = "RESET_BEST_PATH_STATE";
@@ -64,13 +65,38 @@ export const setViewportState = viewport => ({
 });
 
 //
-// NODE TREE 
-// (bottom section)
+// BOTTOM MENU 
 //
 export const updateTree = tree => ({
   type: UPDATE_TREE,
   tree
-})
+});
+
+export const updateRunTable = row => ({
+  type: UPDATE_RUN_TABLE,
+  row 
+});
+
+/*export const updateRunTable = row => (dispatch, getState) => {
+  //const { runTable } = getState();
+  console.log("HERE FOR SOME UNGODLY REASON");
+  //console.log(runTable);
+  //console.log(row);
+  //console.log(row.id);
+  //row.id = runTable.length + 1;
+  dispatch(updateRunTable(row));
+};*/
+
+/*export const randomizePoints = bounds => (dispatch, getState) => {
+  const { pointCount } = getState();
+  const { top, bottom, left, right } = bounds;
+  const points = Array.from({ length: pointCount }).map(_ => [
+    getRandomPoint(right, left),
+    getRandomPoint(top, bottom)
+  ]);
+  dispatch(resetSolverState());
+  dispatch(setPointsAction(points));
+};*/
 
 //
 // SOLVER CONTROLS

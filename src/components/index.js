@@ -17,6 +17,6 @@ export * from "./SEO";
 export * from "./ThemeToggle";
 export * from "./BottomMenu";
 export * from "./MapAndBottomMenuContainer";
-export * from "./CurrentRunTree";
+export * from "./CurrentRun";
 export * from "./SavedRuns";
 export * from "./NodeTree";

@@ -64,6 +64,10 @@ export const makeSolver = solver => {
     });
   };
 
+  self.saveRunDetails = (row) => {
+    self.postMessage(actions.updateRunTable(row));
+  };
+
   self.onmessage = async ({ data: action }) => {
     switch (action.type) {
       case actions.START_SOLVING:

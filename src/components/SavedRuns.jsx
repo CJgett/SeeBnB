@@ -1,4 +1,6 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import * as selectors from "../store/selectors";
 import { 
   Table, 
   TableBody, 
@@ -23,22 +25,19 @@ const columns = [
   { id: 'runID', label: 'Run ID', minWidth: 50 },
   { id: 'runDetails', label: 'Run Details', minWidth: 50 },
   { id: 'solution', label: 'Solution', minWidth: 50 },
-  { id: 'runtime', label: 'Runtime', minWidth: 50 },
   { id: 'instance', label: 'Instance', minWidth: 50 },
   { id: 'evalNodes', label: 'Nodes Evaluated', minWidth: 50 },
-  { id: 'maxTreeDepth', label: 'Max Tree Depth', minWidth: 50 },
 ];
 
 function createData(runID, runDetails, solution, runtime, instance, evalNodes, maxTreeDepth) {
   return { runID, runDetails, solution, runtime, instance, evalNodes, maxTreeDepth };
 }
 
-const rows = [
-  createData(1, 'none, BFS, 1-1', 159, 6, 24, 4, 5),
-];
-
 export const SavedRuns = props => {
 
+  const runTable = useSelector(selectors.selectRunTable);
+  const rows = runTable;
+  console.log(runTable);
   const classes = useStyles();
 
   return (

@@ -77,6 +77,7 @@ const initialState = {
   definingPoints: false,
 
   tree: {},
+  runTable: [],
 
   siteInfoOpen: false,
   algInfoOpen: false,
@@ -130,14 +131,24 @@ export default (state = initialState, action) => {
         viewport: action.viewport
       };
 
+    //
     // NODE TREE
-    
+    // 
     case actions.UPDATE_TREE:
       return {
         ...state,
         tree: action.tree
-      }
+      };
 
+    case actions.UPDATE_RUN_TABLE:
+      return {
+        ...state,
+        runTable: [...state.runTable, action.row],
+      };
+
+    //
+    // SOLVER CONTROLS
+    //
     case actions.RESET_EVALUATING_STATE:
       return {
         ...state,
@@ -152,9 +163,6 @@ export default (state = initialState, action) => {
         bestCost: null
       };
 
-    //
-    // SOLVER CONTROLS
-    //
     case actions.SET_INITIAL_SOLUTION:
       return {
         ...state,

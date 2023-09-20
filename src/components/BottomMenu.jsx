@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/styles";
 import { Paper, Divider } from "@material-ui/core";
-import { CurrentRunTree } from "./CurrentRunTree";
+import { CurrentRun } from "./CurrentRun";
 import { SavedRuns } from "./SavedRuns";
 
 // The resize functionality of this component was modified from Moises CM's (username: fenderOne) CodeSandBox: 
@@ -112,7 +112,7 @@ export const BottomMenu = () => {
   <div className={ classes.wrapper }>  
     <div onMouseDown={setupResizerEvents} className={classes.resizer}></div>
     <Paper classes={{ root: classes.paper }} >
-      <CurrentRunTree />
+      <CurrentRun />
       <Divider orientation='vertical' />
       <SavedRuns />
     </Paper>

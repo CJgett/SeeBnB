@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
     flex: 1
 }));
 
-export const CurrentRunTree = props => {
+export const CurrentRun = props => {
   const classes = useStyles();
 
   return (

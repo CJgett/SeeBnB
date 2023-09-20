@@ -110,8 +110,9 @@ export const selectPlotPaths = createSelector(
 );
 
 //
-// FOR NODE TREE
+// FOR BOTTOM MENU 
 //
 
 export const selectTree = state => state.tree;
+export const selectRunTable = state => state.runTable;
 
