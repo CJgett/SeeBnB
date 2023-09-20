@@ -15,6 +15,10 @@ const branchAndBoundOnCost = async (
   bestCostFromHeuristic,
   searchStrategy,
   boundingStrategy,
+  // only need the following to display the run details...
+  initialSolution,
+  instance,
+  runID
 ) => {
 
   // initialize variables
@@ -145,12 +149,17 @@ const branchAndBoundOnCost = async (
   );
 
   await self.sleep();
+  console.log(runID);
+
+  const roundedOverallBestCost = Math.round(overallBestCost* 100) / 100;
+  //const roundedOverallBestCost = overallBestCost;
 
   self.saveRunDetails({
-  "runID": 1,
-  "runDetails": `none, ${searchStrategy}, ${boundingStrategy}`,
-  "solution": `${overallBestCost}`,
-  "instance": "Germany",
+  "runID": runID,
+  "runDetails": `${initialSolution}, ${searchStrategy}, ${boundingStrategy}`,
+    // TODO round!
+  "solution": `${roundedOverallBestCost}`,
+  "instance": `${instance}`,
   "evalNodes": `${numNodesVisited}`,
 });
 

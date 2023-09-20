@@ -79,15 +79,11 @@ export const updateRunTable = row => ({
 
 /*export const updateRunTable = row => (dispatch, getState) => {
   //const { runTable } = getState();
-  console.log("HERE FOR SOME UNGODLY REASON");
-  //console.log(runTable);
-  //console.log(row);
-  //console.log(row.id);
   //row.id = runTable.length + 1;
-  dispatch(updateRunTable(row));
-};*/
+  dispatch(updateRunTableAction(row));
+};
 
-/*export const randomizePoints = bounds => (dispatch, getState) => {
+export const randomizePoints = bounds => (dispatch, getState) => {
   const { pointCount } = getState();
   const { top, bottom, left, right } = bounds;
   const points = Array.from({ length: pointCount }).map(_ => [
@@ -145,7 +141,7 @@ export const setAlgorithmStage = (isBranchAndBound) => ({
   isBranchAndBound 
 });
 
-export const startSolvingAction = (points, delay, evaluatingDetailLevel, stepping, bestCostFromHeuristic, searchStrategy, boundingStrategy) => ({
+export const startSolvingAction = (points, delay, evaluatingDetailLevel, stepping, bestCostFromHeuristic, searchStrategy, boundingStrategy, initialSolution, instance, runID) => ({
   type: START_SOLVING,
   points,
   delay,
@@ -154,7 +150,10 @@ export const startSolvingAction = (points, delay, evaluatingDetailLevel, steppin
   stepping,
   bestCostFromHeuristic,
   searchStrategy,
-  boundingStrategy
+  boundingStrategy,
+  initialSolution,
+  instance,
+  runID
 });
 
 export const stopSolvingAction = () => ({

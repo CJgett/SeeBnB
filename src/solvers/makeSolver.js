@@ -78,7 +78,7 @@ export const makeSolver = solver => {
         self.solverConfig.stepping = action.stepping;
         self.solverConfig.bestCostFromHeuristic = action.bestCostFromHeuristic;
         self.solverConfig.paused = false;
-        run(action.points, action.bestCostFromHeuristic, action.searchStrategy, action.boundingStrategy);
+        run(action.points, action.bestCostFromHeuristic, action.searchStrategy, action.boundingStrategy, action.initialSolution, action.instance, action.runID);
         break;
 
       case actions.SET_DELAY:

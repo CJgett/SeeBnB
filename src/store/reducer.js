@@ -78,6 +78,7 @@ const initialState = {
 
   tree: {},
   runTable: [],
+  runID: 0,
 
   siteInfoOpen: false,
   algInfoOpen: false,
@@ -143,6 +144,7 @@ export default (state = initialState, action) => {
     case actions.UPDATE_RUN_TABLE:
       return {
         ...state,
+        runID: state.runID + 1,
         runTable: [...state.runTable, action.row],
       };
 

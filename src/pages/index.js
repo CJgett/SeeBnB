@@ -31,12 +31,14 @@ const IndexPage = () => {
   const paused = useSelector(selectors.selectPaused);
   
   const algorithms = useAlgorithmInfo();
-  const initialSolution = useSelector(selectors.selectInitialSolution);
   const bestCost = useSelector(selectors.selectBestCost);
   const isBranchAndBound = useSelector(selectors.selectAlgorithmStage);
   const branchAndBound = "branchAndBoundOnCost";
+  const initialSolution = useSelector(selectors.selectInitialSolution);
   const searchStrategy = useSelector(selectors.selectSearchStrategy);
   const boundingStrategy = useSelector(selectors.selectBoundingStrategy);
+  const instance = useSelector(selectors.selectInstance);
+  const runID = useSelector(selectors.selectRunID);
 
   const solver = useSolverWorker(dispatch, branchAndBound);
   const initialSolutionSolver = useSolverWorker(dispatch, initialSolution);
@@ -70,9 +72,9 @@ const IndexPage = () => {
       defaults = algorithms.find(alg => alg.solverKey === "branchAndBoundOnCost");
       dispatch(actions.setAlgorithm(branchAndBound, defaults));
       dispatch(actions.startSolving(points, delay, evaluatingDetailLevel, stepping, bestCost, searchStrategy, boundingStrategy));
-      currentSolver.postMessage(actions.startSolvingAction(points, delay, evaluatingDetailLevel, stepping, bestCost, searchStrategy, boundingStrategy));
+      currentSolver.postMessage(actions.startSolvingAction(points, delay, evaluatingDetailLevel, stepping, bestCost, searchStrategy, boundingStrategy, initialSolution, instance, runID));
     }
-  }, [dispatch, solver, initialSolutionSolver, algorithms, initialSolution, isBranchAndBound, bestCost, points, delay, evaluatingDetailLevel, searchStrategy, boundingStrategy]);
+  }, [dispatch, solver, initialSolutionSolver, algorithms, initialSolution, isBranchAndBound, bestCost, points, delay, evaluatingDetailLevel, searchStrategy, boundingStrategy, instance, runID]);
   
   function start() {
     stepping = false;
