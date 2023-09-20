@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import * as d3 from "d3";
 import * as selectors from "../store/selectors";
-import { findNodeWithPath, makeNode } from "./nodeTreeHelpers";
 
 export const NodeTree = () => {
 
