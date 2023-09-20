@@ -35,11 +35,11 @@ const initialViewport = {
 const hometownViewport = {
   latitude: 41.59592617614131,
   longitude: -86.12731473663396,
-  zoom: 7, 
+  zoom: 8, 
 };
 
 const vacationViewport = {
-  latitude: 36.32576380051149,
+  latitude: 35.82576380051149,
   longitude: 127.8107581650217,
   zoom: 5, 
 
