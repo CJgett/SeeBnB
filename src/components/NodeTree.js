@@ -26,9 +26,9 @@ export const NodeTree = () => {
     .attr('cx', function(d) {return d.x;})
     .attr('cy', function(d) {return d.y;})
     .attr('r', 8)
-    .style("fill", "steelblue")
-    .style("stroke", "orange")
-    .style("stroke-width", "2px")
+    .style("fill", "steelblue") // set node color 
+    .style("stroke", "white") // set outline color
+    .style("stroke-width", "1.5px") // set outline thickness
 
   // Text Label in Node
   d3.select('svg g.nodes')
@@ -41,9 +41,11 @@ export const NodeTree = () => {
     .attr('y', function(d) { return d.y; }) // Set the y-coordinate for text
     .attr('text-anchor', 'middle') // Center the text horizontally
     .attr('dy', '0.35em') 
-    .attr('font-size', '10px' );
+    .attr('font-size', '10px' )
+    .style("fill", "black") // set font color
+    .style("font-weight", "bold") // set font color
   
-  // Links
+  // Links (connections from node to node)
   d3.select('svg g.links')
     .selectAll('line.link')
     .data(root.links())
