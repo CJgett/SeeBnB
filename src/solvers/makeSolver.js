@@ -30,6 +30,10 @@ export const makeSolver = solver => {
     }
   };
 
+  self.updateTree = (...args) => {
+    self.postMessage(actions.updateTree(...args));
+  };
+
   self.setEvaluatingPath = (getPath, level = 1) => {
     if (self.solverConfig.detailLevel >= level) {
       const { path, cost } = getPath();

@@ -1,9 +1,10 @@
 import gtmEmit from "./emitCustomEvent";
 export const SET_VIEWPORT_STATE = "SET_VIEWPORT_STATE";
 
+export const UPDATE_TREE = "UPDATE_TREE";
+
 export const RESET_EVALUATING_STATE = "RESET_EVALUATING_STATE";
 export const RESET_BEST_PATH_STATE = "RESET_BEST_PATH_STATE";
-
 
 export const SET_INITIAL_SOLUTION = "SET_INITIAL_SOLUTION";
 export const SET_SEARCH_STRATEGY = "SET_SEARCH_STRATEGY";
@@ -61,6 +62,15 @@ export const setViewportState = viewport => ({
   type: SET_VIEWPORT_STATE,
   viewport
 });
+
+//
+// NODE TREE 
+// (bottom section)
+//
+export const updateTree = tree => ({
+  type: UPDATE_TREE,
+  tree
+})
 
 //
 // SOLVER CONTROLS

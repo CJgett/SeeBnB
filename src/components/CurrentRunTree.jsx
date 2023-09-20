@@ -3,7 +3,7 @@ import { Grid, Typography } from "@material-ui/core";
 
 import { MenuSection } from "./MenuSection";
 import { MenuItem } from "./MenuItem";
-import NodeTree from "./NodeTree";
+import { NodeTree } from "./NodeTree";
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles(theme => ({

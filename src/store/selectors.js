@@ -108,3 +108,10 @@ export const selectPlotPaths = createSelector(
   selectEvaluatingPathsDisplay,
   (bestPath, evaluatingPaths) => [...evaluatingPaths, bestPath]
 );
+
+//
+// FOR NODE TREE
+//
+
+export const selectTree = state => state.tree;
+

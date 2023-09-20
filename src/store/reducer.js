@@ -76,6 +76,8 @@ const initialState = {
   pointCount: gerTop5.length,
   definingPoints: false,
 
+  tree: {},
+
   siteInfoOpen: false,
   algInfoOpen: false,
   instanceInfoOpen: false
@@ -127,6 +129,14 @@ export default (state = initialState, action) => {
         ...state,
         viewport: action.viewport
       };
+
+    // NODE TREE
+    
+    case actions.UPDATE_TREE:
+      return {
+        ...state,
+        tree: action.tree
+      }
 
     case actions.RESET_EVALUATING_STATE:
       return {

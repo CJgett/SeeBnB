@@ -35,7 +35,6 @@ const branchAndBoundOnCost = async (
   const initialPath = new Array(startingPoint);
   const initialLowerBound = calculateLowerBound(initialCost, initialPath, points, boundingStrategy, edges);
   toVisit.push(new TreeNode(initialCost, initialPath, initialLowerBound));
-
   
 
   // this is for the node tree displayed in the bottom section 
@@ -81,6 +80,8 @@ const branchAndBoundOnCost = async (
   }
   const rootNode = makeNode("0", initialCost, initialPath);
   var data = rootNode;
+  self.updateTree(data);
+
 
   let path = initialPath;
   let cost = initialCost;
@@ -150,6 +151,7 @@ const branchAndBoundOnCost = async (
           findNodeWithPath(path, data).children.push(newDisplayTreeNode);
         }
       }
+    self.updateTree(data);
     }
     
     numNodesVisited++;
