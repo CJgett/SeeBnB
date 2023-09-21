@@ -23,10 +23,13 @@ export const makeSolver = solver => {
     self.postMessage(actions.setBestPath(...args));
   };
 
-  self.setEvaluatingPaths = (getPaths, level = 1) => {
+  self.setEvaluatingPaths = (getPaths, lowerBound = null, level = 1) => {
+    if (lowerBound !== null) {
+      lowerBound = Math.round(lowerBound * 100) / 100;
+    }
     if (self.solverConfig.detailLevel >= level) {
       const { paths, cost } = getPaths();
-      self.postMessage(actions.setEvaluatingPaths(paths, cost));
+      self.postMessage(actions.setEvaluatingPaths(paths, cost, lowerBound));
     }
   };
 

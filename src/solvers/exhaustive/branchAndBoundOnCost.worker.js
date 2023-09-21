@@ -48,6 +48,7 @@ const branchAndBoundOnCost = async (
 
   let path = initialPath;
   let cost = initialCost;
+  let lowerBound = 0;
 
   // this value marks the node that will be visited in the current while loop
   let currentNode = "";
@@ -59,6 +60,7 @@ const branchAndBoundOnCost = async (
     currentNode = toVisit.pop();
     path = currentNode.pathIncludingPoint;
     cost = currentNode.costToPoint;
+    lowerBound = currentNode.lowerBound;
 
     // highlight current node in NodeTree (bottom menu)
     findNodeWithPath(path, data, pointToNameMap).exploring = "yes";
@@ -79,7 +81,7 @@ const branchAndBoundOnCost = async (
         ],
         cost
       }),
-      2
+      lowerBound, 2
     );
     await self.sleep();
    
@@ -145,19 +147,17 @@ const branchAndBoundOnCost = async (
       ],
       cost
     }),
-    2
+    null, 2
   );
 
   await self.sleep();
   console.log(runID);
 
-  const roundedOverallBestCost = Math.round(overallBestCost* 100) / 100;
-  //const roundedOverallBestCost = overallBestCost;
+  const roundedOverallBestCost = Math.round(overallBestCost * 100) / 100;
 
   self.saveRunDetails({
   "runID": runID,
   "runDetails": `${initialSolution}, ${searchStrategy}, ${boundingStrategy}`,
-    // TODO round!
   "solution": `${roundedOverallBestCost}`,
   "instance": `${instance}`,
   "evalNodes": `${numNodesVisited}`,

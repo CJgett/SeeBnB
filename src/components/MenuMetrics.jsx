@@ -22,6 +22,7 @@ export const MenuMetrics = props => {
   const classes = useStyles();
   const best = useSelector(selectors.selectBestCostDisplay);
   const evaluating = useSelector(selectors.selectEvaluatingCostDisplay);
+  const lowerBound = useSelector(selectors.selectEvaluatingLowerBound);
   const startedRunningAt = useSelector(selectors.selectStartedRunningAt);
   const [runningFor, setRunningFor] = useState(0);
 
@@ -70,7 +71,7 @@ export const MenuMetrics = props => {
             color="textSecondary"
             component="div"
           >
-            Evaluating:{" "}
+            Current Cost:{" "}
           </Typography>
           <Typography
             classes={{ root: classes.grow }}
@@ -79,6 +80,32 @@ export const MenuMetrics = props => {
             variant="button"
           >
             {evaluating}
+          </Typography>
+          <Typography
+            classes={{ root: classes.unit }}
+            align="right"
+            display="inline"
+            variant="button"
+          >
+            km
+          </Typography>
+        </Grid>
+        <Grid item container justifyContent="space-between">
+          <Typography
+            display="inline"
+            variant="button"
+            color="textSecondary"
+            component="div"
+          >
+            Current Lower Bound:{" "}
+          </Typography>
+          <Typography
+            classes={{ root: classes.grow }}
+            align="right"
+            display="inline"
+            variant="button"
+          >
+            {lowerBound} 
           </Typography>
           <Typography
             classes={{ root: classes.unit }}

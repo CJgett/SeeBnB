@@ -102,6 +102,7 @@ export const selectEvaluatingCostDisplay = createSelector(
   selectEvaluatingCost,
   cost => (cost ? cost.toFixed(2) : "")
 );
+export const selectEvaluatingLowerBound = state => state.evaluatingLowerBound;
 
 export const selectPlotPaths = createSelector(
   selectBestPathDisplay,

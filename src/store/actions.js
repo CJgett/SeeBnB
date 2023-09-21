@@ -242,10 +242,11 @@ export const setEvaluatingPath = (path, cost) => ({
   cost
 });
 
-export const setEvaluatingPaths = (paths, cost) => ({
+export const setEvaluatingPaths = (paths, cost, lowerBound) => ({
   type: SET_EVALUATING_PATHS,
   paths,
-  cost
+  cost,
+  lowerBound
 });
 
 export const setBestPath = (path, cost) => ({

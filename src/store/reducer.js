@@ -67,6 +67,7 @@ const initialState = {
 
   evaluatingPaths: [],
   evaluatingCost: null,
+  evaluatingLowerBound: null,
   running: false,
   fullSpeed: false,
   paused: false,
@@ -162,7 +163,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         evaluatingPaths: [],
-        evaluatingCost: null
+        evaluatingCost: null,
+        evaluatingLowerBound: null
       };
 
     case actions.RESET_BEST_PATH_STATE:
@@ -297,7 +299,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         evaluatingPaths: state.evaluatingDetailLevel ? action.paths : [],
-        evaluatingCost: state.evaluatingDetailLevel ? action.cost : null
+        evaluatingCost: state.evaluatingDetailLevel ? action.cost : null,
+        evaluatingLowerBound: state.evaluatingDetailLevel ? action.lowerBound : null
       };
 
     case actions.SET_BEST_PATH:
