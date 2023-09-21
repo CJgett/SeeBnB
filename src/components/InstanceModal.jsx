@@ -31,7 +31,7 @@ export const InstanceModal = props => {
       matrix[i] = new Array(size);
       for (let j = 0; j < size; j++) {
         if (i === j) {
-          matrix[i][j] = `&#8734;`;
+          matrix[i][j] = 0;
         } else {
           let distanceValue = findDistance(points[i], points[j]);
           matrix[i][j] = Math.floor(distanceValue);

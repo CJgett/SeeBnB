@@ -52,7 +52,7 @@ export const SavedRuns = props => {
     <MenuSection>
       <div className={ classes.container }>
       <MenuItem title="Previous Runs" sx={{ width: '100%', overflow: 'hidden' }}>
-         <TableContainer sx={{ maxHeight: 440 }}>
+         <TableContainer >
            <Table stickyHeader aria-label="sticky table">
              <TableHead>
                <TableRow>
