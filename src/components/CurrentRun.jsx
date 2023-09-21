@@ -11,6 +11,7 @@ import * as selectors from "../store/selectors";
 export const CurrentRun = props => {
 
   const runningBranchAndBound = useSelector(selectors.selectAlgorithmStage);
+  const bnbNodeTree = useSelector(selectors.selectTree);
   const ref = useRef(null);
   const refBnB = useRef(null);
 
@@ -25,6 +26,23 @@ export const CurrentRun = props => {
     ref.current.style.setProperty("text-decoration", `${underlineInitialSolution}`, "important");
     refBnB.current.style.setProperty("text-decoration", `${underlineBnB}`, "important");
   }, [runningBranchAndBound]);
+
+  let componentToRender;
+
+  if (Object.keys(bnbNodeTree).length === 0) {
+    componentToRender = (
+      <Typography
+        align="center"
+        display="inline"
+        variant="subtitle2"
+        color="textSecondary"
+      >
+      Start the Branch and Bound algorithm to build the node tree. 
+      </Typography>
+    );
+  } else {
+    componentToRender = <NodeTree /> 
+  }
 
   return (
     <div>
@@ -57,7 +75,7 @@ export const CurrentRun = props => {
             </Typography>
           </Grid>
         </MenuItem>
-        <NodeTree />
+        {componentToRender} 
       </MenuSection>
     </div>
   );

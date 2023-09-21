@@ -164,7 +164,8 @@ export default (state = initialState, action) => {
         ...state,
         evaluatingPaths: [],
         evaluatingCost: null,
-        evaluatingLowerBound: null
+        evaluatingLowerBound: null,
+        tree: {}
       };
 
     case actions.RESET_BEST_PATH_STATE:
