@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import * as selectors from "../store/selectors";
 import { 
   Table, 
@@ -7,17 +7,23 @@ import {
   TableCell, 
   TableContainer, 
   TableHead, 
-  TableRow 
+  TableRow,
+  Button
 } from "@material-ui/core";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRedo } from "@fortawesome/free-solid-svg-icons";
 import { MenuSection } from "./MenuSection";
 import { MenuItem } from "./MenuItem";
 import { makeStyles } from "@material-ui/styles";
+import * as actions from "../store/actions";
 
 const useStyles = makeStyles(theme => ({
-  wrapper: {
-    flex: "1",
-    overflow: "auto",
+  container: {
+    display:"flex",
+  }, 
+  button: {
+    alignSelf: "flex-start",
+    marginTop: "55px"
   }
 }));
 
@@ -29,21 +35,23 @@ const columns = [
   { id: 'evalNodes', label: 'Nodes Evaluated', minWidth: 50 },
 ];
 
-function createData(runID, runDetails, solution, runtime, instance, evalNodes, maxTreeDepth) {
-  return { runID, runDetails, solution, runtime, instance, evalNodes, maxTreeDepth };
-}
-
 export const SavedRuns = props => {
+
+  const dispatch = useDispatch();
 
   const runTable = useSelector(selectors.selectRunTable);
   const rows = runTable;
-  console.log(runTable);
+  
+  function onResetTable() {
+    dispatch(actions.resetRunTable());
+  }
+
   const classes = useStyles();
 
   return (
     <MenuSection>
-      <MenuItem title="Previous Runs" className={classes.item}
-       sx={{ width: '100%', overflow: 'hidden' }}>
+      <div className={ classes.container }>
+      <MenuItem title="Previous Runs" sx={{ width: '100%', overflow: 'hidden' }}>
          <TableContainer sx={{ maxHeight: 440 }}>
            <Table stickyHeader aria-label="sticky table">
              <TableHead>
@@ -78,6 +86,10 @@ export const SavedRuns = props => {
            </Table>
          </TableContainer> 
        </MenuItem>
+       <Button onClick={onResetTable} classes={{ root:classes.button }}>
+         <FontAwesomeIcon icon={faRedo} width="0" />
+       </Button>
+       </div>
     </MenuSection>
   );
 };

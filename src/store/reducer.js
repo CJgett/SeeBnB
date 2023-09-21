@@ -144,8 +144,15 @@ export default (state = initialState, action) => {
     case actions.UPDATE_RUN_TABLE:
       return {
         ...state,
-        runID: state.runID + 1,
         runTable: [...state.runTable, action.row],
+        runID: state.runID + 1,
+      };
+    
+    case actions.RESET_RUN_TABLE:
+      return {
+        ...state,
+        runTable: [],
+        runID: 0
       };
 
     //

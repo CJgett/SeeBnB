@@ -68,7 +68,7 @@ export const NodeTree = () => {
   return (
     <div>
       <svg width="400" height="220">
-        <g style={{ paddingTop: '10px' }} transform="translate(5, 5)">
+        <g transform="translate(0,9)">
           <g className="links"></g>
           <g className="nodes"></g>
         </g>
