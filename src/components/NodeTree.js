@@ -1,19 +1,18 @@
 import React from "react";
+import { useTheme } from '@material-ui/core/styles';
 import { useSelector } from "react-redux";
 import * as selectors from "../store/selectors";
 import * as d3 from "d3";
 
 export const NodeTree = () => {
 
+  const theme = useTheme();
+
   const dataTreeFromBnB = useSelector(selectors.selectTree);
-
   var data = dataTreeFromBnB;
-
   var treeLayout = d3.tree()
     .size([400, 200]);
-
   var root = d3.hierarchy(data);
-
   treeLayout(root);
 
   // Nodes
@@ -31,8 +30,8 @@ export const NodeTree = () => {
     if (d.data.exploring ==="yes")
       return "orange";
     else if (d.data.isCurrentBest ==="yes")
-      return "green";
-    else return "white";
+      return "red";
+    else return `${theme.palette.text.secondary}`;
   }) // set outline color
     .style("stroke-width", "1.5px"); // set outline thickness
 
@@ -48,7 +47,7 @@ export const NodeTree = () => {
     .attr('text-anchor', 'middle') // Center the text horizontally
     .attr('dy', '0.35em') 
     .attr('font-size', '10px' )
-    .style("fill", "black") // set font color
+    .style("fill", `${theme.palette.background.default}`) // set font color
     .style("font-weight", "500"); // set font color
   
   // Links (connections from node to node)
@@ -62,7 +61,7 @@ export const NodeTree = () => {
     .attr('x2', function(d) {return d.target.x;})
     .attr('y2', function(d) {return d.target.y;})
     .style("fill", "none")
-    .style("stroke", "white")
+    .style("stroke", `${theme.palette.text.secondary}`)
     .style("stroke-width", "1px");
 
   return (
