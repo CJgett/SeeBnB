@@ -35,6 +35,8 @@ export function createEdgePriorityQueue(boundingStrategy, points) {
 // returns the lower bound for the given path and cost
 // gives an anwswer to the question, 
 export function calculateLowerBound(costToPoint, pathIncludingPoint, points, boundingStrategy, edges) {
+  if (boundingStrategy === "none") {
+  }
   if (boundingStrategy === "cheapestEdges") {
     // Add the cheapest edges that are not yet part of the given path, 
     // until as many edges have been selected as there are nodes. 
