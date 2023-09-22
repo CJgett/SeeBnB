@@ -56,6 +56,7 @@ const initialState = {
   isRunningBnB: true,
   algorithmType: "initial-solution",
   instance: "gerTop5",
+  tableInstance: "gerTop5",
   delay: 25,
   evaluatingDetailLevel: 2,
   maxEvaluatingDetailLevel: 2,
@@ -78,6 +79,7 @@ const initialState = {
   definingPoints: false,
 
   tree: {},
+  numNodesExplored: null,
   runTable: [],
   runID: 0,
 
@@ -139,7 +141,14 @@ export default (state = initialState, action) => {
     case actions.UPDATE_TREE:
       return {
         ...state,
-        tree: action.tree
+        tree: action.tree,
+        numNodesExplored: action.numNodes
+      };
+
+    case actions.UPDATE_NUM_NODES:
+      return {
+        ...state,
+        numNodesExplored: action.numNodes
       };
 
     case actions.UPDATE_RUN_TABLE:

@@ -10,6 +10,7 @@ import * as selectors from "../store/selectors";
 
 export const CurrentRun = props => {
 
+  const numNodes = useSelector(selectors.selectNumNodesExplored);
   const runningBranchAndBound = useSelector(selectors.selectAlgorithmStage);
   const bnbNodeTree = useSelector(selectors.selectTree);
   const ref = useRef(null);
@@ -17,7 +18,7 @@ export const CurrentRun = props => {
 
   var underlineInitialSolution = runningBranchAndBound ? "none" : "underline";
   var underlineBnB = runningBranchAndBound ? "underline" : "none";
-
+ 
   // Used to show what algo will run next / is currently running. 
   // This can't be set directly in the Typography component
   // because it needs to override its parent text-decoration attribute,
@@ -44,6 +45,18 @@ export const CurrentRun = props => {
     componentToRender = <NodeTree /> 
   }
 
+  let showWarningIfLotsOfNodes;
+
+  if (numNodes > 10) {
+    showWarningIfLotsOfNodes = (<Typography 
+            align="center" 
+            display="inline"
+            variant="subtitle2" 
+            color="textSecondary">
+            Stopped rendering tree: too many nodes! 
+        </Typography>);
+  }
+ 
   return (
     <div>
       <MenuSection>
@@ -75,7 +88,15 @@ export const CurrentRun = props => {
             </Typography>
           </Grid>
         </MenuItem>
+        <Typography 
+            align="center" 
+            display="inline"
+            variant="subtitle2" 
+            color="textSecondary">
+            Number of nodes explored: {numNodes}
+        </Typography>
         {componentToRender} 
+        {showWarningIfLotsOfNodes}
       </MenuSection>
     </div>
   );

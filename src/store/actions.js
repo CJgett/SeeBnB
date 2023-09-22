@@ -2,6 +2,7 @@ import gtmEmit from "./emitCustomEvent";
 export const SET_VIEWPORT_STATE = "SET_VIEWPORT_STATE";
 
 export const UPDATE_TREE = "UPDATE_TREE";
+export const UPDATE_NUM_NODES = "UPDATE_NUM_NODES";
 export const UPDATE_RUN_TABLE = "UPDATE_RUN_TABLE";
 export const RESET_RUN_TABLE = "RESET_RUN_TABLE";
 
@@ -69,9 +70,15 @@ export const setViewportState = viewport => ({
 //
 // BOTTOM MENU 
 //
-export const updateTree = tree => ({
+export const updateTree = (tree, numNodes) => ({
   type: UPDATE_TREE,
-  tree
+  tree,
+  numNodes
+});
+
+export const updateNumNodes = numNodes => ({
+  type: UPDATE_NUM_NODES,
+  numNodes
 });
 
 export const updateRunTable = row => ({

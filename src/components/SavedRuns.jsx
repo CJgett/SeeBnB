@@ -8,7 +8,8 @@ import {
   TableContainer, 
   TableHead, 
   TableRow,
-  Button
+  Button,
+  Tooltip,
 } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRedo } from "@fortawesome/free-solid-svg-icons";
@@ -23,7 +24,8 @@ const useStyles = makeStyles(theme => ({
   }, 
   button: {
     alignSelf: "flex-start",
-    marginTop: "55px"
+    marginTop: "10px",
+    marginLeft: "-55px"
   }
 }));
 
@@ -51,44 +53,46 @@ export const SavedRuns = props => {
   return (
     <MenuSection>
       <div className={ classes.container }>
-      <MenuItem title="Previous Runs" sx={{ width: '100%', overflow: 'hidden' }}>
-         <TableContainer >
-           <Table stickyHeader aria-label="sticky table">
-             <TableHead>
-               <TableRow>
-                 {columns.map((column) => (
-                   <TableCell
-                     key={column.id}
-                     style={{ minWidth: column.minWidth }}
-                   >
-                     {column.label}
-                   </TableCell>
-                 ))}
-               </TableRow>
-             </TableHead>
-             <TableBody>
-               {rows
-                 .map((row) => {
-                   return (
-                     <TableRow hover role="checkbox" tabIndex={-1} key={row.runID}>
-                       {columns.map((column) => {
-                         const value = row[column.id];
-                         return (
-                           <TableCell key={column.id}>
-                             {value}
-                           </TableCell>
-                         );
-                       })}
-                     </TableRow>
-                   );
-                 })}
-             </TableBody>
-           </Table>
-         </TableContainer> 
-       </MenuItem>
-       <Button onClick={onResetTable} classes={{ root:classes.button }}>
-         <FontAwesomeIcon icon={faRedo} width="0" />
-       </Button>
+        <MenuItem title="Previous Runs" sx={{ width: '100%', overflow: 'hidden' }}>
+           <TableContainer >
+             <Table stickyHeader aria-label="sticky table">
+               <TableHead>
+                 <TableRow>
+                   {columns.map((column) => (
+                     <TableCell
+                       key={column.id}
+                       style={{ minWidth: column.minWidth }}
+                     >
+                       {column.label}
+                     </TableCell>
+                   ))}
+                 </TableRow>
+               </TableHead>
+               <TableBody>
+                 {rows
+                   .map((row) => {
+                     return (
+                       <TableRow hover role="checkbox" tabIndex={-1} key={row.runID}>
+                         {columns.map((column) => {
+                           const value = row[column.id];
+                           return (
+                             <TableCell key={column.id}>
+                               {value}
+                             </TableCell>
+                           );
+                         })}
+                       </TableRow>
+                     );
+                   })}
+               </TableBody>
+             </Table>
+           </TableContainer> 
+         </MenuItem>
+         <Tooltip title="Reset Table">
+           <Button onClick={onResetTable} classes={{ root:classes.button }}>
+             <FontAwesomeIcon icon={faRedo} width="0" />
+           </Button>
+         </Tooltip>
        </div>
     </MenuSection>
   );

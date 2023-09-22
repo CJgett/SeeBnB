@@ -44,7 +44,7 @@ const branchAndBoundOnCost = async (
   
   const rootNode = makeNode("0", initialCost, initialPath, "no", "no");
   var data = rootNode;
-  self.updateTree(data);
+  self.updateTree(data, 0);
 
   let path = initialPath;
   let cost = initialCost;
@@ -64,7 +64,7 @@ const branchAndBoundOnCost = async (
 
     // highlight current node in NodeTree (bottom menu)
     findNodeWithPath(path, data, pointToNameMap).exploring = "yes";
-    self.updateTree(data);
+    self.updateTree(data, numNodesVisited);
 
     // the following displays the paths on the map
     self.setEvaluatingPaths(
@@ -126,7 +126,7 @@ const branchAndBoundOnCost = async (
       }
     }
     findNodeWithPath(path, data, pointToNameMap).exploring = "no";
-    self.updateTree(data);
+    self.updateTree(data, numNodesVisited);
     numNodesVisited++;
   }
 

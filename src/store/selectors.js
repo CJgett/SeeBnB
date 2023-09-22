@@ -117,6 +117,7 @@ export const selectPlotPaths = createSelector(
 //
 
 export const selectTree = state => state.tree;
+export const selectNumNodesExplored = state => state.numNodesExplored;
 export const selectRunTable = state => state.runTable;
 export const selectRunID = state => state.runID;
 

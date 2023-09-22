@@ -20,8 +20,8 @@ export const ThemeToggle = () => {
         style={{
           position: 'absolute',
           top: '50%',
-          left: colorMode==="dark" ? '68%' : '32%',
-          transform: 'translate(-50%, -50%)',
+          left: colorMode==="dark" ? '67%' : '32%',
+          transform: 'translate(-50%, -50%) scale(0.9)',
           zIndex: 1,
           pointerEvents:'none',
         }}

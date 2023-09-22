@@ -62,9 +62,7 @@ export const MenuHeader = props => {
         </Typography>
       </Grid>
       <Typography variant="subtitle2" color="textSecondary">
-        SeeBnB is a tool to help visualize the branch and bound algorithm for the traveling salesman problem. Use the
-        controls below to plot points, choose a combination of algorithms, and control
-        execution.
+        SeeBnB is a tool to help visualize the branch and bound algorithm for the traveling salesman problem. Use the controls below to customize the algorithm, control execution, and plot points.
       </Typography>
     </MenuSection>
   );
