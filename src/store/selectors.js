@@ -26,7 +26,7 @@ export const selectBoundingStrategy = state => state.boundingStrategy;
 
 export const selectAlgorithmType = state => state.algorithmType;
 
-export const selectAlgorithmStage = state => state.isBranchAndBound;
+export const selectAlgorithmStage = state => state.isRunningBnB;
 
 export const selectDelay = state => state.delay;
 
@@ -49,6 +49,8 @@ export const selectStartedRunningAt = state => state.startedRunningAt;
 // FOR POINT CONTROLS
 //
 export const selectInstance = state => state.instance;
+
+export const selectTableInstance = state => state.tableInstance;
 
 export const selectDefiningPoints = state => state.definingPoints;
 

@@ -79,10 +79,13 @@ export const MenuPointControls = ({ onRandomizePoints }) => {
   };
 
   const onToggleDefiningPoints = () => {
-    const action = definingPoints
-      ? actions.stopDefiningPoints()
-      : actions.startDefiningPoints();
-    dispatch(action);
+    if (definingPoints) {
+      dispatch(actions.stopDefiningPoints());
+      const instance = pointCount + "nodes_" + Date.now().toString().slice(8);
+      dispatch(actions.setTableInstance(instance));
+    } else  {
+      dispatch(actions.startDefiningPoints());
+    }
   };
 
   const onPointCountChange = (_, newCount) => {

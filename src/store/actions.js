@@ -33,6 +33,7 @@ export const ADD_DEFINED_POINT = "ADD_DEFINED_POINT";
 export const STOP_DEFINING_POINTS = "STOP_DEFINING_POINTS";
 export const SET_POINT_COUNT = "SET_POINT_COUNT";
 export const SET_POINTS = "SET_POINTS";
+export const SET_TABLE_INSTANCE = "SET_TABLE_INSTANCE";
 export const SET_DEFAULT_MAP = "SET_DEFAULT_MAP";
 export const SET_DROPDOWN_MAP = "SET_DROPDOWN_MAP";
 
@@ -123,10 +124,10 @@ const setAlgorithmTypeAction = (algorithmType, defaults) => ({
   defaults
 });
 
-// this EITHER toggles based on what the current value is OR sets the stage to isBranchAndBound (boolean, when true, then run BranchAndBound, otherwise run heuristic)
-export const setAlgorithmStage = (isBranchAndBound) => ({
+// this EITHER toggles based on what the current value is OR sets the stage to isRunningBnB (boolean, when true, then run BranchAndBound, otherwise run heuristic)
+export const setAlgorithmStage = (isRunningBnB) => ({
   type: SET_ALGORITHM_STAGE,
-  isBranchAndBound 
+  isRunningBnB 
 });
 
 export const startSolvingAction = (points, delay, evaluatingDetailLevel, stepping, bestCostFromHeuristic, searchStrategy, boundingStrategy, initialSolution, instance, runID) => ({
@@ -262,6 +263,11 @@ const setDefaultMapAction = () => ({
   type: SET_DEFAULT_MAP
 });
 
+export const setTableInstance = (instance) => ({
+  type: SET_TABLE_INSTANCE,
+  instance
+});
+
 const setDropdownMapAction = (instance) => ({
   type: SET_DROPDOWN_MAP,
   instance
@@ -307,8 +313,12 @@ export const randomizePoints = bounds => (dispatch, getState) => {
     getRandomPoint(right, left),
     getRandomPoint(top, bottom)
   ]);
+  const instance = pointCount + "nodes_" + Date.now().toString().slice(8);
+  console.log(instance);
+
   dispatch(resetSolverState());
   dispatch(setPointsAction(points));
+  dispatch(setTableInstance(instance));
 };
 
 export const setDefaultMap = (...args) => dispatch => {
@@ -319,4 +329,5 @@ export const setDefaultMap = (...args) => dispatch => {
 export const setDropdownMap = (instance) => dispatch => {
   dispatch(resetSolverState());
   dispatch(setDropdownMapAction(instance));
+  dispatch(setTableInstance(instance));
 };

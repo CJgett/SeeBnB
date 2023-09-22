@@ -32,12 +32,12 @@ const IndexPage = () => {
   
   const algorithms = useAlgorithmInfo();
   const bestCost = useSelector(selectors.selectBestCost);
-  const isBranchAndBound = useSelector(selectors.selectAlgorithmStage);
+  const isRunningBnB = useSelector(selectors.selectAlgorithmStage);
   const branchAndBound = "branchAndBoundOnCost";
   const initialSolution = useSelector(selectors.selectInitialSolution);
   const searchStrategy = useSelector(selectors.selectSearchStrategy);
   const boundingStrategy = useSelector(selectors.selectBoundingStrategy);
-  const instance = useSelector(selectors.selectInstance);
+  const instance = useSelector(selectors.selectTableInstance);
   const runID = useSelector(selectors.selectRunID);
 
   const solver = useSolverWorker(dispatch, branchAndBound);
@@ -52,7 +52,7 @@ const IndexPage = () => {
     }
   }, [mapRef, dispatch, pointCount, definingPoints]);
 
-  // runs EITHER heuristic OR branchAndBound, based on whether or not algorithmStage isBranchAndBound
+  // runs EITHER heuristic OR branchAndBound, based on whether or not algorithmStage isRunningBnB
   const runBnB = useCallback((stepping) => {
     let { defaults } = {};
     let currentSolver = "";
@@ -60,7 +60,7 @@ const IndexPage = () => {
     if (initialSolution === "none") {
       dispatch(actions.setAlgorithmStage(true));
     }
-    if (initialSolution !== "none" && isBranchAndBound === false) {
+    if (initialSolution !== "none" && isRunningBnB === false) {
       currentSolver = initialSolutionSolver;
       defaults = algorithms.find(alg => alg.solverKey === initialSolution);
       dispatch(actions.setAlgorithm(initialSolution, defaults));
@@ -74,7 +74,7 @@ const IndexPage = () => {
       dispatch(actions.startSolving(points, delay, evaluatingDetailLevel, stepping, bestCost, searchStrategy, boundingStrategy));
       currentSolver.postMessage(actions.startSolvingAction(points, delay, evaluatingDetailLevel, stepping, bestCost, searchStrategy, boundingStrategy, initialSolution, instance, runID));
     }
-  }, [dispatch, solver, initialSolutionSolver, algorithms, initialSolution, isBranchAndBound, bestCost, points, delay, evaluatingDetailLevel, searchStrategy, boundingStrategy, instance, runID]);
+  }, [dispatch, solver, initialSolutionSolver, algorithms, initialSolution, isRunningBnB, bestCost, points, delay, evaluatingDetailLevel, searchStrategy, boundingStrategy, instance, runID]);
   
   function start() {
     stepping = false;

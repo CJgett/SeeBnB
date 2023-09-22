@@ -51,9 +51,9 @@ const initialState = {
   viewport: initialViewport,
   initialSolution: "none",
   searchStrategy: "lifo",
-  boundingStrategy: "cheapestEdges",
+  boundingStrategy: "currentCost",
   algorithm: "branchAndBoundOnCost",
-  isBranchAndBound: true,
+  isRunningBnB: true,
   algorithmType: "initial-solution",
   instance: "gerTop5",
   delay: 25,
@@ -92,7 +92,7 @@ let findInstance = (instance) => {
     return hometownRoute;
   else if (instance === "vacationCircuit")
     return vacationCircuit;
-  else 
+  else if (instance === "gerTop5") 
     return gerTop5;
 };
 
@@ -101,7 +101,7 @@ let findViewport = (instance) => {
     return hometownViewport;
   else if (instance === "vacationCircuit")
     return vacationViewport;
-  else
+  else if (instance === "gerTop5")
     return initialViewport;
 };
 
@@ -211,7 +211,7 @@ export default (state = initialState, action) => {
     case actions.SET_ALGORITHM_STAGE:
       return {
         ...state,
-        isBranchAndBound: ((action.isBranchAndBound === "toggle") ? !state.isBranchAndBound : action.isBranchAndBound)
+        isRunningBnB: ((action.isRunningBnB === "toggle") ? !state.isRunningBnB : action.isRunningBnB)
       };
 
     case actions.SET_DELAY:
@@ -353,6 +353,13 @@ export default (state = initialState, action) => {
         points: gerTop5,
         pointCount: gerTop5.length,
         instance: "gerTop5"
+      };
+    
+    case actions.SET_TABLE_INSTANCE:
+      console.log("it exists");
+      return {
+        ...state,
+        tableInstance: action.instance
       };
 
     case actions.SET_DROPDOWN_MAP:

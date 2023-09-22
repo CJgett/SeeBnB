@@ -1,8 +1,8 @@
 /* eslint-disable no-restricted-globals */
 import makeSolver from "../makeSolver";
 
-const none = async () => {
+const currentCost = async () => {
   // placeholder worker
 };
 
-makeSolver(none);
+makeSolver(currentCost);

@@ -16,7 +16,7 @@ import minimumLowerBound from "./search-strategy/minimumLowerBound.worker";
 import cheapestEdges from "./bounding-strategy/cheapestEdges.worker";
 import singleCycleTree from "./bounding-strategy/singleCycleTree.worker";
 import singleCycleTreeWithAscent from "./bounding-strategy/singleCycleTreeWithAscent.worker";
-import noBounding from "./bounding-strategy/none.worker";
+import currentCost from "./bounding-strategy/currentCost.worker";
 
 export default {
   branchAndBoundOnCost,
@@ -34,7 +34,7 @@ export default {
   breadthFirstSearch,
   minimumLowerBound,
 
-  noBounding,
+  currentCost,
   cheapestEdges,
   singleCycleTree,
   singleCycleTreeWithAscent,
