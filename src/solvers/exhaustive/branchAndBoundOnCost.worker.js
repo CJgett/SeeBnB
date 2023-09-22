@@ -20,6 +20,9 @@ const branchAndBoundOnCost = async (
   instance,
   runID
 ) => {
+  if(points.length < 2) {
+    return [0, points];
+  }
 
   // initialize variables
   
