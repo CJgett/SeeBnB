@@ -12,6 +12,7 @@ import {
 export const selectSiteInfoOpen = state => state.siteInfoOpen;
 export const selectAlgInfoOpen = state => state.algInfoOpen;
 export const selectInstanceInfoOpen = state => state.instanceInfoOpen;
+export const selectExpandedTreeOpen = state => state.expandedTreeOpen;
 
 //
 //  FOR SOLVER CONTROLS

@@ -8,6 +8,7 @@ import {
   AlgorithmModals,
   IntroductionModal,
   InstanceModal,
+  ExpandedTreeModal,
   Layout,
   BottomMenu,
   MapPlot,
@@ -145,6 +146,7 @@ const IndexPage = () => {
       <IntroductionModal />
       <AlgorithmModals />
       <InstanceModal />
+      <ExpandedTreeModal />
       <Menu
         onStart={start}
         onPause={pause}

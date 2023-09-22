@@ -85,7 +85,8 @@ const initialState = {
 
   siteInfoOpen: false,
   algInfoOpen: false,
-  instanceInfoOpen: false
+  instanceInfoOpen: false,
+  expandedTreeOpen: false
 };
 
 // map the string instance name to the coordinates, viewpoint
@@ -127,6 +128,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         instanceInfoOpen: !state.instanceInfoOpen
+      };
+
+    case actions.TOGGLE_EXPANDED_TREE_OPEN:
+      console.log(!state.expandedTreeOpen);
+      return {
+        ...state,
+        expandedTreeOpen: !state.expandedTreeOpen
       };
 
     case actions.SET_VIEWPORT_STATE:

@@ -2,6 +2,7 @@ export * from "./AlgorithmModals";
 export * from "./InformationModal";
 export * from "./IntroductionModal";
 export * from "./InstanceModal";
+export * from "./ExpandedTreeModal";
 export * from "./Layout";
 export * from "./MapPlot";
 export * from "./Menu";
