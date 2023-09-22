@@ -19,10 +19,10 @@ export const ExpandedTreeModal = props => {
   const dataTreeFromBnB = useSelector(selectors.selectTree);
 
   var dataModal = dataTreeFromBnB;
-  var treeLayoutModal = d3.tree()
-    .size([900, 1000]);
   var rootModal = d3.hierarchy(dataModal);
-  const treeHeight = rootModal.height * 270;
+  var treeLayoutModal = d3.tree()
+    .size([800, 1000]);
+  const treeHeight = rootModal.height * 300;
   treeLayoutModal(rootModal);
   // Nodes
   d3.select('svg g.nodes-modal')
@@ -85,7 +85,7 @@ export const ExpandedTreeModal = props => {
           onClose={onClose}
         >
           <h1>Expanded Tree</h1>
-          <svg width="900" height={treeHeight}>
+          <svg style={{ padding: 50 }} width="900" height={treeHeight}>
             <g transform="translate(0,9)">
               <g className="links-modal"></g>
               <g className="nodes-modal"></g>
