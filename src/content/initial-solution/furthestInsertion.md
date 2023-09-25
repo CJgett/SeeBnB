@@ -2,19 +2,19 @@
 type: initial-solution
 order: 4
 solverKey: furthestInsertion
-friendlyName: Furthest Insertion
+friendlyName: Farthest Insertion
 defaults:
   evaluatingDetailLevel: 1
   maxEvaluatingDetailLevel: 1
 ---
 
-# Furthest Insertion
+# Farthest Insertion
 
-This is a heuristic construction algorithm. It selects the furthest point from the path, and then figures out where the best place to put it will be.
+This is a heuristic construction algorithm. It selects the farthest point from the path, and then figures out where the best place to put it will be.
 
 1. From the starting point
 2. First, go to the closest point
-3. Choose the point that is furthest from any of the points on the path
+3. Choose the point that is farthest from any of the points on the path
 4. Find the cheapest place to add it in the path
 5. Chosen point is no longer an "available point"
 6. Continue from #3 until there are no available points, and then return to the start.
@@ -22,7 +22,7 @@ This is a heuristic construction algorithm. It selects the furthest point from t
 ## Implementation
 
 ```javascript
-const furthestInsertion = async points => {
+const farthestInsertion = async points => {
   // from the starting point
   const path = [points.shift()];
 
@@ -34,7 +34,7 @@ const furthestInsertion = async points => {
 
   while (points.length > 0) {
     //
-    // SELECTION - furthest point from the path
+    // SELECTION - farthest point from the path
     //
     let [selectedDistance, selectedIdx] = [0, null];
     for (const [freePointIdx, freePoint] of points.entries()) {
