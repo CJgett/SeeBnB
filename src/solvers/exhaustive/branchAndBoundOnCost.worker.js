@@ -20,6 +20,7 @@ const branchAndBoundOnCost = async (
   instance,
   runID
 ) => {
+  console.log(boundingStrategy);
   if(points.length < 2) {
     return [0, points];
   }
@@ -33,7 +34,7 @@ const branchAndBoundOnCost = async (
 
   // create priority queue of edges ordered by cost (low to high). 
   // Only needed for cheapest edges bounding strategy
-  const edges = createEdgePriorityQueue(boundingStrategy, points);
+  const edges = createEdgePriorityQueue(points);
 
   // this holds the nodes that need to still be explored
   // the data structure depends on the search strategy
