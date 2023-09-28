@@ -56,7 +56,7 @@ export function calculateLowerBound(costToPoint, pathIncludingPoint, points, bou
     }
     return cheapestEdgesLowerBound;
   }
-  else if (boundingStrategy === "singleCycleTree") {
+  else if (boundingStrategy === "oneTree") {
 
     if(pathIncludingPoint.length === points.length){
       return costToPoint;
@@ -120,7 +120,7 @@ export function calculateLowerBound(costToPoint, pathIncludingPoint, points, bou
     console.log(groupRepArray);
     return oneTreeLowerBound;
   }
-  // boundingStrategy === "singleCycleTreeWithAscent" 
+  // boundingStrategy === "oneTreeWithAscent" 
   else {
     //TODO
     return 0;
