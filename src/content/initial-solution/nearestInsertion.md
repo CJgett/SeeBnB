@@ -8,7 +8,7 @@ defaults:
   maxEvaluatingDetailLevel: 1
 ---
 
-# Furthest Insertion
+# Nearest Insertion
 
 This is a heuristic construction algorithm. It selects the closest point to the path, and then figures out where the best place to put it will be.
 
