@@ -1,14 +1,14 @@
 ---
 type: bounding-strategy 
 order: 1
-solverKey: singleCycleTree 
-friendlyName: Single Cycle Tree 
+solverKey: oneTree 
+friendlyName: 1-Tree (Kruskal) 
 defaults:
   evaluatingDetailLevel: 2
   maxEvaluatingDetailLevel: 2 
 ---
 
-# Single Cycle Tree 
+# 1-Tree 
 
 ## Implementation
 

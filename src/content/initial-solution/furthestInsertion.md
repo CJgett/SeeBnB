@@ -1,7 +1,7 @@
 ---
 type: initial-solution
 order: 4
-solverKey: furthestInsertion
+solverKey: farthestInsertion
 friendlyName: Farthest Insertion
 defaults:
   evaluatingDetailLevel: 1

@@ -55,7 +55,6 @@ export const MapPlot = React.forwardRef((props, ref) => {
   }, [matches, dispatch]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onViewportChanged = viewport => {
-    console.log(plotPoints);
     dispatch(actions.setViewportState(viewport));
   };
 

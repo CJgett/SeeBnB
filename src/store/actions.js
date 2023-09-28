@@ -326,8 +326,6 @@ export const randomizePoints = bounds => (dispatch, getState) => {
     getRandomPoint(top, bottom)
   ]);
   const instance = pointCount + "nodes_" + Date.now().toString().slice(8);
-  console.log(instance);
-
   dispatch(resetSolverState());
   dispatch(setPointsAction(points));
   dispatch(setTableInstance(instance));

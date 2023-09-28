@@ -1,8 +1,8 @@
 /* eslint-disable no-restricted-globals */
 import makeSolver from "../makeSolver";
 
-const singleCycleTreeWithAscent = async () => {
+const oneTree = async () => {
   // placeholder worker
 };
 
-makeSolver(singleCycleTreeWithAscent);
+makeSolver(oneTree);

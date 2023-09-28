@@ -74,7 +74,6 @@ export const makeSolver = solver => {
   self.onmessage = async ({ data: action }) => {
     switch (action.type) {
       case actions.START_SOLVING:
-        console.log("started solving");
         self.solverConfig.delay = action.delay;
         self.solverConfig.detailLevel = action.evaluatingDetailLevel;
         self.solverConfig.fullSpeed = action.fullSpeed;

@@ -2,7 +2,7 @@
 import makeSolver from "../makeSolver";
 import { pathCost, distance } from "../cost";
 
-const furthestInsertion = async points => {
+const farthestInsertion = async points => {
   // from the starting point
   const path = [points.shift()];
 
@@ -21,7 +21,7 @@ const furthestInsertion = async points => {
 
   while (points.length > 0) {
     //
-    // SELECTION - furthest point from the path
+    // SELECTION - farthest point from the path
     //
     let [selectedDistance, selectedIdx] = [0, null];
     for (const [freePointIdx, freePoint] of points.entries()) {
@@ -76,4 +76,4 @@ const furthestInsertion = async points => {
   self.setBestPath(path, cost);
 };
 
-makeSolver(furthestInsertion);
+makeSolver(farthestInsertion);
