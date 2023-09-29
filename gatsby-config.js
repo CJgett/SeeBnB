@@ -4,6 +4,7 @@ module.exports = {
     description: ``,
     author: `@CJgett`
   },
+  pathPrefix: "/SeeBnB_io",
   flags: {
       DEV_SSR: false
   },
@@ -33,8 +34,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `tsp visualizer`,
-        short_name: `tspvis`,
+        name: `seebnb`,
+        short_name: `seebnb`,
         start_url: `/`,
         background_color: `#663399`,
         theme_color: `#663399`,

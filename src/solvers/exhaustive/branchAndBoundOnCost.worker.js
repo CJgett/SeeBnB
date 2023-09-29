@@ -20,7 +20,6 @@ const branchAndBoundOnCost = async (
   instance,
   runID
 ) => {
-  console.log(boundingStrategy);
   if(points.length < 2) {
     return [0, points];
   }
@@ -130,7 +129,9 @@ const branchAndBoundOnCost = async (
       }
     }
     findNodeWithPath(path, data, pointToNameMap).exploring = "no";
-    self.updateTree(data, numNodesVisited);
+    if(numNodesVisited < 1000) {
+      self.updateTree(data, numNodesVisited);
+    }
     numNodesVisited++;
   }
 
@@ -155,7 +156,6 @@ const branchAndBoundOnCost = async (
   );
 
   await self.sleep();
-  console.log(runID);
 
   const roundedOverallBestCost = Math.round(overallBestCost * 100) / 100;
 
@@ -166,10 +166,6 @@ const branchAndBoundOnCost = async (
   "instance": `${instance}`,
   "evalNodes": `${numNodesVisited}`,
 });
-
-  console.log(overallBestPath);
-  console.log(overallBestCost);
-  console.log(data);
 
   return [overallBestCost, overallBestPath];
 };

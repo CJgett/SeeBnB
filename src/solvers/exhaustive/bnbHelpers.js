@@ -67,8 +67,6 @@ export function calculateLowerBound(costToPoint, pathIncludingPoint, points, bou
     let edgesCopy = edges.copy();
     let currentEdge = "";
     let pointsToBuildMST = selectMSTPoints(pathIncludingPoint, points);
-    console.log("pointsToBuildMST");
-    console.log(pointsToBuildMST);
     const pointToIndexMap = new Map();
     // save the values of pointsToBuild in a map, index -> point
     pointsToBuildMST.forEach((point, index) => pointToIndexMap.set(point.join(','), index));
@@ -76,35 +74,20 @@ export function calculateLowerBound(costToPoint, pathIncludingPoint, points, bou
     // initialize the group representative for each point to be included in the MST. At the start, every point is its own representative
     pointsToBuildMST.forEach((point, index) => groupRepArray[index] = index);
 
-    console.log("groupRepArray");
-    console.log(groupRepArray);
-
-    
-
     let counter = 0;
 
     while (edgesToAdd !== 0) {
-      console.log("RUN NUMBER: ");
-      console.log(counter);
       counter++;
       currentEdge = edgesCopy.pop();
-      console.log("currentEdge");
-      console.log(currentEdge);
       if(edgeIncludesForbiddenPoint(pointsToBuildMST, currentEdge)) {
-        console.log("includes forbidden point, don't add");
-        console.log(currentEdge);
         // in this case, the currentEdge contains at least one point on the inner part of the current path, which we don't want to use for the MST.
         continue;
       }
       if(pathIncludingPoint.length === 2 && containsEdge(pathIncludingPoint, currentEdge)) {
-        console.log("already have edge!");
-        console.log(currentEdge);
         // edge case: even though we would normally ignore the portion of the current path between the start and end node by not including these points in the creation of the MST, in the case of the current path containing just two nodes, this edge needs to be manually ignored.
         continue;
       }
       if(nodesAreConnected(currentEdge, groupRepArray, pointToIndexMap)) {
-        console.log("nodes are already connected");
-        console.log(currentEdge);
         // nodes have the same group rep and are therefore connected through some path already. Adding this edge would create a cycle, which we don't want!
           continue;
       }
@@ -112,17 +95,13 @@ export function calculateLowerBound(costToPoint, pathIncludingPoint, points, bou
       updateGroupReps(currentEdge, groupRepArray, pointToIndexMap);
       // add the edge to the mst, but we only need the lower bound, so just calculate this.
       // currentEdge.lowerBound is actually the cost of the edge!
-      console.log("edge Added");
-      console.log(currentEdge);
       oneTreeLowerBound += currentEdge.lowerBound;
       edgesToAdd--;
     }
-    console.log(groupRepArray);
     return oneTreeLowerBound;
   }
-  // boundingStrategy === "oneTreeWithAscent" 
+  // could add: boundingStrategy === "oneTreeWithAscent" 
   else {
-    //TODO
     return 0;
   }
 }

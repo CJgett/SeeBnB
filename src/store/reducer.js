@@ -110,7 +110,6 @@ let findViewport = (instance) => {
 
 
 export default (state = initialState, action) => {
-  console.log(action);
   switch (action.type) {
     case actions.TOGGLE_SITE_INFO_OPEN:
       return {
@@ -131,7 +130,6 @@ export default (state = initialState, action) => {
       };
 
     case actions.TOGGLE_EXPANDED_TREE_OPEN:
-      console.log(!state.expandedTreeOpen);
       return {
         ...state,
         expandedTreeOpen: !state.expandedTreeOpen
@@ -373,7 +371,6 @@ export default (state = initialState, action) => {
       };
     
     case actions.SET_TABLE_INSTANCE:
-      console.log("it exists");
       return {
         ...state,
         tableInstance: action.instance

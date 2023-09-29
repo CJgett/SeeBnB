@@ -69,7 +69,7 @@ export const NodeTree = () => {
         .style("stroke-width", "1px");
     }
 
-    if (numNodes > 1000) {
+    if (numNodes > 250) {
       setTreeShouldUpdate(false);
     }
 

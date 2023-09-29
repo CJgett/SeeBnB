@@ -63,7 +63,7 @@ export const CurrentRun = props => {
 
   let showWarningIfLotsOfNodes;
 
-  if (numNodes > 1000) {
+  if (numNodes > 250) {
     showWarningIfLotsOfNodes = (<Typography 
             align="center" 
             display="inline"
