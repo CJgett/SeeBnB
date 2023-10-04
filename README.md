@@ -3,8 +3,8 @@
 SeeBnB is an Open Educational Resource designed to help users visualize (see!) the branch and bound (BnB) algorithm. 
 
 Branch and bound is an exhaustive algorithm, which means that it always provides an optimal
-solution. Although the branch and bound algorithm has been referred to as an algorithm in the sin-
-gular, it is actually composed of three parts which can be replaced with different options
+solution. Although the branch and bound algorithm has been referred to as an algorithm in the 
+singular, it is actually composed of three parts which can be replaced with different options
 to customize and optimize it for the problem at hand.
 
 To explain the branch and bound algorithm, one can start with the name itself. One
@@ -87,21 +87,23 @@ As this is meant to be an open educational resource, feel free to use this progr
 
 ## How to Run SeeBnB
 
+You can view SeeBnB immediately at [SeeBnB_io](https://cjgett.github.io/SeeBnB_io/). If you'd like to run the files yourself, keep reading.
+
 SeeBnB makes use of Gatsby, a React-based open source framework for creating websites. 
 
-Once you have cloned the repository, you can use Gatsby to get started. This [quick start guide](https://www.gatsbyjs.com/docs/tutorial/getting-started/part-0/#installation-guide) from Gatsby could be helpful helpful. 
+Once you have cloned the repository, you can use Gatsby to get started. This [quick start guide](https://www.gatsbyjs.com/docs/tutorial/getting-started/part-0/#installation-guide) from Gatsby could be helpful. 
 
 You have two options to run the website: in develop or build mode.
 
 ### Develop
 
-npm run develop: this command runs a server in the background and enables the use of hot reloading, as well as other features supported by Gatsby. 
+`npm run develop`: this command runs a server in the background and enables the use of hot reloading, as well as other features supported by Gatsby. 
 
 ### Build 
 
-npm run build: this command translates the React files into static HTML pages and stores these in the public folder. To view these files immediately, simply use the command npm run serve.
+`npm run build`: this command translates the React files into static HTML pages and stores these in the public folder. To view these files immediately, simply use the command `npm run serve`.
 
-If you'd like to run these static files yourself, just subsequently run npm run build.
+If you'd like to run these static files yourself, just update the pathPrefix located in the gatsby-config.js file. You'll need to add the path that comes after the domain name. For example, if you'd like to serve the files at https://cjgett.github.io/SeeBnB_io/, the pathPrefix will be `/SeeBnB_io`
 
 Gatsby provides an [explainer](https://www.gatsbyjs.com/docs/conceptual/overview-of-the-gatsby-build-process/) for more information on the differences between Gatsby build and develop.
 
