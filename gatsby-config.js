@@ -1,23 +1,16 @@
 module.exports = {
+  pathPrefix: `/SeeBnB_io`,
   siteMetadata: {
     title: `SeeBnB`,
     description: ``,
-    author: `@CJgett`
+    author: `@CJgett`,
   },
-  pathPrefix: "/SeeBnB_io",
   flags: {
-      DEV_SSR: false
+      DEV_SSR: true 
   },
   plugins: [
     `gatsby-plugin-material-ui`,
     `gatsby-plugin-react-helmet`,
-    {
-      resolve: "gatsby-plugin-google-tagmanager",
-      options: {
-        id: "GTM-PS28HLQ",
-        includeInDevelopment: false
-      }
-    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {

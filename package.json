@@ -1,7 +1,7 @@
 {
-  "name": "tsp-visualizer",
+  "name": "seebnb",
   "private": true,
-  "description": "Visualizer for the traveling salesman problem",
+  "description": "Live demo for the branch and bound algorithm for the traveling salesman problem",
   "version": "0.1.0",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
@@ -15,6 +15,7 @@
     "eslint-config-react-app": "^5.2.1",
     "gatsby": "^2.32.12",
     "gatsby-cli": "^2.19.2",
+    "gatsby-plugin-fontawesome-css": "^1.2.0",
     "gatsby-plugin-google-tagmanager": "^2.11.0",
     "gatsby-plugin-manifest": "^2.12.1",
     "gatsby-plugin-material-ui": "^2.1.6",
@@ -48,7 +49,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider; gatsby build",
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider; gatsby build --prefix-paths",
     "develop": "export NODE_OPTIONS=--openssl-legacy-provider; gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "npm run develop",
@@ -57,9 +58,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jhackshaw/tspvis"
+    "url": "https://github.com/CJgett/SeeBnB"
   },
   "bugs": {
-    "url": "https://github.com/jhackshaw/tspvis/issues"
+    "url": "https://github.com/CJgett/SeeBnB/issues"
   }
 }
