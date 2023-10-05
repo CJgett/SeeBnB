@@ -103,9 +103,9 @@ You have two options to run the website: in develop or build mode.
 
 `npm run build`: this command translates the React files into static HTML pages and stores these in the public folder. To view these files immediately, simply use the command `npm run serve`.
 
-If you'd like to run these static files yourself, just update the pathPrefix located in the gatsby-config.js file. You'll need to add the path that comes after the domain name. For example, if you'd like to serve the files at https://cjgett.github.io/SeeBnB_io/, the pathPrefix should be set to `/SeeBnB_io`, as it is currently in this repository.
+If you'd like to run these static files yourself, just update the path prefix located in the gatsby-config.js file. You'll need to add the path that comes after the domain name. For example, if you'd like to serve the files at https://cjgett.github.io/SeeBnB_io/, the pathPrefix should be set to `/SeeBnB_io`, as it is currently in this repository.
 
-Gatsby provides an [explainer](https://www.gatsbyjs.com/docs/conceptual/overview-of-the-gatsby-build-process/) for more information on the differences between Gatsby build and develop.
+Gatsby provides explainers for more information on [Gatsby build and develop](https://www.gatsbyjs.com/docs/conceptual/overview-of-the-gatsby-build-process/), as well as [path prefixes](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/path-prefix/)
 
 ## Acknowledgements
 This repository is a modified version of [tspvis](https://github.com/jhackshaw/tspvis) by [Jeff Hackshaw](https://github.com/jhackshaw)  
